@@ -7,12 +7,14 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 
 import com.example.lmrs.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,14 +29,32 @@ public class MainActivity extends AppCompatActivity {
 
         // Init all the UI elements
         bottomNav = findViewById(R.id.bottom_navigation);
-
-        // Set onClickListener
         bottomNav.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
         // Initialize fragment
         openFragment(EditMenuFragment.newInstance("", ""));
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        new MaterialAlertDialogBuilder(MainActivity.this)
+                .setTitle("Logout")
+                .setMessage("Are you sure you want to logout?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Do nothing
+                    }
+                })
+                .show();
     }
 
     private void openFragment(Fragment fragment) {
@@ -44,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
+    @SuppressLint("NonConstantResourceId")
     BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
             item -> {
                 switch (item.getItemId()) {
