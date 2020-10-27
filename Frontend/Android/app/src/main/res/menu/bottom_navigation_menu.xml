@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/navigation_home"
+        android:id="@+id/navigation_edit_menu"
         android:icon="@drawable/ic_launcher_foreground"
         android:title="Edit Menu" />
 
     <item
-        android:id="@+id/navigation_sms"
+        android:id="@+id/navigation_view_order"
         android:icon="@drawable/ic_launcher_foreground"
         android:title="View Orders" />
 
     <item
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_statstics"
         android:icon="@drawable/ic_launcher_foreground"
         android:title="Statistics" />
 </menu>
