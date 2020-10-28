@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNav.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
         // Initialize fragment
-        openFragment(EditMenuFragment.newInstance("", ""));
+        openFragment(new EditMenuFragment());
 
 
     }
@@ -70,17 +70,17 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.navigation_edit_menu:
                         Log.i(TAG, "Edit menu");
-                        openFragment(EditMenuFragment.newInstance("", ""));
+                        openFragment(new EditMenuFragment());
                         return true;
 
                     case R.id.navigation_view_order:
                         Log.i(TAG, "View Order");
-                        openFragment(ViewOrdersFragment.newInstance("", ""));
+                        openFragment(new ViewOrdersFragment());
                         return true;
 
                     case R.id.navigation_statstics:
                         Log.i(TAG, "Statistics");
-                        openFragment(StatisticsFragment.newInstance("", ""));
+                        openFragment(new StatisticsFragment());
                         return true;
                 }
                 return false;
