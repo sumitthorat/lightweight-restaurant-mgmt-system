@@ -1,7 +1,30 @@
 import requests
 
 BASE = "http://127.0.0.1:5000/"
+'''
+#TESTING LOGIN FEATURE
+login = [{"username": "raman", "password_hash":"xyz111", "role":"manager"},
+	 {"username": "raj", "password_hash":"xye331", "role":"assistant"}]
 
+for i in range(len(login)):
+	response = requests.put(BASE + "user" , login[i])
+	print(response.json())
+
+input()
+
+response = requests.get(BASE + "login", {"username": "raman", "password_hash":"xyz111"})
+print(response.json())
+input()
+
+response = requests.get(BASE + "login", {"username": "ran", "password_hash":"xyz111"})
+print(response.json())
+input()
+
+response = requests.get(BASE + "login", {"username": "raman", "password_hash":"sdubisj"})
+print(response.json())
+input()
+'''
+#INSERTED SAMPLE DATA HENCE TESTED PUT METHODS
 '''
 menudata = [{"item_name":"paneer", "price":55},
 	    {"item_name":"chicken", "price":101},
@@ -41,17 +64,50 @@ for i in range(len(complete)):
 
 input()
 '''
+'''
+#TESTING DELETE FOR ALL TABLES
+response = requests.delete(BASE + "ordpen/1")
+print(response)
+input()
 
-
-
-
-
+response = requests.delete(BASE + "table/1")
+print(response)
+input()
+'''
+'''
+input()
+#TESTING GET METHODS OF ALL TABLES
 response = requests.get(BASE + "menu/1")
 print(response.json())
 input()
-#response = requests.patch(BASE + "menu/0",{"price" : 515})
-#print(response.json())
-#input()
+
+response = requests.get(BASE + "table/1")
+print(response.json())
+input()
+
+response = requests.get(BASE + "ordpen/0")
+print(response.json())
+input()
+
+response = requests.get(BASE + "ordcomp/1")
+print(response.json())
+input()
+
+#TESTING UPDATE(PATCH) METHODS IN ALL tabletab and orderspending tabels
+response = requests.patch(BASE + "ordpen/1", {"amount":1025})
+print(response.json())
+input()
+
+response = requests.patch(BASE + "table/1", {"encodstr":"editedtable"})
+print(response.json())
+input()
+
+'''
+
+
+
+
+#TESTED FULL RETRIEVAL OF ALL TABLES
 '''
 response = requests.get(BASE + "menu")
 print(response.json())
