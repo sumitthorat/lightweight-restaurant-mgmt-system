@@ -35,7 +35,10 @@ class OrdersComplete(db.Model):
     amount = db.Column(db.Float, nullable=False)
     tableid = db.Column(db.Integer)
 
-
+class Users(db.Model):
+    username = db.Column(db.String(40), primary_key=True)
+    password_hash = db.Column(db.String, nullable=False)
+    role = db.Column(db.String(20), nullable=False)
 
 
 #db.create_all()
@@ -70,6 +73,20 @@ ordcomp_put_item = reqparse.RequestParser()
 ordcomp_put_item.add_argument("content", type=str, required=True, help="No food items entered")
 ordcomp_put_item.add_argument("amount", type=float, required=True, help="Amount not entered")
 ordcomp_put_item.add_argument("tableid", type=int, required=True, help="table id not entered")
+
+user_put_item = reqparse.RequestParser()
+user_put_item.add_argument("username", type=str, required=True, help="username required")
+user_put_item.add_argument("password_hash", type=str, required=True, help="password required")
+user_put_item.add_argument("role", type=str, required=True, help="role of user required")
+
+user_login_item = reqparse.RequestParser()
+user_login_item.add_argument("username", type=str, required=True, help="username required")
+user_login_item.add_argument("password_hash", type=str, required=True, help="password required")
+
+user_update_item = reqparse.RequestParser()
+user_update_item.add_argument("username", type=str, required=True)
+user_update_item.add_argument("password_hash", type=str)
+user_update_item.add_argument("role", type=str)
 
 
 resource_menu_fields = {
@@ -235,6 +252,28 @@ class OrdComp(Resource):
         db.session.delete(result)
         db.session.commit()
         return '', 204    
+############################################################################################################
+class UserFunctions(Resource):
+    
+    def put(self):
+        args = user_put_item.parse_args()
+        result = Users.query.filter_by(username=args['username']).first()
+        if result:
+            abort(409, message="Username already taken")
+        user_item = Users(username=args['username'], password_hash=args['password_hash'], role=args['role'])
+        db.session.add(user_item)
+        db.session.commit()
+        return '', 204
+
+    def delete(self):
+        args = user_update_item.parse_args()
+        result = Users.query.filter_by(username=args['username']).first()
+        if not result:
+            abort(404, message="No such user exists")
+        db.session.delete(result)
+        db.session.commit()
+        return '', 204
+
 
 
 ############################################################################################################
@@ -242,6 +281,20 @@ api.add_resource(Menu, "/menu/<int:item_id>")
 api.add_resource(Table, "/table/<int:table_id>")
 api.add_resource(OrdPen, "/ordpen/<int:order_id>")
 api.add_resource(OrdComp, "/ordcomp/<int:order_id>")
+api.add_resource(UserFunctions, "/user")
+#########################################################################################################
+#TO VERIFY USER LOGIN INFO
+@app.route('/login',methods=['GET'])
+def login():
+    args = user_login_item.parse_args()
+    result = Users.query.filter_by(username=args['username']).first()
+    if not result:
+        return jsonify({"status" : -1, "message" : "Username does not exist"})
+    if(result.password_hash != args['password_hash']):
+        return jsonify({"status" : -1, "message" : "Password does not match"})
+    else:
+        return jsonify({"status" : 0, "message" : "Login Successful"})
+
 #########################################################################################################
 #TO GET FULL MENU
 @app.route('/menu',methods=['GET'])
