@@ -1,5 +1,6 @@
 package com.example.lmrs.view;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,9 @@ import android.widget.TextView;
 import com.example.lmrs.R;
 import com.google.android.material.card.MaterialCardView;
 
+import java.util.Objects;
+import java.util.Random;
+
 public class ViewOrdersFragment extends Fragment {
 
     @Override
@@ -29,13 +33,25 @@ public class ViewOrdersFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        Objects.requireNonNull(getActivity()).setTitle("View Orders");
+
+
         LinearLayout llViewOrdersRoot = view.findViewById(R.id.ll_view_orders_root);
 
         for (int i = 0; i < 5; ++i) {
             View rootView = getLayoutInflater().inflate(R.layout.order_card_view, null);
             TextView tvTableId = rootView.findViewById(R.id.tv_table_id);
             tvTableId.setText("R1T" + i);
-            MaterialCardView materialCardView = rootView.findViewById(R.id.order_card_view);
+            MaterialCardView materialCardView = rootView.findViewById(R.id.cv_order);
+            LinearLayout llItems = rootView.findViewById(R.id.ll_items);
+            int items = new Random().nextInt(10) % 5;
+            for (int j = 0; j < items; ++j) {
+                TextView item = new TextView(getContext());
+                item.setText("2x Parantha");
+                item.setTypeface(null, Typeface.BOLD_ITALIC);
+                item.setTextSize(18);
+                llItems.addView(item);
+            }
             materialCardView.setOnClickListener(orderOnClickListener);
             llViewOrdersRoot.addView(rootView);
         }

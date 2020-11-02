@@ -15,6 +15,8 @@ import android.widget.TextView;
 import com.example.lmrs.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Objects;
 
@@ -23,7 +25,7 @@ public class LoginActivity extends AppCompatActivity {
     static final String TAG = "LoginActivity";
 
     MaterialButton btnLogin;
-    EditText etUsername, etPassword;
+    TextInputLayout etUsername, etPassword;
     TextView tvCreateAccount;
 
     @Override

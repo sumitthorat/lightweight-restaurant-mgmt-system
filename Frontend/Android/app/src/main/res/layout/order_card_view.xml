@@ -8,7 +8,7 @@
     android:layout_width="match_parent">
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/order_card_view"
+        android:id="@+id/cv_order"
         android:clickable="true"
         app:cardElevation="8dp"
         app:strokeWidth="2dp"
@@ -17,6 +17,7 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
+            android:id="@+id/ll_items"
             android:padding="16dp"
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -25,25 +26,8 @@
             <TextView
                 android:id="@+id/tv_table_id"
                 android:text="R1T1"
+                android:textStyle="bold"
                 android:textSize="20sp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:text="2x Paneer Tikka"
-                android:textSize="18sp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:text="4x Roti"
-                android:textSize="18sp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:text="1x Mixed Veg"
-                android:textSize="18sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 

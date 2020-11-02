@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.lmrs.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -32,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNav.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
         // Initialize fragment
-        openFragment(new EditMenuFragment());
+        openFragment(new ViewOrdersFragment());
 
 
     }
