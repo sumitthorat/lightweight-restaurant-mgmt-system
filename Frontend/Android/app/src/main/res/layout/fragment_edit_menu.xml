@@ -6,16 +6,26 @@
     android:layout_height="match_parent"
     tools:context=".view.EditMenuFragment">
 
-    <TextView
-        android:id="@+id/temp_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Edit Menu Fragment"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:padding="16dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <include layout="@layout/category_layout" />
+
+            <include layout="@layout/category_layout" />
+
+            <include layout="@layout/category_layout" />
+
+
+        </LinearLayout>
+
+    </ScrollView>
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/extended_fab_edit_menu"
@@ -25,7 +35,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:contentDescription=""
-        android:text="Add items"
+        android:text="Add item"
         app:icon="@drawable/baseline_add_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
