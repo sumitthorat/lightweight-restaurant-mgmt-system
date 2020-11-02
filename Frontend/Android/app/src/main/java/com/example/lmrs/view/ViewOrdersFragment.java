@@ -44,11 +44,10 @@ public class ViewOrdersFragment extends Fragment {
             tvTableId.setText("R1T" + i);
             MaterialCardView materialCardView = rootView.findViewById(R.id.cv_order);
             LinearLayout llItems = rootView.findViewById(R.id.ll_items);
-            int items = new Random().nextInt(10) % 5;
+            int items = 5;
             for (int j = 0; j < items; ++j) {
                 TextView item = new TextView(getContext());
                 item.setText("2x Parantha");
-                item.setTypeface(null, Typeface.BOLD_ITALIC);
                 item.setTextSize(18);
                 llItems.addView(item);
             }

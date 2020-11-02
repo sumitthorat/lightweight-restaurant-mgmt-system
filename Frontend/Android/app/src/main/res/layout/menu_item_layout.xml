@@ -15,7 +15,7 @@
         android:layout_marginLeft="16dp"
         android:layout_gravity="center"
         android:layout_width="match_parent"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:layout_height="wrap_content"
         android:text="Paneer Tikka" />
 
