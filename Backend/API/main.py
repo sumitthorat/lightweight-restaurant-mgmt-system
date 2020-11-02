@@ -284,7 +284,7 @@ api.add_resource(OrdComp, "/ordcomp/<int:order_id>")
 api.add_resource(UserFunctions, "/user")
 #########################################################################################################
 #TO VERIFY USER LOGIN INFO
-@app.route('/login',methods=['GET'])
+@app.route('/login',methods=['PUT'])
 def login():
     args = user_login_item.parse_args()
     result = Users.query.filter_by(username=args['username']).first()

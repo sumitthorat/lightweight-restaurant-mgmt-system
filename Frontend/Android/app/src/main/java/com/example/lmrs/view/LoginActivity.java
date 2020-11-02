@@ -8,14 +8,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.lmrs.R;
+import com.example.lmrs.model.login.LoginModel;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Objects;
@@ -25,8 +24,9 @@ public class LoginActivity extends AppCompatActivity {
     static final String TAG = "LoginActivity";
 
     MaterialButton btnLogin;
-    TextInputLayout etUsername, etPassword;
+    TextInputLayout textInputUsername, textInputPassword;
     TextView tvCreateAccount;
+    LoginModel loginModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,15 +37,25 @@ public class LoginActivity extends AppCompatActivity {
         // Code to hide the app bar
         Objects.requireNonNull(getSupportActionBar()).hide();
 
+        loginModel = new LoginModel();
+
         btnLogin = findViewById(R.id.btn_login);
-        etUsername = findViewById(R.id.et_username);
-        etPassword = findViewById(R.id.et_password);
+        textInputUsername = findViewById(R.id.et_username);
+        textInputPassword = findViewById(R.id.et_password);
         tvCreateAccount = findViewById(R.id.tv_create_account);
+
 
         btnLogin.setOnClickListener(v -> {
             Intent goToMain = new Intent(this, MainActivity.class);
             startActivity(goToMain);
             finish();
+        });
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loginModel.attemptLogin(textInputUsername.getEditText().getText().toString(), textInputPassword.getEditText().getText().toString());
+            }
         });
 
 
