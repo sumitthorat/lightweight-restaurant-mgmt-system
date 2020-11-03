@@ -1,6 +1,8 @@
 package com.example.lmrs.view;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -27,6 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     TextInputLayout textInputUsername, textInputPassword;
     TextView tvCreateAccount;
     LoginModel loginModel;
+    ConstraintLayout clRoot;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +46,7 @@ public class LoginActivity extends AppCompatActivity {
         textInputUsername = findViewById(R.id.et_username);
         textInputPassword = findViewById(R.id.et_password);
         tvCreateAccount = findViewById(R.id.tv_create_account);
+        clRoot = findViewById(R.id.cl_root);
 
 
         btnLogin.setOnClickListener(v -> {
@@ -54,7 +58,28 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loginModel.attemptLogin(textInputUsername.getEditText().getText().toString(), textInputPassword.getEditText().getText().toString());
+
+                String username = Objects.requireNonNull(textInputUsername.getEditText()).getText().toString();
+                String password = Objects.requireNonNull(textInputPassword.getEditText()).getText().toString();
+
+
+                if (!validateLoginInfo(username, password)) {
+                    SnackbarUtil.showErrorSnackbar(clRoot, "Please enter valid username and password");
+                    return;
+                }
+
+                Thread loginThread = new Thread(() -> {
+                    String[] err = {""};
+                    boolean value = loginModel.attemptLogin(username, password, err);
+                    if (value) {
+                       startMainactivity();
+                    } else {
+                        SnackbarUtil.showErrorSnackbar(clRoot, err[0]);
+                    }
+                });
+
+                loginThread.start();
+
             }
         });
 
@@ -94,5 +119,14 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    void startMainactivity() {
+        Intent goToMain = new Intent(this, MainActivity.class);
+        startActivity(goToMain);
+        finish();
+    }
+
+    boolean validateLoginInfo(String username, String password) {
+        return username.length() > 0 && password.length() > 0;
+    }
 
 }

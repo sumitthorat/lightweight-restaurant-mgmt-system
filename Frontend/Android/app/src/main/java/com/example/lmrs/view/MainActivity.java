@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         new MaterialAlertDialogBuilder(MainActivity.this)
                 .setTitle("Logout")
-                .setMessage("Are you sure you want to logout?")
+                .setMessage("Are you sure you want to exit?")
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

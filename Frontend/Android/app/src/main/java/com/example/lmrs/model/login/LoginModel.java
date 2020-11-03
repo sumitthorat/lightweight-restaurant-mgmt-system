@@ -18,31 +18,23 @@ public class LoginModel {
         apiInterface = ApiUtils.getApiInterface();
     }
 
-    public boolean attemptLogin(String username, String password) {
+    public boolean attemptLogin(String username, String password, String[] err) {
         LoginRequest loginRequest = new LoginRequest();
         loginRequest.setUsername(username);
         loginRequest.setPasswordHash(password);
 
-        apiInterface.loginRequest(loginRequest).enqueue(new Callback<LoginResponse>() {
-            @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                Log.i(TAG, response.body().getMessage());
+        LoginResponse loginResponse = null;
+        try {
+            loginResponse = apiInterface.loginRequest(loginRequest).execute().body();
+            assert loginResponse != null;
+            if (loginResponse.getStatus() == -1) {
+                err[0] = loginResponse.getMessage();
             }
+        } catch (Exception e) {
+            Log.e(TAG, "Ex: ", e);
 
-            @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
-                Log.i(TAG, "Could not connect! : " + t.getMessage());
-            }
-        });
+        }
 
-//        LoginResponse loginResponse = null;
-//        try {
-//            loginResponse = apiInterface.loginRequest(loginRequest).execute().body();
-//        } catch (IOException e) {
-//            Log.e(TAG, e.getMessage());
-//        }
-//        return loginResponse != null && loginResponse.getStatus() != -1;
-
-        return true;
+        return loginResponse != null && loginResponse.getStatus() != -1;
     }
 }
