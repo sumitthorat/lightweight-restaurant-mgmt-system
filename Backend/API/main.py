@@ -10,24 +10,27 @@ app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///database.db"
 db = SQLAlchemy(app)
 
 class MenuTab(db.Model):
+    __tablename__ = 'menutab'
     id = db.Column(db.Integer, primary_key=True)
     item_name = db.Column(db.String(100), nullable=False)
     price = db.Column(db.Integer, nullable=False)
+    category = db.Column(db.String, db.ForeignKey('categories.category'))
 
     def __repr__(self):
         return f"Menu(items = {item_name}, price = {price})"
 
 class TableTab(db.Model):
+    __tablename__ = 'tabletab'
     tableid = db.Column(db.Integer, primary_key=True)
     encodstr = db.Column(db.String(100), unique=True, nullable=False)
-    #orders_pen = db.relationship('OrdersPending', backref='ordpen')
+    orders_pen = db.relationship('OrdersPending', backref='ordpen')
     #orders_comp = db.relationship('OrdersComplete', backref='ordcomp')
 
 class OrdersPending(db.Model):
     ordid = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.String(200), nullable=False, unique=True)
+    content = db.Column(db.String(200), nullable=False)
     amount = db.Column(db.Float, nullable=False)
-    tableid = db.Column(db.Integer)
+    tableid = db.Column(db.Integer, db.ForeignKey('tabletab.tableid'))
 
 class OrdersComplete(db.Model):
     ordid = db.Column(db.Integer, primary_key=True)
@@ -40,21 +43,24 @@ class Users(db.Model):
     password_hash = db.Column(db.String, nullable=False)
     role = db.Column(db.String(20), nullable=False)
 
+class Categories(db.Model):
+    category = db.Column(db.String(20), primary_key=True)
+    menu_add = db.relationship('MenuTab', backref='item')
+
 
 #db.create_all()
-
-
 
 ############################################################################################################
 #THIS SECTION WILL DEFINE PARSER OBJECTS AND FIELD TYPES FOR ALL THE TABLES IN THE DATABASE
 menu_put_item = reqparse.RequestParser()
 menu_put_item.add_argument("item_name", type=str,required=True, help="Item name not sent")
 menu_put_item.add_argument("price", type=int,required=True, help="Price of item is required")
+menu_put_item.add_argument("category", type=str, required=True, help="Category not given")
 
 menu_update_item = reqparse.RequestParser()
 menu_update_item.add_argument("item_name", type=str)
 menu_update_item.add_argument("price", type=int)
-
+menu_update_item.add_argument("category", type=str)
 
 table_put_item = reqparse.RequestParser()
 table_put_item.add_argument("encodstr", type=str, required=True, help="Table encoded string not ")
@@ -92,7 +98,8 @@ user_update_item.add_argument("role", type=str)
 resource_menu_fields = {
     'id' : fields.Integer,
     'item_name' : fields.String,
-    'price' : fields.Integer
+    'price' : fields.Integer,
+    'category' : fields.String
 }
 
 resource_table_fields = {
@@ -106,7 +113,12 @@ resource_order_fields = {
     'amount'  : fields.Float,
     'tableid' : fields.Integer
 }
-
+############################################################################################################
+class Catadd(Resource):
+    def put(self, categoryadd):
+        add_category = Categories(category = categoryadd)
+        db.session.add(add_category)
+        db.session.commit()
 ############################################################################################################
 #THIS CLASS WILL BE USED FOR CRUD OPERATIONS USING SENT ITEM_ID AND DATA FOR MENU TABLE
 class Menu(Resource):
@@ -116,7 +128,15 @@ class Menu(Resource):
         result = MenuTab.query.filter_by(id=item_id).first()
         if result:
             abort(409, message="Item id taken")
-        menu_item = MenuTab(id=item_id, item_name=args['item_name'], price=args['price'])
+        
+        fetch_category = Categories.query.filter_by(category=args['category']).first()
+        if not fetch_category:
+            add_category = Categories(category=args['category'])
+            db.session.add(add_category)
+            db.session.commit()
+
+        fetch_category = Categories.query.filter_by(category=args['category']).first()
+        menu_item = MenuTab(id=item_id, item_name=args['item_name'], price=args['price'], item = fetch_category)
         db.session.add(menu_item)
         db.session.commit()
         return menu_item, 201
@@ -139,6 +159,13 @@ class Menu(Resource):
             result.price = args['price']
         if args['item_name']:
             result.item_name = args['item_name']
+        if args['category']:
+            fetch_category = Categories.query.filter_by(category=args['category']).first()
+            if not fetch_category:
+                add_category = Categories(category=args['category'])
+                db.session.add(add_category)
+                db.session.commit()
+            result.category = args['category']
         db.session.commit()
         return result    
 
@@ -194,7 +221,12 @@ class OrdPen(Resource):
         result = OrdersPending.query.filter_by(ordid=order_id).first()
         if result:
             abort(409, message="Order id taken")
-        order_item = OrdersPending(ordid=order_id, content=args['content'], amount=args['amount'], tableid=args['tableid'])
+
+        fetch_table = TableTab.query.filter_by(tableid = args['tableid']).first()
+        if not fetch_table:
+            abort(404, message="No table exists for given table id")
+
+        order_item = OrdersPending(ordid=order_id, content=args['content'], amount=args['amount'], ordpen = fetch_table)
         db.session.add(order_item)
         db.session.commit()
         return order_item, 201
@@ -211,7 +243,10 @@ class OrdPen(Resource):
         if args['content']:
             result.content = args['content']
         if args['tableid']:
-            result.tableid = args['tableid']    
+            fetch_table = TableTab.query.filter_by(tableid = args['tableid']).first()
+            if not fetch_table:
+                abort(404, message="No table exists for given table id")
+            result.tableid = args['tableid']
         db.session.commit()
         return result
     
@@ -238,8 +273,10 @@ class OrdComp(Resource):
     def put(self, order_id):
         args = ordcomp_put_item.parse_args()
         result = OrdersComplete.query.filter_by(ordid=order_id).first()
+
         if result:
             abort(409, message="Order already completed with this Order id")
+       
         order_item = OrdersComplete(ordid=order_id, content=args['content'], amount=args['amount'], tableid=args['tableid'])
         db.session.add(order_item)
         db.session.commit()
@@ -274,10 +311,9 @@ class UserFunctions(Resource):
         db.session.commit()
         return '', 204
 
-
-
 ############################################################################################################
 api.add_resource(Menu, "/menu/<int:item_id>")
+api.add_resource(Catadd, "/catadd/<string:categoryadd>")
 api.add_resource(Table, "/table/<int:table_id>")
 api.add_resource(OrdPen, "/ordpen/<int:order_id>")
 api.add_resource(OrdComp, "/ordcomp/<int:order_id>")
@@ -294,7 +330,18 @@ def login():
         return jsonify({"status" : -1, "message" : "Password does not match"})
     else:
         return jsonify({"status" : 0, "message" : "Login Successful"})
+############################################################################################################
+#To Get all categories
+@app.route('/GetCategories', methods=['GET'])
+def all_categories():
+    full_categories = Categories.query.all()
+    output = []
+    for category in full_categories:
+        category_data = {}
+        category_data['category'] = category.category
+        output.append(category_data)
 
+    return jsonify(output)
 #########################################################################################################
 #TO GET FULL MENU
 @app.route('/menu',methods=['GET'])
@@ -306,6 +353,7 @@ def all_prod():
         item_data['id'] = item.id
         item_data['item_name'] = item.item_name
         item_data['price'] = item.price
+        item_data['category'] = item.category
         output.append(item_data)
     
     return jsonify(output)
