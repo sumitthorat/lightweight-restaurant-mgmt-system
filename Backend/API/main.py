@@ -11,8 +11,8 @@ db = SQLAlchemy(app)
 
 class MenuTab(db.Model):
     __tablename__ = 'menutab'
-    id = db.Column(db.Integer, primary_key=True)
-    item_name = db.Column(db.String(100), nullable=False)
+    #id = db.Column(db.Integer, primary_key=True)
+    item_name = db.Column(db.String(100), primary_key=True)
     price = db.Column(db.Integer, nullable=False)
     category = db.Column(db.String, db.ForeignKey('categories.category'))
 
@@ -96,7 +96,6 @@ user_update_item.add_argument("role", type=str)
 
 
 resource_menu_fields = {
-    'id' : fields.Integer,
     'item_name' : fields.String,
     'price' : fields.Integer,
     'category' : fields.String
@@ -116,19 +115,27 @@ resource_order_fields = {
 ############################################################################################################
 class Catadd(Resource):
     def put(self, categoryadd):
+        fetch_category = Categories.query.filter_by(category = categoryadd).first()
+        if fetch_category:
+            return jsonify({"status":-1, "message":"Category already exists"})
         add_category = Categories(category = categoryadd)
         db.session.add(add_category)
         db.session.commit()
+        response = jsonify({"status":1, "message":"Category added successfully"})
+        #print(response)
+        return response
 ############################################################################################################
 #THIS CLASS WILL BE USED FOR CRUD OPERATIONS USING SENT ITEM_ID AND DATA FOR MENU TABLE
 class Menu(Resource):
     @marshal_with(resource_menu_fields)
-    def put(self, item_id):
+    def put(self):
         args = menu_put_item.parse_args()
-        result = MenuTab.query.filter_by(id=item_id).first()
+        result = MenuTab.query.filter_by(item_name = args['item_name']).first()
         if result:
-            abort(409, message="Item id taken")
-        
+            abort(409, message="Item name taken",status=-1)
+            #response = jsonify({"status":-1, "message":"Item name already exists"})
+            #return "BAD"
+
         fetch_category = Categories.query.filter_by(category=args['category']).first()
         if not fetch_category:
             add_category = Categories(category=args['category'])
@@ -136,29 +143,32 @@ class Menu(Resource):
             db.session.commit()
 
         fetch_category = Categories.query.filter_by(category=args['category']).first()
-        menu_item = MenuTab(id=item_id, item_name=args['item_name'], price=args['price'], item = fetch_category)
+        menu_item = MenuTab(item_name=args['item_name'], price=args['price'], item = fetch_category)
         db.session.add(menu_item)
         db.session.commit()
-        return menu_item, 201
+        abort(409, message="Item added successfully",status=1)
+        #return jsonify({"status":1, "message":"Item added successfully"})
+        #return "OK"
 
     @marshal_with(resource_menu_fields)
-    def get(self,item_id):
-        result = MenuTab.query.filter_by(id=item_id).first()
+    def get(self):
+        args = menu_update_item.parse_args()
+        result = MenuTab.query.filter_by(item_name = args['item_name']).first()
         if not result:
-            abort(404, message="Could not find any food item with that item_id")
+            abort(404, message="Could not find any food item with that item_id", status=-1)
+            #return jsonify({"status":-1, "message":"No item with that name"})
         return result
 
     @marshal_with(resource_menu_fields)
-    def patch(self, item_id):
+    def patch(self):
         args = menu_update_item.parse_args()
-        result = MenuTab.query.filter_by(id=item_id).first()
+        result = MenuTab.query.filter_by(item_name = args['item_name']).first()
         if not result:
-            abort(404, message="Could not find any food item with that item_id")
+            abort(404, message="Could not find any food item with that item_id", status=-1)
+            #return jsonify({"status":-1, "message":"No item with that name"})
         
         if args['price']:
             result.price = args['price']
-        if args['item_name']:
-            result.item_name = args['item_name']
         if args['category']:
             fetch_category = Categories.query.filter_by(category=args['category']).first()
             if not fetch_category:
@@ -167,15 +177,18 @@ class Menu(Resource):
                 db.session.commit()
             result.category = args['category']
         db.session.commit()
-        return result    
+        abort(409, message="Item updated successfully", status=1)
+        #return jsonify({"status":1, "message":"Item updated successfully"}) 
 
-    def delete(self,item_id):
-        result = MenuTab.query.filter_by(id=item_id).first()
+    def delete(self):
+        args = menu_update_item.parse_args()
+        result = MenuTab.query.filter_by(item_name = args['item_name']).first()
         if not result:
             abort(404, message="Could not find any food item with that item_id")
+            #return jsonify({"status":-1, "message":"No item with that name"})
         db.session.delete(result)
         db.session.commit()
-        return '', 204
+        return jsonify({"status":1, "message":"Item deleted successfully"})
 ############################################################################################################
 #THIS CLASS WILL BE USED FOR Create and Delete OPERATIONS USING SENT Table_ID AND DATA FOR TableTab TABLE
 class Table(Resource):
@@ -183,7 +196,7 @@ class Table(Resource):
     def get(self,table_id):
         result = TableTab.query.filter_by(tableid=table_id).first()
         if not result:
-            abort(404, message="Could not find any table with that table_id")
+            abort(404, message="Could not find any table with that table_id", status=-1)
         return result
 
     @marshal_with(resource_table_fields)
@@ -191,11 +204,12 @@ class Table(Resource):
         args = table_put_item.parse_args()
         result = TableTab.query.filter_by(tableid=table_id).first()
         if result:
-            abort(409, message="Table id taken")
+            abort(409, message="Table id taken", status=-1)
         tabledata = TableTab(tableid=table_id, encodstr = args['encodstr'])
         db.session.add(tabledata)
         db.session.commit()
-        return tabledata, 201    
+        abort(409, message="Table added", status=1)
+        #return tabledata, 201    
 
     def delete(self,table_id):
         result = TableTab.query.filter_by(tableid=table_id).first()
@@ -203,7 +217,8 @@ class Table(Resource):
             abort(404, message="Could not find any table with that table_id")
         db.session.delete(result)
         db.session.commit()
-        return '', 204
+        abort(409, message="Table deleted", status=1)
+        #return '', 204
 ############################################################################################################
 ############################################################################################################
 #THIS CLASS WILL BE USED FOR CRUD OPERATIONS USING SENT Table_ID AND DATA FOR OrdersPending TABLE
@@ -213,6 +228,7 @@ class OrdPen(Resource):
         result = OrdersPending.query.filter_by(ordid=order_id).first()
         if not result:
             abort(404, message="Could not find any pending order with that order_id")
+            #return jsonify({"status":-1, "message":"No Order with that order_id"})
         return result
     
     @marshal_with(resource_order_fields)
@@ -220,16 +236,20 @@ class OrdPen(Resource):
         args = ordpen_put_item.parse_args()
         result = OrdersPending.query.filter_by(ordid=order_id).first()
         if result:
-            abort(409, message="Order id taken")
+            abort(409, message="Order id taken", status = 1)
+            #return jsonify({"status":-1, "message":"Order id taken"})
 
         fetch_table = TableTab.query.filter_by(tableid = args['tableid']).first()
         if not fetch_table:
-            abort(404, message="No table exists for given table id")
+            abort(404, message="No table exists for given table id", status = 1)
+            #return jsonify({"status":-1, "message":"No table exists for given table id"})
 
         order_item = OrdersPending(ordid=order_id, content=args['content'], amount=args['amount'], ordpen = fetch_table)
         db.session.add(order_item)
         db.session.commit()
-        return order_item, 201
+        #return order_item, 201
+        abort(404, message="Pending Order added successfully", status = 1)
+        #return jsonify({"status":1, "message":"Pending Order added successfully"})
 
     @marshal_with(resource_order_fields)
     def patch(self, order_id):
@@ -237,6 +257,7 @@ class OrdPen(Resource):
         result = OrdersPending.query.filter_by(ordid=order_id).first()
         if not result:
             abort(404, message="Could not find any order to update with that order id")
+            #return jsonify({"status":-1, "message":"No pending order with that order id"})
         
         if args['amount']:
             result.amount = args['amount']
@@ -246,17 +267,23 @@ class OrdPen(Resource):
             fetch_table = TableTab.query.filter_by(tableid = args['tableid']).first()
             if not fetch_table:
                 abort(404, message="No table exists for given table id")
+                #return jsonify({"status":-1, "message":"No table exists for given table id"})
             result.tableid = args['tableid']
         db.session.commit()
-        return result
+        #return result
+        abort(404,message="Pending order updated successfully", status=1)
+        #return jsonify({"status":1, "message":"Pending order updated successfully"})
     
     def delete(self,order_id):
         result = OrdersPending.query.filter_by(ordid=order_id).first()
         if not result:
-            abort(404, message="No pending orders with that order id")
+            #abort(404, message="No pending orders with that order id")
+            return jsonify({"status":-1, "message":"No pending order with that order id"})
         db.session.delete(result)
         db.session.commit()
-        return '', 204
+        #return '', 204
+        abort(404,message="Pending order deleted successfully", status=1)
+        #return jsonify({"status":1, "message":"Pending order deleted successfully"})
 
 
 ############################################################################################################
@@ -266,7 +293,8 @@ class OrdComp(Resource):
     def get(self,order_id):
         result = OrdersComplete.query.filter_by(ordid=order_id).first()
         if not result:
-            abort(404, message="Could not find any Completed order with that order_id")
+            abort(404, message="Could not find any Completed order with that order_id", status=-1)
+            #return jsonify({"status":-1, "message":"No completed order with that order id"})
         return result
 
     @marshal_with(resource_order_fields)
@@ -275,20 +303,26 @@ class OrdComp(Resource):
         result = OrdersComplete.query.filter_by(ordid=order_id).first()
 
         if result:
-            abort(409, message="Order already completed with this Order id")
-       
+            abort(409, message="Order already completed with this Order id", status=-1)
+            #return jsonify({"status":-1, "message":"Order already completed with this Order id"})
+
         order_item = OrdersComplete(ordid=order_id, content=args['content'], amount=args['amount'], tableid=args['tableid'])
         db.session.add(order_item)
         db.session.commit()
-        return order_item, 201
+        #return order_item, 201
+        abort(409, message="Completed Order added successfully", status=-1)
+        #return jsonify({"status":1, "message":"Completed Order added successfully"})
 
     def delete(self,order_id):
         result = OrdersComplete.query.filter_by(ordid=order_id).first()
         if not result:
-            abort(404, message="No Completed orders with that order id")
+            #abort(404, message="No Completed orders with that order id")
+            return jsonify({"status":-1, "message":"No completed order with that order id"})
         db.session.delete(result)
         db.session.commit()
-        return '', 204    
+        #return '', 204
+        abort(409, message="Completed Order deleted successfully", status=1)
+        #return jsonify({"status":1, "message":"Completed order deleted successfully"})    
 ############################################################################################################
 class UserFunctions(Resource):
     
@@ -296,25 +330,27 @@ class UserFunctions(Resource):
         args = user_put_item.parse_args()
         result = Users.query.filter_by(username=args['username']).first()
         if result:
-            return jsonify({"status" : -1, "message" : "Username already taken"})
-            
+            #abort(409, message="Username already taken")
+            return jsonify({"status":-1, "message":"Username already taken"})
         user_item = Users(username=args['username'], password_hash=args['password_hash'], role=args['role'])
         db.session.add(user_item)
         db.session.commit()
-        return jsonify({"status" : 1, "message" : "User successfully added"})
+        #return '', 204
+        return jsonify({"status":1, "message":"User added successfully"})
 
     def delete(self):
         args = user_update_item.parse_args()
         result = Users.query.filter_by(username=args['username']).first()
         if not result:
-            return jsonify({"status" : -1, "message" : "Username does not exist"})
-
+            #abort(404, message="No such user exists")
+            return jsonify({"status":-1, "message":"No such user exists"})
         db.session.delete(result)
         db.session.commit()
-        return jsonify({"status" : 1, "message" : "User successfully deleted"})
+        #return '', 204
+        return jsonify({"status":1, "message":"User deleted successfully"})
 
 ############################################################################################################
-api.add_resource(Menu, "/menu/<int:item_id>")
+api.add_resource(Menu, "/menufunc")
 api.add_resource(Catadd, "/catadd/<string:categoryadd>")
 api.add_resource(Table, "/table/<int:table_id>")
 api.add_resource(OrdPen, "/ordpen/<int:order_id>")
@@ -322,7 +358,7 @@ api.add_resource(OrdComp, "/ordcomp/<int:order_id>")
 api.add_resource(UserFunctions, "/user")
 #########################################################################################################
 #TO VERIFY USER LOGIN INFO
-@app.route('/login',methods=['PUT'])
+@app.route('/login',methods=['GET'])
 def login():
     args = user_login_item.parse_args()
     result = Users.query.filter_by(username=args['username']).first()
@@ -352,7 +388,6 @@ def all_prod():
     output = []
     for item in fullmenu:
         item_data = {}
-        item_data['id'] = item.id
         item_data['item_name'] = item.item_name
         item_data['price'] = item.price
         item_data['category'] = item.category
@@ -407,3 +442,4 @@ def all_completed():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
