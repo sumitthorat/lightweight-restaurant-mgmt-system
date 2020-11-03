@@ -259,20 +259,22 @@ class UserFunctions(Resource):
         args = user_put_item.parse_args()
         result = Users.query.filter_by(username=args['username']).first()
         if result:
-            abort(409, message="Username already taken")
+            return jsonify({"status" : -1, "message" : "Username already taken"})
+            
         user_item = Users(username=args['username'], password_hash=args['password_hash'], role=args['role'])
         db.session.add(user_item)
         db.session.commit()
-        return '', 204
+        return jsonify({"status" : 1, "message" : "User successfully added"})
 
     def delete(self):
         args = user_update_item.parse_args()
         result = Users.query.filter_by(username=args['username']).first()
         if not result:
-            abort(404, message="No such user exists")
+            return jsonify({"status" : -1, "message" : "Username does not exist"})
+
         db.session.delete(result)
         db.session.commit()
-        return '', 204
+        return jsonify({"status" : 1, "message" : "User successfully deleted"})
 
 
 
