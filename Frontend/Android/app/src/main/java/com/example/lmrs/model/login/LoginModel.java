@@ -5,10 +5,6 @@ import android.util.Log;
 import com.example.lmrs.model.ApiInterface;
 import com.example.lmrs.model.ApiUtils;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 public class LoginModel {
     ApiInterface apiInterface;
 
@@ -19,22 +15,44 @@ public class LoginModel {
     }
 
     public boolean attemptLogin(String username, String password, String[] err) {
-        LoginRequest loginRequest = new LoginRequest();
-        loginRequest.setUsername(username);
-        loginRequest.setPasswordHash(password);
+        AttemptLoginJSONRequest attemptLoginJSONRequest = new AttemptLoginJSONRequest();
+        attemptLoginJSONRequest.setUsername(username);
+        attemptLoginJSONRequest.setPasswordHash(password);
 
-        LoginResponse loginResponse = null;
+        LoginJSONResponse loginJSONResponse = null;
         try {
-            loginResponse = apiInterface.loginRequest(loginRequest).execute().body();
-            assert loginResponse != null;
-            if (loginResponse.getStatus() == -1) {
-                err[0] = loginResponse.getMessage();
+            loginJSONResponse = apiInterface.attemptLogin(attemptLoginJSONRequest).execute().body();
+            assert loginJSONResponse != null;
+            if (loginJSONResponse.getStatus() == -1) {
+                err[0] = loginJSONResponse.getMessage();
             }
         } catch (Exception e) {
             Log.e(TAG, "Ex: ", e);
 
         }
 
-        return loginResponse != null && loginResponse.getStatus() != -1;
+        return loginJSONResponse != null && loginJSONResponse.getStatus() != -1;
+    }
+
+    public boolean addNewUser(String username, String password, String role, String[] err) {
+        NewUserJSONRequest newUserJSONRequest = new NewUserJSONRequest();
+        newUserJSONRequest.setUsername(username);
+        newUserJSONRequest.setPasswordHash(password);
+        newUserJSONRequest.setRole(role);
+
+        LoginJSONResponse loginJSONResponse = null;
+
+        try {
+            loginJSONResponse = apiInterface.addNewUser(newUserJSONRequest).execute().body();
+            assert loginJSONResponse != null;
+            if (loginJSONResponse.getStatus() == -1) {
+                err[0] = loginJSONResponse.getMessage();
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Ex: ", e);
+
+        }
+
+        return loginJSONResponse != null && loginJSONResponse.getStatus() != -1;
     }
 }

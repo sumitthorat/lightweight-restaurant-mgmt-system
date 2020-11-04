@@ -90,19 +90,41 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 LayoutInflater layoutInflater = getLayoutInflater();
                 View layout = layoutInflater.inflate(R.layout.register_dialog_layout, findViewById(R.id.ll_root), false);
-                EditText etRegUsername = layout.findViewById(R.id.et_reg_username);
-                EditText etRegPassword = layout.findViewById(R.id.et_reg_password);
-                EditText etRegRole = layout.findViewById(R.id.et_reg_role);
+                TextInputLayout textInputRegUsername = layout.findViewById(R.id.et_reg_username);
+                TextInputLayout textInputRegPassword = layout.findViewById(R.id.et_reg_password);
+                TextInputLayout textInputRegRole = layout.findViewById(R.id.et_reg_role);
 
-                new MaterialAlertDialogBuilder(LoginActivity.this)
+                MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(LoginActivity.this)
                         .setView(layout)
                         .setTitle("Register")
                         .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 // Parse Info
-                                Log.i(TAG, etRegUsername.getText()+ ":" + etRegPassword.getText() + ":" + etRegRole.getText());
-                                dialog.dismiss();
+                                String username = textInputRegUsername.getEditText().getText().toString();
+                                String password = textInputRegPassword.getEditText().getText().toString();
+                                String role = textInputRegRole.getEditText().getText().toString();
+
+                                if (!validateLoginInfo(username, password)) {
+                                    SnackbarUtil.showErrorSnackbar(clRoot, "Please enter valid username and password");
+                                } else {
+                                    Thread thread = new Thread() {
+                                        @Override
+                                        public void run() {
+                                            super.run();
+                                            String[] err = {""};
+                                            boolean value = loginModel.addNewUser(username, password, role, err);
+
+                                            if (value) {
+                                                SnackbarUtil.showSuccessSnackbar(clRoot, "User added successfully");
+                                            } else {
+                                                SnackbarUtil.showErrorSnackbar(clRoot, err[0]);
+                                            }
+                                        }
+                                    };
+                                    thread.start();
+                                }
+
                             }
                         })
                         .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -111,8 +133,9 @@ public class LoginActivity extends AppCompatActivity {
                                 // Clear the fields (if required)
                                 dialog.dismiss();
                             }
-                        })
-                        .show();
+                        });
+
+                builder.show();
 
             }
         });

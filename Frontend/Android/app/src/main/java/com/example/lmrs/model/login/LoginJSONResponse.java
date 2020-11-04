@@ -3,7 +3,7 @@ package com.example.lmrs.model.login;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class LoginResponse {
+public class LoginJSONResponse {
 
     @SerializedName("message")
     @Expose
