@@ -7,3 +7,6 @@ Lightweight Restaurant Management System
 ## Icons
 1. Restaurant Icon: Flaticons.com
 2. Other Icons: Material.io
+
+## References
+Movable Floating Action Button: https://stackoverflow.com/questions/46370836/android-movable-draggable-floating-action-button-fab

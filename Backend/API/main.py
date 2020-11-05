@@ -407,12 +407,21 @@ def attempt_login():
 @app.route('/GetCategories', methods=['GET'])
 def all_categories():
     full_categories = Categories.query.all()
-    output = []
+    res = []
+    output = {}
     for category in full_categories:
         category_data = {}
-        category_data['category'] = category.category
-        output.append(category_data)
+        res.append(category.category)
 
+
+    output['categories'] = res
+    output['message'] = 'Successful'
+    output['status'] = 1
+
+    if len(res) <= 0:
+        output['message'] = 'No categories available'
+        output['status'] = -1
+    
     return jsonify(output)
 
 
@@ -420,15 +429,28 @@ def all_categories():
 @app.route('/GetFullMenu',methods=['GET'])
 def get_full_menu():
     fullmenu = MenuTab.query.all()
-    output = []
+    categories_list = []
+    # output will a list of categories, each category will have a list of items
     for item in fullmenu:
         item_data = {}
         item_data['item_name'] = item.item_name
         item_data['price'] = item.price
-        item_data['category'] = item.category
-        output.append(item_data)
+
+        found = False
+        for category_item in categories_list:
+            if category_item['category'] == item.category:
+                category_item['menu_items'].append(item_data)
+                found = True
+                break
+        
+        if not found:
+            categories_list.append({'category' : item.category, 'menu_items' : [item_data]})
+            
+            
+                
+    return jsonify({'categories' : categories_list})
+
     
-    return jsonify(output)
 
 
 # Returns a list of all 'tables' in the restaurant

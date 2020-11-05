@@ -11,23 +11,24 @@
         android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/ll_menu_root"
             android:padding="16dp"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <include layout="@layout/category_layout" />
+<!--            <include layout="@layout/category_layout" />-->
 
-            <include layout="@layout/category_layout" />
+<!--            <include layout="@layout/category_layout" />-->
 
-            <include layout="@layout/category_layout" />
+<!--            <include layout="@layout/category_layout" />-->
 
 
         </LinearLayout>
 
     </ScrollView>
 
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+    <com.example.lmrs.view.MovableFloatingActionButton
         android:id="@+id/extended_fab_edit_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
