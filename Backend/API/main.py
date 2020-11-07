@@ -26,20 +26,30 @@ class TableTab(db.Model):
     __tablename__ = 'tabletab'
     tableid = db.Column(db.Integer, primary_key=True)
     encodstr = db.Column(db.String(100), unique=True, nullable=False)
-    orders_pen = db.relationship('OrdersPending', backref='ordpen')
+    # orders_pen = db.relationship('OrdersPending', backref='ordpen')
     #orders_comp = db.relationship('OrdersComplete', backref='ordcomp')
 
+class OrdersMaster(db.Model):
+    orderid = db.Column(db.Integer, primary_key=True)
+    status = db.Column(db.String, nullable=False)
+    amount = db.Column(db.Float, nullable=False)
+    tableid = db.Column(db.Integer, nullable=False)
+    time_start = db.Column(db.DateTime,nullable=False)
+    time_end = db.Column(db.DateTime)
+    # orders_pen = db.relationship('OrdersPending', backref = 'orderid')
+    orders_comp = db.relationship('OrdersComplete', backref = 'orderid')
+
 class OrdersPending(db.Model):
-    ordid = db.Column(db.Integer, db.ForeignKey('orders_master.orderid'), primary_key=True)
+    __tablename__ = 'orders_pending'
+    orderid = db.Column(db.Integer, db.ForeignKey('orders_master.orderid'), primary_key=True)
     item_name = db.Column(db.String, primary_key=True)
-    item_quantity = db.Column(db.Integer, primary_key=True)
-    tableid = db.Column(db.Integer, db.ForeignKey('tabletab.tableid'))
+    quantity = db.Column(db.Integer)
     
 class OrdersComplete(db.Model):
-    ordid = db.Column(db.Integer, db.ForeignKey('orders_master.orderid'), primary_key=True)
+    ordid = db.Column(db.Integer, db.ForeignKey('orders_master.orderid'))
     item_name = db.Column(db.String, primary_key=True)
-    item_quantity = db.Column(db.Integer, primary_key=True)
-    tableid = db.Column(db.Integer, db.ForeignKey('tabletab.tableid'))
+    item_quantity = db.Column(db.Integer)
+    
 
 class Users(db.Model):
     username = db.Column(db.String(40), primary_key=True)
@@ -50,15 +60,7 @@ class Categories(db.Model):
     category = db.Column(db.String(20), primary_key=True)
     menu_add = db.relationship('MenuTab', backref='item')
 
-class OrdersMaster(db.Model):
-    orderid = db.Column(db.Integer, primary_key=True)
-    status = db.Column(db.String, nullable=False)
-    amount = db.Column(db.Float, nullable=False)
-    tableid = db.Column(db.Integer, nullable=False)
-    time_start = db.Column(db.DateTime,nullable=False)
-    time_end = db.Column(db.DateTime)
-    orders_pen = db.relationship('OrdersPending', backref = 'orderid')
-    orders_comp = db.relationship('OrdersComplete', backref = 'orderid')
+
 
 #db.create_all()
 
@@ -500,36 +502,32 @@ def get_pending_orders():
         order_data['tableid'] = order.tableid
         output.append(order_data)
     return jsonify(output)
-'''
-#Create New Order
+
+# Create New Order
 @app.route('/NewOrder', methods=['PUT'])
 def new_order():
     check_empty = OrdersMaster.query.first()
     if not check_empty:
-        orderid = 0
+        order_id = 0
     else :
-        
-        orderid = db.session.query(func.max(OrdersMaster.orderid)).scalar()
-        orderid += 1
-    args = master_order.parse_args()
-    tableid = args['tableid']
-    items = args['items']
-    print(items)
-    #jsons = request.json
-    #return jsons
-    add_master = OrdersMaster(orderid = orderid, status = "pending", time_start = datetime.now(), tableid = tableid)
+        order_id = db.session.query(func.max(OrdersMaster.orderid)).scalar()
+        order_id += 1
+
+    orders_json_req = request.get_json()
+    tableid = orders_json_req['tableid']
+    items = orders_json_req['items']
+   
+    add_master = OrdersMaster(orderid = order_id, status = "pending", time_start = datetime.now(), tableid = tableid)
     db.session.add(add_master)
     db.session.commit()
 
     for item in items:
-        temp_item = item['item_name']
-        temp_qty = item['quantity']
-        add_pend = OrdersPending(orderid = orderid, item_name = temp_item, quantity=temp_qty)
+        add_pend = OrdersPending(orderid = order_id, item_name = item['item_name'], quantity = item['item_qty'])
         db.session.add(add_pend)
         db.session.commit()
 
     return jsonify({"status":1, "message":"Order added successfully"})
-'''
+
 
 # Returns all completed orders
 @app.route('/GetCompletedOrders', methods=['GET'])
