@@ -1,7 +1,10 @@
-from flask import Flask
+from flask import Flask, request
 from flask_restful import Api, Resource, reqparse, abort, fields, marshal_with
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import func, desc
 from flask import jsonify
+from datetime import datetime
+import json
 
 
 app = Flask(__name__)
@@ -27,16 +30,16 @@ class TableTab(db.Model):
     #orders_comp = db.relationship('OrdersComplete', backref='ordcomp')
 
 class OrdersPending(db.Model):
-    ordid = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.String(200), nullable=False)
-    amount = db.Column(db.Float, nullable=False)
+    ordid = db.Column(db.Integer, db.ForeignKey('orders_master.orderid'), primary_key=True)
+    item_name = db.Column(db.String, primary_key=True)
+    item_quantity = db.Column(db.Integer, primary_key=True)
     tableid = db.Column(db.Integer, db.ForeignKey('tabletab.tableid'))
-
+    
 class OrdersComplete(db.Model):
-    ordid = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.String(200), nullable=False)
-    amount = db.Column(db.Float, nullable=False)
-    tableid = db.Column(db.Integer)
+    ordid = db.Column(db.Integer, db.ForeignKey('orders_master.orderid'), primary_key=True)
+    item_name = db.Column(db.String, primary_key=True)
+    item_quantity = db.Column(db.Integer, primary_key=True)
+    tableid = db.Column(db.Integer, db.ForeignKey('tabletab.tableid'))
 
 class Users(db.Model):
     username = db.Column(db.String(40), primary_key=True)
@@ -47,8 +50,22 @@ class Categories(db.Model):
     category = db.Column(db.String(20), primary_key=True)
     menu_add = db.relationship('MenuTab', backref='item')
 
+class OrdersMaster(db.Model):
+    orderid = db.Column(db.Integer, primary_key=True)
+    status = db.Column(db.String, nullable=False)
+    amount = db.Column(db.Float, nullable=False)
+    tableid = db.Column(db.Integer, nullable=False)
+    time_start = db.Column(db.DateTime,nullable=False)
+    time_end = db.Column(db.DateTime)
+    orders_pen = db.relationship('OrdersPending', backref = 'orderid')
+    orders_comp = db.relationship('OrdersComplete', backref = 'orderid')
 
 #db.create_all()
+
+#trialadd = OrdersMaster(orderid = 222, status = "pending", time_start = datetime.now())
+#db.session.add(trialadd)
+#db.session.commit()
+
 
 # Define parser objects and field types for all tables in database
 menu_put_item = reqparse.RequestParser()
@@ -93,6 +110,9 @@ user_update_item.add_argument("username", type=str, required=True)
 user_update_item.add_argument("password_hash", type=str)
 user_update_item.add_argument("role", type=str)
 
+master_order = reqparse.RequestParser()
+master_order.add_argument("tableid", type=int, required=True)
+master_order.add_argument("items", location=json)
 
 resource_menu_fields = {
     'item_name' : fields.String,
@@ -480,7 +500,36 @@ def get_pending_orders():
         order_data['tableid'] = order.tableid
         output.append(order_data)
     return jsonify(output)
+'''
+#Create New Order
+@app.route('/NewOrder', methods=['PUT'])
+def new_order():
+    check_empty = OrdersMaster.query.first()
+    if not check_empty:
+        orderid = 0
+    else :
+        
+        orderid = db.session.query(func.max(OrdersMaster.orderid)).scalar()
+        orderid += 1
+    args = master_order.parse_args()
+    tableid = args['tableid']
+    items = args['items']
+    print(items)
+    #jsons = request.json
+    #return jsons
+    add_master = OrdersMaster(orderid = orderid, status = "pending", time_start = datetime.now(), tableid = tableid)
+    db.session.add(add_master)
+    db.session.commit()
 
+    for item in items:
+        temp_item = item['item_name']
+        temp_qty = item['quantity']
+        add_pend = OrdersPending(orderid = orderid, item_name = temp_item, quantity=temp_qty)
+        db.session.add(add_pend)
+        db.session.commit()
+
+    return jsonify({"status":1, "message":"Order added successfully"})
+'''
 
 # Returns all completed orders
 @app.route('/GetCompletedOrders', methods=['GET'])
@@ -500,5 +549,22 @@ def all_completed():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", debug=True)
+    app.run(debug=True)
+'''
+CREATE TABLE "orders_master" (
+	"orderid"	INTEGER NOT NULL AUTOINCREMENT,
+	"status"	VARCHAR NOT NULL,
+	"time_start"	DATETIME NOT NULL,
+	"time_end"	DATETIME,
+	"amount"	INTEGER,
+	PRIMARY KEY("orderid")
+);
 
+CREATE TABLE "orders_pending" (
+	"orderid"	INTEGER NOT NULL,
+	"item_name"	VARCHAR NOT NULL,
+	"quantity"	INTEGER NOT NULL,
+	PRIMARY KEY("orderid","item_name"),
+	FOREIGN KEY("item_name") REFERENCES "menutab"("item_name")
+);
+'''

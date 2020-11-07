@@ -3,7 +3,7 @@ import requests
 BASE = "http://127.0.0.1:5000/"
 
 #FIRST I WILL ADD TWO CATEGORIES STARTER AND MAIN COURSE
-
+'''
 input()
 response = requests.put(BASE + "catadd/" + "starter")
 print(response.json())
@@ -136,8 +136,13 @@ response = requests.get(BASE + "login", {"username": "raman", "password_hash":"s
 print(response.json())
 input()
 
+'''
 
+input()
 
+response = requests.put(BASE + "NewOrder", {"tableid": 1, "items":[{"item_name": "Dal Tadka", "quantity": 3}, {"item_name": "Masala Papad", "quantity": 2}}])
+
+print(response.json())
 
 
 
