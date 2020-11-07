@@ -37,18 +37,18 @@ class OrdersMaster(db.Model):
     time_start = db.Column(db.DateTime,nullable=False)
     time_end = db.Column(db.DateTime)
     # orders_pen = db.relationship('OrdersPending', backref = 'orderid')
-    orders_comp = db.relationship('OrdersComplete', backref = 'orderid')
+    #orders_comp = db.relationship('OrdersComplete', backref = 'orderid')
 
 class OrdersPending(db.Model):
     __tablename__ = 'orders_pending'
-    orderid = db.Column(db.Integer, db.ForeignKey('orders_master.orderid'), primary_key=True)
+    orderid = db.Column(db.Integer, db.ForeignKey('orders_master.orderid'))
     item_name = db.Column(db.String, primary_key=True)
     quantity = db.Column(db.Integer)
     
 class OrdersComplete(db.Model):
-    ordid = db.Column(db.Integer, db.ForeignKey('orders_master.orderid'))
+    orderid = db.Column(db.Integer, db.ForeignKey('orders_master.orderid'))
     item_name = db.Column(db.String, primary_key=True)
-    item_quantity = db.Column(db.Integer)
+    quantity = db.Column(db.Integer)
     
 
 class Users(db.Model):
@@ -112,9 +112,9 @@ user_update_item.add_argument("username", type=str, required=True)
 user_update_item.add_argument("password_hash", type=str)
 user_update_item.add_argument("role", type=str)
 
-master_order = reqparse.RequestParser()
-master_order.add_argument("tableid", type=int, required=True)
-master_order.add_argument("items", location=json)
+order_complete = reqparse.RequestParser()
+order_complete.add_argument("orderid", type=int, required=True)
+order_complete.add_argument("amount", type=float, required=True)
 
 resource_menu_fields = {
     'item_name' : fields.String,
@@ -527,7 +527,7 @@ def new_order():
     orders_json_req = request.get_json()
     tableid = orders_json_req['tableid']
     items = orders_json_req['items']
-   
+
     add_master = OrdersMaster(orderid = order_id, status = "pending", time_start = datetime.now(), tableid = tableid)
     db.session.add(add_master)
     db.session.commit()
@@ -538,6 +538,38 @@ def new_order():
         db.session.commit()
 
     return jsonify({"status":1, "message":"Order added successfully"})
+
+#Complete an Order
+@app.route('/OrderComplete', methods=['PUT'])
+def complete_order():
+    args = order_complete.parse_args()
+
+    #multi_rows = OrdersPending.query.filter_by(orderid = args['orderid'])
+
+    #for row in multi_rows :
+    #    fullfill = OrdersComplete(row)
+    #    db.session.add(fullfill)
+    #    db.session.commit()
+
+    while(OrdersPending.query.filter_by(orderid = args['orderid']).first()):
+        fullfill = OrdersPending.query.filter_by(orderid = args['orderid']).first()
+        #print(type(fullfill.orderid))
+        oid = int(fullfill.orderid)
+        name = fullfill.item_name
+        qty = int(fullfill.quantity)
+        add_comp = OrdersComplete(orderid = oid, item_name = name, quantity = qty)
+        db.session.add(add_comp)
+        db.session.commit()
+        db.session.delete(fullfill)
+        db.session.commit()
+
+
+    result = OrdersMaster.query.filter_by(orderid = args['orderid']).first()
+    result.time_end = datetime.now()
+    result.amount = args['amount']
+    result.status = "complete"
+    db.session.commit()
+    return jsonify({"status":1, "message":"Order completed successfully"})
 
 
 # Returns all completed orders
