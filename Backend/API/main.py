@@ -492,15 +492,26 @@ def all_tables():
 # Return pending orders
 @app.route('/GetPendingOrders', methods=['GET'])
 def get_pending_orders():
-    pendinglist = OrdersPending.query.all()
+    pending_list = OrdersPending.query.all()
+    # output = {}
+    # for order in pendinglist:
+    #     if order.orderid not in output:
+    #         output['orderid'] = [{"item_name" : order.item_name, "item_qty" : order.quantity}]
+    #     else:
+    #         output['orderid'].append({"item_name" : order.item_name, "item_qty" : order.quantity})
     output = []
-    for order in pendinglist:
-        order_data = {}
-        order_data['ordid'] = order.ordid
-        order_data['content'] = order.content
-        order_data['amount'] = order.amount
-        order_data['tableid'] = order.tableid
-        output.append(order_data)
+    for pending_order in pending_list:
+        item_data = {"item_name" : pending_order.item_name, "item_qty" : pending_order.quantity}
+
+        found = False
+        for order in output:
+            if order['orderid'] == pending_order.orderid:
+                order['items'].append(item_data)
+                found = True
+
+        if not found:
+            output.append({"orderid" : pending_order.orderid, "items" : [item_data]})
+
     return jsonify(output)
 
 # Create New Order
