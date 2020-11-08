@@ -1,7 +1,6 @@
 package com.example.lmrs.model.vieworders;
 
 import android.annotation.SuppressLint;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,7 +64,6 @@ public class OrdersRecyclerAdapter extends RecyclerView.Adapter<OrdersRecyclerAd
 
     @Override
     public int getItemCount() {
-        Log.i("Adapter", "ADapter size : " + orderList.size());
         return orderList.size();
     }
 }

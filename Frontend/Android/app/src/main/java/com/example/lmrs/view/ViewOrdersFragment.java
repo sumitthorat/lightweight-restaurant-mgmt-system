@@ -18,13 +18,14 @@ import com.example.lmrs.R;
 import com.example.lmrs.model.vieworders.Order;
 import com.example.lmrs.model.vieworders.OrdersRecyclerAdapter;
 import com.example.lmrs.model.vieworders.ViewOrdersModel;
+import com.example.lmrs.model.vieworders.ViewOrdersProtocol;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class ViewOrdersFragment extends Fragment {
+public class ViewOrdersFragment extends Fragment implements ViewOrdersProtocol {
 
     private RecyclerView ordersRecyclerView;
     private RecyclerView.Adapter ordersRecyclerAdapter;
@@ -48,6 +49,8 @@ public class ViewOrdersFragment extends Fragment {
         Objects.requireNonNull(getActivity()).setTitle("View Orders");
 
         viewOrdersModel = new ViewOrdersModel();
+
+        viewOrdersModel.setDelegate(this);
 
         orders = new ArrayList<>();
 
@@ -89,12 +92,8 @@ public class ViewOrdersFragment extends Fragment {
                 List<Order> orderList = viewOrdersModel.getPendingOrders(err);
                 orders.addAll(orderList);
 
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        ordersRecyclerAdapter.notifyDataSetChanged();
-                    }
-                });
+                updateRecyclerViewOnUIThread();
+
 
             }
         };
@@ -136,4 +135,18 @@ public class ViewOrdersFragment extends Fragment {
         }
     };
 
+    @Override
+    public void onReceiveNewOrder(Order order) {
+        orders.add(order);
+        updateRecyclerViewOnUIThread();
+    }
+
+    private void updateRecyclerViewOnUIThread() {
+        Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ordersRecyclerAdapter.notifyDataSetChanged();
+            }
+        });
+    }
 }
