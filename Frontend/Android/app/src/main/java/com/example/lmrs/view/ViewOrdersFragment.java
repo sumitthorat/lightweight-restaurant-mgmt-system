@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,8 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lmrs.R;
 import com.example.lmrs.model.vieworders.Order;
-import com.example.lmrs.model.vieworders.OrderItem;
 import com.example.lmrs.model.vieworders.OrdersRecyclerAdapter;
+import com.example.lmrs.model.vieworders.ViewOrdersModel;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.ArrayList;
@@ -31,6 +30,7 @@ public class ViewOrdersFragment extends Fragment {
     private RecyclerView.Adapter ordersRecyclerAdapter;
     private RecyclerView.LayoutManager orderRecyclerLayoutMgr;
     List<Order> orders;
+    ViewOrdersModel viewOrdersModel;
 
     private static final String TAG = "ViewOrdersFragment";
 ;
@@ -47,20 +47,21 @@ public class ViewOrdersFragment extends Fragment {
 
         Objects.requireNonNull(getActivity()).setTitle("View Orders");
 
+        viewOrdersModel = new ViewOrdersModel();
+
         orders = new ArrayList<>();
 
-        List<OrderItem> orderItemList = new ArrayList<>();
-        orderItemList.add(new OrderItem("Item 1", 1));
-        orderItemList.add(new OrderItem("Item 2", 2));
-        orderItemList.add(new OrderItem("Item 3", 3));
-        orderItemList.add(new OrderItem("Item 4", 4));
-
-        orders.add(new Order("T1", "O1", orderItemList));
-        orders.add(new Order("T2", "O2", orderItemList));
-        orders.add(new Order("T3", "O3", orderItemList));
-        orders.add(new Order("T4", "O4", orderItemList));
-        orders.add(new Order("T4", "O5", orderItemList));
-
+//        List<OrderItem> orderItemList = new ArrayList<>();
+//        orderItemList.add(new OrderItem("Item 1", 1));
+//        orderItemList.add(new OrderItem("Item 2", 2));
+//        orderItemList.add(new OrderItem("Item 3", 3));
+//        orderItemList.add(new OrderItem("Item 4", 4));
+//
+//        orders.add(new Order("T1", "O1", orderItemList));
+//        orders.add(new Order("T2", "O2", orderItemList));
+//        orders.add(new Order("T3", "O3", orderItemList));
+//        orders.add(new Order("T4", "O4", orderItemList));
+//        orders.add(new Order("T4", "O5", orderItemList));
 
         ordersRecyclerView = view.findViewById(R.id.rv_view_orders);
 
@@ -73,15 +74,33 @@ public class ViewOrdersFragment extends Fragment {
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(itemTouchCallback);
         itemTouchHelper.attachToRecyclerView(ordersRecyclerView);
+
+        getOrders();
+
+
     }
 
-    View.OnClickListener orderOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            TextView tvTableId = v.findViewById(R.id.tv_table_id);
-            Log.i("ViewOrdersFragment", "Want to delete : " + tvTableId.getText());
-        }
-    };
+    private void getOrders() {
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                String[] err = {""};
+                List<Order> orderList = viewOrdersModel.getPendingOrders(err);
+                orders.addAll(orderList);
+
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ordersRecyclerAdapter.notifyDataSetChanged();
+                    }
+                });
+
+            }
+        };
+
+        thread.start();
+    }
 
     ItemTouchHelper.SimpleCallback itemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
         @Override
@@ -116,24 +135,5 @@ public class ViewOrdersFragment extends Fragment {
                     .show();
         }
     };
+
 }
-
-
-//        LinearLayout llViewOrdersRoot = view.findViewById(R.id.ll_view_orders_root);
-//
-//        for (int i = 0; i < 5; ++i) {
-//            View rootView = getLayoutInflater().inflate(R.layout.order_card_view, null);
-//            TextView tvTableId = rootView.findViewById(R.id.tv_table_id);
-//            tvTableId.setText("R1T" + i);
-//            MaterialCardView materialCardView = rootView.findViewById(R.id.cv_order);
-//            LinearLayout llItems = rootView.findViewById(R.id.ll_items);
-//            int items = 5;
-//            for (int j = 0; j < items; ++j) {
-//                TextView item = new TextView(getContext());
-//                item.setText("2x Parantha");
-//                item.setTextSize(18);
-//                llItems.addView(item);
-//            }
-//            materialCardView.setOnClickListener(orderOnClickListener);
-//            llViewOrdersRoot.addView(rootView);
-//        }

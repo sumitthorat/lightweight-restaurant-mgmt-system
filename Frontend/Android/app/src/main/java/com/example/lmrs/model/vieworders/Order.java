@@ -2,23 +2,14 @@ package com.example.lmrs.model.vieworders;
 
 import java.util.List;
 
-public class Order {
-    private String tableId, orderId;
+public class Order implements Comparable<Order> {
+    private String orderId;
     private List<OrderItem> orderItemList;
 
 
-    public Order(String tableId, String orderId, List<OrderItem> orderItemList) {
-        this.tableId = tableId;
+    public Order(String orderId, List<OrderItem> orderItemList) {
         this.orderId = orderId;
         this.orderItemList = orderItemList;
-    }
-
-    public String getTableId() {
-        return tableId;
-    }
-
-    public void setTableId(String tableId) {
-        this.tableId = tableId;
     }
 
     public String getOrderId() {
@@ -35,5 +26,10 @@ public class Order {
 
     public void setOrderItemList(List<OrderItem> orderItemList) {
         this.orderItemList = orderItemList;
+    }
+
+    @Override
+    public int compareTo(Order o) {
+        return this.getOrderId().compareTo(o.getOrderId());
     }
 }
