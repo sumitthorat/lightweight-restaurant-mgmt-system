@@ -45,7 +45,6 @@ class OrdersMaster(db.Model):
     #orders_comp = db.relationship('OrdersComplete', backref = 'orderid')
 
 class OrdersPending(db.Model):
-    __tablename__ = 'orders_pending'
     orderid = db.Column(db.Integer, db.ForeignKey('orders_master.orderid'))
     item_name = db.Column(db.String, primary_key=True)
     quantity = db.Column(db.Integer)
@@ -498,12 +497,7 @@ def all_tables():
 @app.route('/GetPendingOrders', methods=['GET'])
 def get_pending_orders():
     pending_list = OrdersPending.query.all()
-    # output = {}
-    # for order in pendinglist:
-    #     if order.orderid not in output:
-    #         output['orderid'] = [{"item_name" : order.item_name, "item_qty" : order.quantity}]
-    #     else:
-    #         output['orderid'].append({"item_name" : order.item_name, "item_qty" : order.quantity})
+    
     output = []
     for pending_order in pending_list:
         item_data = {"item_name" : pending_order.item_name, "item_qty" : pending_order.quantity}
@@ -551,12 +545,8 @@ def new_order():
 def complete_order():
     args = order_complete.parse_args()
 
-    #multi_rows = OrdersPending.query.filter_by(orderid = args['orderid'])
-
-    #for row in multi_rows :
-    #    fullfill = OrdersComplete(row)
-    #    db.session.add(fullfill)
-    #    db.session.commit()
+    print(args)
+    
     total_bill = 0.0
     while(OrdersPending.query.filter_by(orderid = args['orderid']).first()):
         fullfill = OrdersPending.query.filter_by(orderid = args['orderid']).first()
@@ -573,6 +563,7 @@ def complete_order():
         db.session.commit()
         db.session.delete(fullfill)
         db.session.commit()
+        
     total_bill = float(total_bill)
     result = OrdersMaster.query.filter_by(orderid = args['orderid']).first()
     result.time_end = datetime.now()

@@ -100,5 +100,22 @@ public class ViewOrdersModel {
         return orders;
     }
 
+    public boolean notifyOrderComplete(Integer orderId, String[] err) {
+        OrderCompleteJSONResponse response = null;
+        OrderCompleteJSONRequest request = new OrderCompleteJSONRequest();
+        request.setOrderid(orderId);
+        try {
+            response = apiInterface.notifyOrderComplete(request).execute().body();
+            assert response != null;
+            if (response.getStatus() == -1) {
+                err[0] = response.getMessage();
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Ex: ", e);
+        }
+        assert response != null;
+        return response.getStatus() != -1;
+    }
+
 
 }

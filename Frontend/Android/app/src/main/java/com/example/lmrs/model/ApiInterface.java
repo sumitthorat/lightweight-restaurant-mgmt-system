@@ -8,6 +8,8 @@ import com.example.lmrs.model.login.AttemptLoginJSONRequest;
 import com.example.lmrs.model.login.LoginJSONResponse;
 import com.example.lmrs.model.login.NewUserJSONRequest;
 import com.example.lmrs.model.vieworders.GetPendingOrdersResponseJSON;
+import com.example.lmrs.model.vieworders.OrderCompleteJSONRequest;
+import com.example.lmrs.model.vieworders.OrderCompleteJSONResponse;
 
 import java.util.List;
 
@@ -40,5 +42,8 @@ public interface ApiInterface {
 
     @GET("GetPendingOrders")
     Call<List<GetPendingOrdersResponseJSON>> getPendingOrders();
+
+    @PUT("OrderComplete")
+    Call<OrderCompleteJSONResponse> notifyOrderComplete(@Body OrderCompleteJSONRequest orderCompleteJSONRequest);
 
 }

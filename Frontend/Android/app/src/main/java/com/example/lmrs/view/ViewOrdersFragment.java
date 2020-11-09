@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -32,6 +33,7 @@ public class ViewOrdersFragment extends Fragment implements ViewOrdersProtocol {
     private RecyclerView.LayoutManager orderRecyclerLayoutMgr;
     List<Order> orders;
     ViewOrdersModel viewOrdersModel;
+    ConstraintLayout clViewOrdersRoot;
 
     private static final String TAG = "ViewOrdersFragment";
 ;
@@ -49,8 +51,10 @@ public class ViewOrdersFragment extends Fragment implements ViewOrdersProtocol {
         Objects.requireNonNull(getActivity()).setTitle("View Orders");
 
         viewOrdersModel = new ViewOrdersModel();
-
         viewOrdersModel.setDelegate(this);
+
+        clViewOrdersRoot = view.findViewById(R.id.cl_view_orders_root);
+
 
         orders = new ArrayList<>();
 
@@ -117,11 +121,29 @@ public class ViewOrdersFragment extends Fragment implements ViewOrdersProtocol {
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            // TODO: Send request to server to delete the order
-                            Log.i(TAG, orders.get(position).getOrderId());
+                            if (orders.size() >= position) {
+                                int orderId = Integer.parseInt(orders.get(position).getOrderId());
+                                Thread thread = new Thread() {
+                                    @Override
+                                    public void run() {
+                                        super.run();
+                                        String[] err = {""};
+                                        boolean value = viewOrdersModel.notifyOrderComplete(orderId, err);
 
-                            ordersRecyclerAdapter.notifyItemRemoved(position);
-                            orders.remove(position);
+                                        if (!value) {
+                                            SnackbarUtil.showErrorSnackbar(clViewOrdersRoot, err[0]);
+                                        } else {
+                                            SnackbarUtil.showSuccessSnackbar(clViewOrdersRoot, "Order processed successfully");
+                                        }
+
+                                    }
+                                };
+
+                                thread.start();
+
+                                ordersRecyclerAdapter.notifyItemRemoved(position);
+                                orders.remove(position);
+                            }
                         }
                     })
                     .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -142,11 +164,17 @@ public class ViewOrdersFragment extends Fragment implements ViewOrdersProtocol {
     }
 
     private void updateRecyclerViewOnUIThread() {
-        Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                ordersRecyclerAdapter.notifyDataSetChanged();
-            }
-        });
+
+        if (getActivity() != null) {
+            Log.i(TAG, "Activity: " + getActivity().toString());
+
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    ordersRecyclerAdapter.notifyDataSetChanged();
+                }
+            });
+        }
+
     }
 }
