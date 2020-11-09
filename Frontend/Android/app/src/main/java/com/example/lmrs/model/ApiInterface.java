@@ -7,6 +7,7 @@ import com.example.lmrs.model.editmenu.GetFullMenuJSONResponse;
 import com.example.lmrs.model.login.AttemptLoginJSONRequest;
 import com.example.lmrs.model.login.LoginJSONResponse;
 import com.example.lmrs.model.login.NewUserJSONRequest;
+import com.example.lmrs.model.vieworders.GetPendingOrdersResponseJSON;
 
 import java.util.List;
 
@@ -36,4 +37,7 @@ public interface ApiInterface {
 
     @PUT("AddItemToMenu")
     Call<AddItemJSONResponse> addItemToMenu(@Body AddItemJSONRequest addItemJSONRequest);
+
+    @GET("GetPendingOrders")
+    Call<List<GetPendingOrdersResponseJSON>> getPendingOrders();
 }

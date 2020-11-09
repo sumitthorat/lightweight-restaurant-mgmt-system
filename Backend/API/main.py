@@ -5,9 +5,14 @@ from sqlalchemy import func, desc
 from flask import jsonify
 from datetime import datetime, timedelta
 import json
+import socketio
 
 
 app = Flask(__name__)
+
+sio = socketio.Server(logger=True, async_mode=None)
+app.wsgi_app = socketio.WSGIApp(sio, app.wsgi_app)
+
 api = Api(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///database.db"
 db = SQLAlchemy(app)
@@ -536,6 +541,8 @@ def new_order():
         add_pend = OrdersPending(orderid = order_id, item_name = item['item_name'], quantity = item['item_qty'])
         db.session.add(add_pend)
         db.session.commit()
+
+    sio.emit('new order', {'orderid' : order_id, 'items' : items})
 
     return jsonify({"status":1, "message":"Order added successfully"})
 

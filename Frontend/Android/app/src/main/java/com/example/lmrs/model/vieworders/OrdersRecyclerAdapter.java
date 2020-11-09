@@ -1,5 +1,6 @@
 package com.example.lmrs.model.vieworders;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,10 +42,11 @@ public class OrdersRecyclerAdapter extends RecyclerView.Adapter<OrdersRecyclerAd
         return ovh;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull OrdersRecyclerViewHolder holder, int position) {
         Order currentOrder = orderList.get(position);
-        holder.tvOrderTableId.setText(currentOrder.getTableId());
+        holder.tvOrderTableId.setText("OID: " + currentOrder.getOrderId());
 
         holder.llItems.removeAllViews();
 
