@@ -3,7 +3,7 @@ from flask_restful import Api, Resource, reqparse, abort, fields, marshal_with
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import func, desc
 from flask import jsonify
-from datetime import datetime
+from datetime import datetime, timedelta
 import json
 
 
@@ -114,7 +114,7 @@ user_update_item.add_argument("role", type=str)
 
 order_complete = reqparse.RequestParser()
 order_complete.add_argument("orderid", type=int, required=True)
-order_complete.add_argument("amount", type=float, required=True)
+#order_complete.add_argument("amount", type=float, required=True)
 
 resource_menu_fields = {
     'item_name' : fields.String,
@@ -550,26 +550,60 @@ def complete_order():
     #    fullfill = OrdersComplete(row)
     #    db.session.add(fullfill)
     #    db.session.commit()
-
+    total_bill = 0.0
     while(OrdersPending.query.filter_by(orderid = args['orderid']).first()):
         fullfill = OrdersPending.query.filter_by(orderid = args['orderid']).first()
         #print(type(fullfill.orderid))
         oid = int(fullfill.orderid)
         name = fullfill.item_name
         qty = int(fullfill.quantity)
+
+        fetch_price = MenuTab.query.filter_by(item_name = name).first()
+        total_bill += qty * float(fetch_price.price)
+
         add_comp = OrdersComplete(orderid = oid, item_name = name, quantity = qty)
         db.session.add(add_comp)
         db.session.commit()
         db.session.delete(fullfill)
         db.session.commit()
-
-
+    total_bill = float(total_bill)
     result = OrdersMaster.query.filter_by(orderid = args['orderid']).first()
     result.time_end = datetime.now()
-    result.amount = args['amount']
+    result.amount = total_bill
     result.status = "complete"
     db.session.commit()
     return jsonify({"status":1, "message":"Order completed successfully"})
+
+'''
+#Return Sale of a particular item
+@app.route('/ItemSale', methods=['GET'])
+def item_sale():
+    args = request.get_json()
+    name = args['item_name']
+    prev_days = args['days']
+
+    total_qty = 0
+    #todays_datetime = datetime(datetime.today().year, datetime.today().month, datetime.today().day)
+    if(prev_days != 0):
+        filter_after = datetime.today() - timedelta(days= prev_days)
+    else :
+        filter_after = datetime(datetime.today().year, datetime.today().month, datetime.today().day)
+
+    #todays_orders = OrdersMaster.query.filter(OrdersMaster.time_end >= todays_datetime).all()
+    todays_orders = OrdersMaster.query.filter(OrdersMaster.time_end >= filter_after).all()
+
+    for order in todays_orders:
+        id = order.orderid
+        #print(id , " iddddd")
+        completed = OrdersComplete.query.filter_by(orderid = id).all()
+        for x in completed:
+            if(x.item_name == name):
+                print(x.orderid, " ID")
+                print(x.quantity)
+                total_qty += x.quantity
+        
+    return jsonify({"item_name": name, "quantity_sold" : total_qty})
+'''
 
 
 # Returns all completed orders
