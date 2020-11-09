@@ -2,13 +2,9 @@ package com.example.lmrs.view;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -17,11 +13,14 @@ import android.widget.AutoCompleteTextView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.example.lmrs.R;
 import com.example.lmrs.model.editmenu.EditMenuModel;
 import com.example.lmrs.model.editmenu.MenuItem;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.math.BigDecimal;
@@ -40,6 +39,7 @@ public class EditMenuFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        setHasOptionsMenu(true);
         return inflater.inflate(R.layout.fragment_edit_menu, container, false);
     }
 
@@ -73,6 +73,24 @@ public class EditMenuFragment extends Fragment {
                 openAddItemsDialog(v);
             }
         });
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.edit_menu_options, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull android.view.MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.option_add_table) {
+            // TODO: Handle add table functionality
+        } else if (id == R.id.option_manage_qr) {
+            // TODO: Handle manage QR functionality
+        }
+        return super.onOptionsItemSelected(item);
+        
     }
 
     private void fetchCategories() {

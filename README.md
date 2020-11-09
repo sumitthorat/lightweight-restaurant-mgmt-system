@@ -10,3 +10,4 @@ Lightweight Restaurant Management System
 
 ## References
 Movable Floating Action Button: https://stackoverflow.com/questions/46370836/android-movable-draggable-floating-action-button-fab
+Realtime bidriectional communication: https://socket.io/blog/native-socket-io-and-android/
