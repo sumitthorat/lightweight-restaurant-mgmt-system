@@ -45,7 +45,8 @@ class OrdersMaster(db.Model):
     #orders_comp = db.relationship('OrdersComplete', backref = 'orderid')
 
 class OrdersPending(db.Model):
-    orderid = db.Column(db.Integer, db.ForeignKey('orders_master.orderid'))
+    __tablename__ = 'orders_pending'
+    orderid = db.Column(db.Integer, db.ForeignKey('orders_master.orderid'), primary_key=True)
     item_name = db.Column(db.String, primary_key=True)
     quantity = db.Column(db.Integer)
     
@@ -497,7 +498,12 @@ def all_tables():
 @app.route('/GetPendingOrders', methods=['GET'])
 def get_pending_orders():
     pending_list = OrdersPending.query.all()
-    
+    # output = {}
+    # for order in pendinglist:
+    #     if order.orderid not in output:
+    #         output['orderid'] = [{"item_name" : order.item_name, "item_qty" : order.quantity}]
+    #     else:
+    #         output['orderid'].append({"item_name" : order.item_name, "item_qty" : order.quantity})
     output = []
     for pending_order in pending_list:
         item_data = {"item_name" : pending_order.item_name, "item_qty" : pending_order.quantity}
@@ -545,15 +551,13 @@ def new_order():
 def complete_order():
     args = order_complete.parse_args()
 
-    print(args)
-    
+    multi_rows = OrdersPending.query.filter_by(orderid = args['orderid']).all()
     total_bill = 0.0
-    while(OrdersPending.query.filter_by(orderid = args['orderid']).first()):
-        fullfill = OrdersPending.query.filter_by(orderid = args['orderid']).first()
-        #print(type(fullfill.orderid))
-        oid = int(fullfill.orderid)
-        name = fullfill.item_name
-        qty = int(fullfill.quantity)
+
+    for row in multi_rows :
+        oid = int(row.orderid)
+        name = row.item_name
+        qty = int(row.quantity)
 
         fetch_price = MenuTab.query.filter_by(item_name = name).first()
         total_bill += qty * float(fetch_price.price)
@@ -561,9 +565,12 @@ def complete_order():
         add_comp = OrdersComplete(orderid = oid, item_name = name, quantity = qty)
         db.session.add(add_comp)
         db.session.commit()
-        db.session.delete(fullfill)
-        db.session.commit()
-        
+        #db.session.delete(row)
+        #db.session.commit()
+
+    db.session.query(OrdersPending).filter(OrdersPending.orderid == args['orderid']).delete()
+    db.session.commit()
+
     total_bill = float(total_bill)
     result = OrdersMaster.query.filter_by(orderid = args['orderid']).first()
     result.time_end = datetime.now()
@@ -572,6 +579,32 @@ def complete_order():
     db.session.commit()
     return jsonify({"status":1, "message":"Order completed successfully"})
 
+
+
+    '''
+    total_bill = 0.0
+    while(OrdersPending.query.filter_by(orderid = args['orderid']).first()):
+        fullfill = OrdersPending.query.filter_by(orderid = args['orderid']).first()
+        #print(type(fullfill.orderid))
+        oid = int(fullfill.orderid)
+        name = fullfill.item_name
+        qty = int(fullfill.quantity)
+        fetch_price = MenuTab.query.filter_by(item_name = name).first()
+        total_bill += qty * float(fetch_price.price)
+
+        add_comp = OrdersComplete(orderid = oid, item_name = name, quantity = qty)
+        db.session.add(add_comp)
+        #db.session.commit()
+        db.session.delete(fullfill)
+        db.session.commit()
+    total_bill = float(total_bill)
+    result = OrdersMaster.query.filter_by(orderid = args['orderid']).first()
+    result.time_end = datetime.now()
+    result.amount = total_bill
+    result.status = "complete"
+    db.session.commit()
+    return jsonify({"status":1, "message":"Order completed successfully"})
+    '''
 '''
 #Return Sale of a particular item
 @app.route('/ItemSale', methods=['GET'])
