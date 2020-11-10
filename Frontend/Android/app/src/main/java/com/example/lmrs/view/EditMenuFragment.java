@@ -99,6 +99,9 @@ public class EditMenuFragment extends Fragment {
             @Override
             public void run() {
                 CATEGORIES = editMenuModel.getAllCategories(err);
+                if (CATEGORIES == null) {
+                    SnackbarUtil.showErrorSnackbar(getView(), "Could not fetch categories");
+                }
             }
         };
         thread.start();

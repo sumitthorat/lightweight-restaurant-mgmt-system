@@ -23,16 +23,14 @@ public class EditMenuModel {
         GetCategoriesJSONResponse getCategoriesJSONResponse = null;
         try {
             getCategoriesJSONResponse = apiInterface.getAllCategories().execute().body();
-            assert getCategoriesJSONResponse != null;
-            if (getCategoriesJSONResponse.getStatus() == -1) {
+            if (getCategoriesJSONResponse != null && getCategoriesJSONResponse.getStatus() == -1) {
                 err[0] = getCategoriesJSONResponse.getMessage();
             }
         } catch (Exception e) {
             Log.e(TAG, "Ex: ", e);
         }
 
-        assert getCategoriesJSONResponse != null;
-        return getCategoriesJSONResponse.getCategories();
+        return getCategoriesJSONResponse != null ? getCategoriesJSONResponse.getCategories() : null;
     }
 
     public boolean addNewItem(String itemName, String category, Integer price, String[] err) {
@@ -63,7 +61,6 @@ public class EditMenuModel {
 
         try {
             getFullMenuJSONResponse = apiInterface.getFullMenu().execute().body();
-            assert getFullMenuJSONResponse != null;
             List<Category> categoryItems = getFullMenuJSONResponse.getCategories();
             for (Category category: categoryItems) {
                 res.put(category.getCategory(), category.getMenuItems());

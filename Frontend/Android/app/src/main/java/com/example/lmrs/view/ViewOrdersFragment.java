@@ -58,17 +58,6 @@ public class ViewOrdersFragment extends Fragment implements ViewOrdersProtocol {
 
         orders = new ArrayList<>();
 
-//        List<OrderItem> orderItemList = new ArrayList<>();
-//        orderItemList.add(new OrderItem("Item 1", 1));
-//        orderItemList.add(new OrderItem("Item 2", 2));
-//        orderItemList.add(new OrderItem("Item 3", 3));
-//        orderItemList.add(new OrderItem("Item 4", 4));
-//
-//        orders.add(new Order("T1", "O1", orderItemList));
-//        orders.add(new Order("T2", "O2", orderItemList));
-//        orders.add(new Order("T3", "O3", orderItemList));
-//        orders.add(new Order("T4", "O4", orderItemList));
-//        orders.add(new Order("T4", "O5", orderItemList));
 
         ordersRecyclerView = view.findViewById(R.id.rv_view_orders);
 
@@ -94,6 +83,12 @@ public class ViewOrdersFragment extends Fragment implements ViewOrdersProtocol {
                 super.run();
                 String[] err = {""};
                 List<Order> orderList = viewOrdersModel.getPendingOrders(err);
+
+                if (orderList == null) {
+                    SnackbarUtil.showErrorSnackbar(getView(), "Could not fetch orders");
+                    return;
+                }
+
                 orders.addAll(orderList);
 
                 updateRecyclerViewOnUIThread();
