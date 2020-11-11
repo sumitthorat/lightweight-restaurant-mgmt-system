@@ -57,7 +57,7 @@
                     TextView tvTableId = tablesLayoutView.findViewById(R.id.tv_manage_qr_table_id);
                     ImageView ivQrCode = tablesLayoutView.findViewById(R.id.iv_qr_code);
 
-                    tvTableId.setText("Table Id: " + t.getTableId());
+                    tvTableId.setText("Table Number: " + t.getTableId());
                     ivQrCode.setImageBitmap(t.getQrCode());
 
                     llRootManageTables.addView(tablesLayoutView);

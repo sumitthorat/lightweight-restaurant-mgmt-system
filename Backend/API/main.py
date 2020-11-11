@@ -6,6 +6,10 @@ from flask import jsonify
 from datetime import datetime, timedelta
 import json
 import socketio
+import base64
+import png
+import os
+import pyqrcode
 
 
 app = Flask(__name__)
@@ -31,8 +35,7 @@ class TableTab(db.Model):
     __tablename__ = 'tabletab'
     tableid = db.Column(db.Integer, primary_key=True)
     qrcode_str = db.Column(db.String, unique=True, nullable=False)
-    # orders_pen = db.relationship('OrdersPending', backref='ordpen')
-    #orders_comp = db.relationship('OrdersComplete', backref='ordcomp')
+    
 
 class OrdersMaster(db.Model):
     orderid = db.Column(db.Integer, primary_key=True)
@@ -86,7 +89,7 @@ menu_update_item.add_argument("price", type=int)
 menu_update_item.add_argument("category", type=str)
 
 table_put_item = reqparse.RequestParser()
-table_put_item.add_argument("qrcode_str", type=str, required=True, help="Table encoded string not ")
+table_put_item.add_argument("tableid", type=int, required=True, help="Table id required")
 
 ordpen_put_item = reqparse.RequestParser()
 ordpen_put_item.add_argument("content", type=str, required=True, help="No food items entered")
@@ -411,7 +414,9 @@ def add_new_table():
 
     image = open('qr_table.png', 'rb')
     image_read = image.read()
-    image_encoded = base64.encodebytes(image_read)
+    image_encoded = base64.standard_b64encode(image_read)
+    print(image_encoded)
+    print()
     image_encoded = str(image_encoded)
     image.close()
     os.remove("qr_table.png")
@@ -424,7 +429,7 @@ def add_new_table():
     table_new = TableTab(tableid=args['tableid'], qrcode_str=image_encoded)
     db.session.add(table_new)
     db.session.commit()
-    return jsonify({"status":1, "message":"table added"})
+    return jsonify({"status":1, "message":"Table added successfully"})
 
 # Add new user
 @app.route('/AddNewUser', methods=['PUT'])

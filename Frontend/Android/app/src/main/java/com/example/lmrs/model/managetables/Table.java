@@ -14,6 +14,8 @@ public class Table {
     }
 
     Bitmap decodeString(String code) {
+        int len = code.length();
+        code = code.substring(2, len - 1);
         byte[] decodedString = Base64.decode(code, Base64.DEFAULT);
         return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
     }

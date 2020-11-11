@@ -22,6 +22,7 @@ public class ManageTablesModel {
         List<Table> ret = null;
         try {
             responses = apiInterface.getTablesInfo().execute().body();
+            Log.i(TAG, "Response size: " + responses.size());
 
             if (responses != null) {
                 ret = new ArrayList<>();

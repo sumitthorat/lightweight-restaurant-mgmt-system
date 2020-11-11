@@ -81,18 +81,19 @@ public class ViewOrdersModel {
             ordersList = apiInterface.getPendingOrders().execute().body();
             orders = new ArrayList<>();
 
-            for (GetPendingOrdersResponseJSON orderJSON: ordersList) {
-                List<OrderItem> orderItems = new ArrayList<>();
-                for (ItemJSON itemJSON: orderJSON.getItemJSONS()) {
-                    OrderItem orderItem = new OrderItem(itemJSON.getItemName(), itemJSON.getItemQty());
-                    orderItems.add(orderItem);
+            if (ordersList != null) {
+                for (GetPendingOrdersResponseJSON orderJSON: ordersList) {
+                    List<OrderItem> orderItems = new ArrayList<>();
+                    for (ItemJSON itemJSON: orderJSON.getItemJSONS()) {
+                        OrderItem orderItem = new OrderItem(itemJSON.getItemName(), itemJSON.getItemQty());
+                        orderItems.add(orderItem);
+                    }
+                    Order o = new Order(String.valueOf(orderJSON.getOrderid()), orderItems);
+                    orders.add(o);
                 }
-                Order o = new Order(String.valueOf(orderJSON.getOrderid()), orderItems);
-                orders.add(o);
+
+                Collections.sort(orders);
             }
-
-            Collections.sort(orders);
-
         } catch (Exception e) {
             Log.e(TAG, "Ex: ", e);
         }

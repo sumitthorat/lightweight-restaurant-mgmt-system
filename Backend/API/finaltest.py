@@ -2,6 +2,10 @@ import requests
 
 BASE = "http://127.0.0.1:5000/"
 
+response = requests.put(BASE + "AddTable", {"tableid":3})
+print(response.json())
+
+
 #FIRST I WILL ADD TWO CATEGORIES STARTER AND MAIN COURSE
 '''
 input()
@@ -138,11 +142,13 @@ input()
 
 '''
 
-input()
+# input()
 
-response = requests.put(BASE + "NewOrder", {"tableid": 1, "items":[{"item_name": "Dal Tadka", "quantity": 3}, {"item_name": "Masala Papad", "quantity": 2}]})
+# response = requests.put(BASE + "NewOrder", {"tableid": 1, "items":[{"item_name": "Dal Tadka", "quantity": 3}, {"item_name": "Masala Papad", "quantity": 2}]})
 
-print(response)
+# print(response)
+
+
 
 
 
