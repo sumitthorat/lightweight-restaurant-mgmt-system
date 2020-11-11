@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="8dp"
     android:orientation="vertical">
 
     <TextView
@@ -12,7 +11,7 @@
         android:id="@+id/tv_manage_qr_table_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Table Number: 1"
+        android:text="Table ID: 1"
         android:textColor="@color/design_default_color_primary"
         android:textSize="20sp"/>
 

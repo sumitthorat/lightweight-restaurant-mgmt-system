@@ -37,4 +37,23 @@ public class ManageTablesModel {
 
         return ret;
     }
+
+    public boolean addTable(Integer tableId, String[] err) {
+        AddTableJSONRequest request = new AddTableJSONRequest();
+        request.setTableid(tableId);
+        AddTableJSONResponse response = null;
+        try {
+            response = apiInterface.addTable(request).execute().body();
+
+            if (response != null) {
+                if (response.getStatus() == -1) {
+                    err[0] = response.getMessage();
+                }
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Ex: ", e);
+        }
+
+        return response != null && response.getStatus() != -1;
+    }
 }

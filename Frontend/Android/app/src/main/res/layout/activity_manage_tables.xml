@@ -13,22 +13,16 @@
 
         <LinearLayout
             android:id="@+id/ll_root_manage_tables"
-            android:padding="16dp"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-<!--            <include layout="@layout/table_info_layout"/>-->
 
-<!--            <include layout="@layout/table_info_layout"/>-->
+            <include layout="@layout/table_info_layout" />v
 
-<!--            <include layout="@layout/table_info_layout"/>-->
+            <include layout="@layout/table_info_layout" />
 
-<!--            <include layout="@layout/table_info_layout"/>-->
-
-<!--            <include layout="@layout/table_info_layout"/>-->
-
-<!--            <include layout="@layout/table_info_layout"/>-->
+            <include layout="@layout/table_info_layout" />
 
         </LinearLayout>
     </ScrollView>

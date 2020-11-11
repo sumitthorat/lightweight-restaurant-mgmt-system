@@ -7,6 +7,8 @@ import com.example.lmrs.model.editmenu.GetFullMenuJSONResponse;
 import com.example.lmrs.model.login.AttemptLoginJSONRequest;
 import com.example.lmrs.model.login.LoginJSONResponse;
 import com.example.lmrs.model.login.NewUserJSONRequest;
+import com.example.lmrs.model.managetables.AddTableJSONRequest;
+import com.example.lmrs.model.managetables.AddTableJSONResponse;
 import com.example.lmrs.model.managetables.GetTablesJSONResponse;
 import com.example.lmrs.model.vieworders.GetPendingOrdersResponseJSON;
 import com.example.lmrs.model.vieworders.OrderCompleteJSONRequest;
@@ -49,5 +51,8 @@ public interface ApiInterface {
 
     @GET("GetTables")
     Call<List<GetTablesJSONResponse>> getTablesInfo();
+    
+    @PUT("AddTable")
+    Call<AddTableJSONResponse> addTable(@Body AddTableJSONRequest addTableJSONRequest);
 
 }
