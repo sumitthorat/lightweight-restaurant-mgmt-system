@@ -30,7 +30,7 @@ class MenuTab(db.Model):
 class TableTab(db.Model):
     __tablename__ = 'tabletab'
     tableid = db.Column(db.Integer, primary_key=True)
-    encodstr = db.Column(db.String(100), unique=True, nullable=False)
+    qrcode_str = db.Column(db.String, unique=True, nullable=False)
     # orders_pen = db.relationship('OrdersPending', backref='ordpen')
     #orders_comp = db.relationship('OrdersComplete', backref='ordcomp')
 
@@ -86,7 +86,7 @@ menu_update_item.add_argument("price", type=int)
 menu_update_item.add_argument("category", type=str)
 
 table_put_item = reqparse.RequestParser()
-table_put_item.add_argument("encodstr", type=str, required=True, help="Table encoded string not ")
+table_put_item.add_argument("qrcode_str", type=str, required=True, help="Table encoded string not ")
 
 ordpen_put_item = reqparse.RequestParser()
 ordpen_put_item.add_argument("content", type=str, required=True, help="No food items entered")
@@ -382,6 +382,50 @@ resource_order_fields = {
 # api.add_resource(OrdComp, "/ordcomp/<int:order_id>")
 # api.add_resource(UserFunctions, "/user")
 
+# Get all tables info
+@app.route('/GetTables', methods=['GET'])
+def get_tables():
+    all_tables = TableTab.query.all()
+
+    output = []
+    for table in all_tables:
+        item = {}
+        item['tableid'] = table.tableid
+        item['qrcode_str'] = table.qrcode_str
+        output.append(item)
+
+    return jsonify(output)
+
+# Add new table
+@app.route('/AddTable', methods=['PUT'])
+def add_new_table():
+    args = table_put_item.parse_args()
+    result = TableTab.query.filter_by(tableid=args['tableid']).first()
+    if result:
+        response = jsonify({"status": -1, "message": "Table id already exists"})
+        return response
+
+    s = "localhost:5000/order/?table=" + str(args['tableid'])
+    qr = pyqrcode.create(s)
+    qr.png("qr_table.png", scale = 6)
+
+    image = open('qr_table.png', 'rb')
+    image_read = image.read()
+    image_encoded = base64.encodebytes(image_read)
+    image_encoded = str(image_encoded)
+    image.close()
+    os.remove("qr_table.png")
+    '''
+    image_decode = base64.decodestring(image_encoded)
+    image_result = open('qr_table.png', 'wb')
+    image_result.write(image_decode)
+    image_result.close()
+    '''
+    table_new = TableTab(tableid=args['tableid'], qrcode_str=image_encoded)
+    db.session.add(table_new)
+    db.session.commit()
+    return jsonify({"status":1, "message":"table added"})
+
 # Add new user
 @app.route('/AddNewUser', methods=['PUT'])
 def add_new_user():
@@ -579,32 +623,6 @@ def complete_order():
     db.session.commit()
     return jsonify({"status":1, "message":"Order completed successfully"})
 
-
-
-    '''
-    total_bill = 0.0
-    while(OrdersPending.query.filter_by(orderid = args['orderid']).first()):
-        fullfill = OrdersPending.query.filter_by(orderid = args['orderid']).first()
-        #print(type(fullfill.orderid))
-        oid = int(fullfill.orderid)
-        name = fullfill.item_name
-        qty = int(fullfill.quantity)
-        fetch_price = MenuTab.query.filter_by(item_name = name).first()
-        total_bill += qty * float(fetch_price.price)
-
-        add_comp = OrdersComplete(orderid = oid, item_name = name, quantity = qty)
-        db.session.add(add_comp)
-        #db.session.commit()
-        db.session.delete(fullfill)
-        db.session.commit()
-    total_bill = float(total_bill)
-    result = OrdersMaster.query.filter_by(orderid = args['orderid']).first()
-    result.time_end = datetime.now()
-    result.amount = total_bill
-    result.status = "complete"
-    db.session.commit()
-    return jsonify({"status":1, "message":"Order completed successfully"})
-    '''
 '''
 #Return Sale of a particular item
 @app.route('/ItemSale', methods=['GET'])

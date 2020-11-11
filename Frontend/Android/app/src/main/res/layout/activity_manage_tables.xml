@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.ManageTablesActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:id="@+id/ll_root_manage_tables"
+            android:padding="16dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+<!--            <include layout="@layout/table_info_layout"/>-->
+
+<!--            <include layout="@layout/table_info_layout"/>-->
+
+<!--            <include layout="@layout/table_info_layout"/>-->
+
+<!--            <include layout="@layout/table_info_layout"/>-->
+
+<!--            <include layout="@layout/table_info_layout"/>-->
+
+<!--            <include layout="@layout/table_info_layout"/>-->
+
+        </LinearLayout>
+    </ScrollView>
+
+
+
+</LinearLayout>

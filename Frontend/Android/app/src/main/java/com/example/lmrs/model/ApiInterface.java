@@ -7,6 +7,7 @@ import com.example.lmrs.model.editmenu.GetFullMenuJSONResponse;
 import com.example.lmrs.model.login.AttemptLoginJSONRequest;
 import com.example.lmrs.model.login.LoginJSONResponse;
 import com.example.lmrs.model.login.NewUserJSONRequest;
+import com.example.lmrs.model.managetables.GetTablesJSONResponse;
 import com.example.lmrs.model.vieworders.GetPendingOrdersResponseJSON;
 import com.example.lmrs.model.vieworders.OrderCompleteJSONRequest;
 import com.example.lmrs.model.vieworders.OrderCompleteJSONResponse;
@@ -45,5 +46,8 @@ public interface ApiInterface {
 
     @PUT("OrderComplete")
     Call<OrderCompleteJSONResponse> notifyOrderComplete(@Body OrderCompleteJSONRequest orderCompleteJSONRequest);
+
+    @GET("GetTables")
+    Call<List<GetTablesJSONResponse>> getTablesInfo();
 
 }

@@ -1,6 +1,7 @@
 package com.example.lmrs.view;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -84,10 +85,9 @@ public class EditMenuFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(@NonNull android.view.MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.option_add_table) {
-            // TODO: Handle add table functionality
-        } else if (id == R.id.option_manage_qr) {
-            // TODO: Handle manage QR functionality
+        if (id == R.id.option_manage_tables) {
+            Intent intent = new Intent(getActivity(), ManageTablesActivity.class);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
         
