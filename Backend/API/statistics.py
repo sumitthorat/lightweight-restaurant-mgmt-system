@@ -52,7 +52,9 @@ def most_sold():
             else :
                 items[item_name] = item_qty
         
-    #max_sold = max(items, key=items.get) 
+    if not items :
+	return jsonify({"status" : -1, "message" : "No Item Sold For Today"})
+
     mx = max(items.values())
     max_sold = [k for k, v in items.items() if v == mx]
 
