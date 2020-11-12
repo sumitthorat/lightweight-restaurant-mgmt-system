@@ -39,11 +39,30 @@ public class ManageTablesModel {
     }
 
     public boolean addTable(Integer tableId, String[] err) {
-        AddTableJSONRequest request = new AddTableJSONRequest();
+        AddDeleteTableJSONRequest request = new AddDeleteTableJSONRequest();
         request.setTableid(tableId);
-        AddTableJSONResponse response = null;
+        AddDeleteTableJSONResponse response = null;
         try {
             response = apiInterface.addTable(request).execute().body();
+
+            if (response != null) {
+                if (response.getStatus() == -1) {
+                    err[0] = response.getMessage();
+                }
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Ex: ", e);
+        }
+
+        return response != null && response.getStatus() != -1;
+    }
+
+    public boolean deleteTable(Integer tableId, String[] err) {
+        AddDeleteTableJSONRequest request = new AddDeleteTableJSONRequest();
+        request.setTableid(tableId);
+        AddDeleteTableJSONResponse response = null;
+        try {
+            response = apiInterface.deleteTable(request).execute().body();
 
             if (response != null) {
                 if (response.getStatus() == -1) {

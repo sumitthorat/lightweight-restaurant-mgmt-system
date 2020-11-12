@@ -125,31 +125,34 @@ public class EditMenuFragment extends Fragment {
     }
 
     private void updateMenuUI() {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                llMenuRoot.removeAllViews();
+        if (getActivity() != null) {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    llMenuRoot.removeAllViews();
 
-                for (Map.Entry<String, List<MenuItem>> e: menu.entrySet()) {
-                    View categoryLayout = getLayoutInflater().inflate(R.layout.category_layout, null);
-                    TextView tvCategoryName = categoryLayout.findViewById(R.id.tv_category_name);
-                    LinearLayout llMenuItems = categoryLayout.findViewById(R.id.ll_category_items);
-                    tvCategoryName.setText(e.getKey());
+                    for (Map.Entry<String, List<MenuItem>> e: menu.entrySet()) {
+                        View categoryLayout = getLayoutInflater().inflate(R.layout.category_layout, null);
+                        TextView tvCategoryName = categoryLayout.findViewById(R.id.tv_category_name);
+                        LinearLayout llMenuItems = categoryLayout.findViewById(R.id.ll_category_items);
+                        tvCategoryName.setText(e.getKey());
 
 
-                    for (MenuItem item: e.getValue()) {
-                        View menuItemLayout = getLayoutInflater().inflate(R.layout.menu_item_layout, null);
-                        TextView itemName = menuItemLayout.findViewById(R.id.tv_item_name);
-                        TextView itemPrice = menuItemLayout.findViewById(R.id.tv_item_price);
-                        itemPrice.setText(getIndianRupee(String.valueOf(item.getPrice())));
-                        itemName.setText(item.getItemName());
-                        llMenuItems.addView(menuItemLayout);
+                        for (MenuItem item: e.getValue()) {
+                            View menuItemLayout = getLayoutInflater().inflate(R.layout.menu_item_layout, null);
+                            TextView itemName = menuItemLayout.findViewById(R.id.tv_item_name);
+                            TextView itemPrice = menuItemLayout.findViewById(R.id.tv_item_price);
+                            itemPrice.setText(getIndianRupee(String.valueOf(item.getPrice())));
+                            itemName.setText(item.getItemName());
+                            llMenuItems.addView(menuItemLayout);
+                        }
+
+                        llMenuRoot.addView(categoryLayout);
                     }
-
-                    llMenuRoot.addView(categoryLayout);
                 }
-            }
-        });
+            });
+        }
+
 
     }
 

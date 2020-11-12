@@ -3,7 +3,7 @@ package com.example.lmrs.model.managetables;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class AddTableJSONRequest {
+public class AddDeleteTableJSONRequest {
 
     @SerializedName("tableid")
     @Expose

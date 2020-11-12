@@ -385,6 +385,23 @@ resource_order_fields = {
 # api.add_resource(OrdComp, "/ordcomp/<int:order_id>")
 # api.add_resource(UserFunctions, "/user")
 
+# Delete A Table
+@app.route('/DeleteTable', methods=['PUT'])
+def delete_table():
+	args = request.get_json()
+	table_id = args['tableid']
+	
+	pending_list = OrdersMaster.query.filter_by(status = "pending").all()
+	
+	for order in pending_list:
+		if(order.tableid == table_id):
+			return jsonify({"status" : -1, "message" : "Cannot delete with currently pending order(s)"})
+	
+	delete_tab = TableTab.query.filter_by(tableid = table_id).first()
+	db.session.delete(delete_tab)
+	db.session.commit()
+	return jsonify({"status" : 1, "message" : "Table Deleted Successfully"})
+
 # Get all tables info
 @app.route('/GetTables', methods=['GET'])
 def get_tables():

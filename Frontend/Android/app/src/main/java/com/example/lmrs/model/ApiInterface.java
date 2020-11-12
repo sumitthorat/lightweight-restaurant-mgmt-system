@@ -7,8 +7,8 @@ import com.example.lmrs.model.editmenu.GetFullMenuJSONResponse;
 import com.example.lmrs.model.login.AttemptLoginJSONRequest;
 import com.example.lmrs.model.login.LoginJSONResponse;
 import com.example.lmrs.model.login.NewUserJSONRequest;
-import com.example.lmrs.model.managetables.AddTableJSONRequest;
-import com.example.lmrs.model.managetables.AddTableJSONResponse;
+import com.example.lmrs.model.managetables.AddDeleteTableJSONRequest;
+import com.example.lmrs.model.managetables.AddDeleteTableJSONResponse;
 import com.example.lmrs.model.managetables.GetTablesJSONResponse;
 import com.example.lmrs.model.vieworders.GetPendingOrdersResponseJSON;
 import com.example.lmrs.model.vieworders.OrderCompleteJSONRequest;
@@ -53,6 +53,9 @@ public interface ApiInterface {
     Call<List<GetTablesJSONResponse>> getTablesInfo();
     
     @PUT("AddTable")
-    Call<AddTableJSONResponse> addTable(@Body AddTableJSONRequest addTableJSONRequest);
+    Call<AddDeleteTableJSONResponse> addTable(@Body AddDeleteTableJSONRequest addDeleteTableJSONRequest);
+
+    @PUT("DeleteTable")
+    Call<AddDeleteTableJSONResponse> deleteTable(@Body AddDeleteTableJSONRequest addDeleteTableJSONRequest);
 
 }
