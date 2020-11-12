@@ -1,3 +1,20 @@
+#Delete A Table
+@app.route('/DeleteTable', methods=['GET'])
+def delete_table():
+	args = request.get_json()
+	table_id = args['tableid']
+	
+	pending_list = OrdersMaster.query.filter_by(status = "pending").all()
+	
+	for order in pending_list:
+		if(order.tableid == table_id):
+			return jsonify({"status" : -1, "message" : "Cannot Delete A Table With A Currently Pending Order"})
+	
+	delete_tab = TableTab.query.filter_by(tableid = table_id).first()
+	db.session.delete(delete_tab)
+	db.session.commit()
+	return jsonify({"status" : 1, "message" : "Table Deleted Successfully"})
+	
 #Return Sale of a particular item
 @app.route('/ItemSale', methods=['GET'])
 def item_sale():
