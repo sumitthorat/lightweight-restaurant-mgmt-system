@@ -10,6 +10,9 @@ import com.example.lmrs.model.login.NewUserJSONRequest;
 import com.example.lmrs.model.managetables.AddDeleteTableJSONRequest;
 import com.example.lmrs.model.managetables.AddDeleteTableJSONResponse;
 import com.example.lmrs.model.managetables.GetTablesJSONResponse;
+import com.example.lmrs.model.statistics.GetCurrentDaySaleJSONResponse;
+import com.example.lmrs.model.statistics.GetItemSaleJSONRequest;
+import com.example.lmrs.model.statistics.GetItemSaleJSONResponse;
 import com.example.lmrs.model.vieworders.GetPendingOrdersResponseJSON;
 import com.example.lmrs.model.vieworders.OrderCompleteJSONRequest;
 import com.example.lmrs.model.vieworders.OrderCompleteJSONResponse;
@@ -57,5 +60,11 @@ public interface ApiInterface {
 
     @PUT("DeleteTable")
     Call<AddDeleteTableJSONResponse> deleteTable(@Body AddDeleteTableJSONRequest addDeleteTableJSONRequest);
+
+    @PUT("ItemSale")
+    Call<GetItemSaleJSONResponse> getItemSale(@Body GetItemSaleJSONRequest getItemSaleJSONRequest);
+
+    @GET("CurrentDaySale")
+    Call<GetCurrentDaySaleJSONResponse> getCurrentDaySale();
 
 }
