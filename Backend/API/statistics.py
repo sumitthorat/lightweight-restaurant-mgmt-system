@@ -87,6 +87,8 @@ def average_time():
     count = 0
     filter_after = datetime(datetime.today().year, datetime.today().month, datetime.today().day)
     todays_orders = OrdersMaster.query.filter(OrdersMaster.time_end >= filter_after).all()
+    if not todays_orders :
+	return jsonify({"status" : -1, "message" : "No Item Sold For Today"})
     for order in todays_orders:
         count += 1
         start = order.time_start
