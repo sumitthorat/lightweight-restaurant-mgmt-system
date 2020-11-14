@@ -2,12 +2,13 @@
 <html lang="en">
 {% block head %}
 <head>
-    {% load static %}
+{% load static %}
 <meta charset="UTF-8">
 <title>Menu</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-</script>
-    <script type="text/javascript">
+<script type="text/javascript">
+    var tableid = GetURLParameter('table');
+
     function GetURLParameter(parameter)
     {
         var url_s = window.location.search.substring(1);
@@ -18,86 +19,7 @@
         }
     }
 
-    var tableid = GetURLParameter('table');
-</script>
-</head>
-
-{% endblock %}
-
-<body>
-<h1>Menu</h1>
-<table border="1" width="600">
-<tr>
-    <th>Name</th>
-    <th>Price</th>
-    <th>Select</th>
-    <th>Quantity</th>
-</tr>
-    {% for x in menu.categories %}
-        <tr>
-            <th colspan="4">{{ x.category }}</th>
-        </tr>
-            {% for y in x.menu_items %}
-                <tr>
-                    <td>{{ y.item_name }}</td>
-                    <td>{{ y.price }}</td>
-                    <td><input type="checkbox" id="{{ y.item_name }}_select" name="{{ y.item_name }}_select"></td>
-                    <td><input type="number" id="{{ y.item_name }}_quantity" name="{{ y.item_name }}_quantity" value="0"></td>
-                </tr>
-
-            {% endfor %}
-    {% endfor %}
-        </table>
-
-
-<p id="demo"></p>
-<script type="text/javascript">
-    var s = "\{ \"tableid\" : ";
-    s=s.concat(tableid);
-    s=s.concat(", \"items\" : \[  ");
-    {% for x in menu.categories %}
-        {% for y in x.menu_items %}
-            if(document.getElementById("{{ y.item_name }}_select").checked)
-            {
-                s=s.concat("\{ \"item_name\" : ");
-                s=s.concat("\"{{ y.item_name }}\", ");
-                s=s.concat("\"item_qty\" : ");
-                var q=document.getElementById("{{ y.item_name }}_quantity").value;
-                s=s.concat(q);
-                s=s.concat(" \}, ");
-            }
-        {% endfor %}
-    {% endfor %}
-    s=s.slice(0,-2);
-    s=s.concat(" \] \}");
-    document.getElementById("demo").innerHTML = s;
-</script>
-<!--<script type="text/javascript">'
-var st = "\{ \"tableid\": 6 \}";
-$(document).ready(function() {
-        $('#submit').click( function () {
-            console.log("click");
-            var sendData = $('#data').val();
-
-            $.ajax({
-                url: 'localhost:5000/AddTable',
-                type: 'POST',
-                dataType: 'json',
-                data: {
-                    data : sendData
-                },
-                success: function () {
-                }
-            })
-            ;
-        });
-    });
-</script>-->
-
-<input id="submit" type="button"  value="Submit" onclick="send_fun()">
-<script type="text/javascript">
-
-function get_data() {
+    function get_data() {
     var s = "\{ \"tableid\" : ";
     s=s.concat(tableid);
     s=s.concat(", \"items\" : \[  ");
@@ -117,9 +39,7 @@ function get_data() {
     s=s.slice(0,-2);
     s=s.concat(" \] \}");
     return s
-
 }
-
 
 function send_fun() {
     var xhr = new XMLHttpRequest()
@@ -136,21 +56,57 @@ function send_fun() {
         console.log(data)
     }
 }
+
+var s = "\{ \"tableid\" : ";
+    s=s.concat(tableid);
+    s=s.concat(", \"items\" : \[  ");
+    {% for x in menu.categories %}
+        {% for y in x.menu_items %}
+            if(document.getElementById("{{ y.item_name }}_select").checked)
+            {
+                s=s.concat("\{ \"item_name\" : ");
+                s=s.concat("\"{{ y.item_name }}\", ");
+                s=s.concat("\"item_qty\" : ");
+                var q=document.getElementById("{{ y.item_name }}_quantity").value;
+                s=s.concat(q);
+                s=s.concat(" \}, ");
+            }
+    {% endfor %}
+    {% endfor %}
+    s=s.slice(0,-2);
+    s=s.concat(" \] \}");
+
 </script>
 
-<!--{{ no_of_items }}
-<script type="text/javascript">
-document.write(tableid)
-</script>-->
+</head>
+{% endblock %}
 
-<!--<form action="" method="post">
-    {% csrf_token %}-->
-    <!--{{ form.as_table }}-->
-    <!--<label for="your_name">Your name: </label>
-    <input id="your_name" type="number" name="your_name">
-    <input type="submit" value="Place Order">
-</form>
--->
+<body>
+<h1>Menu</h1>
+<table border="1" width="600">
+    <tr>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Select</th>
+        <th>Quantity</th>
+    </tr>
+    {% for x in menu.categories %}
+        <tr>
+            <th colspan="4">{{ x.category }}</th>
+        </tr>
+        {% for y in x.menu_items %}
+            <tr>
+                <td>{{ y.item_name }}</td>
+                <td>{{ y.price }}</td>
+                <td><input type="checkbox" id="{{ y.item_name }}_select" name="{{ y.item_name }}_select"></td>
+                <td><input type="number" id="{{ y.item_name }}_quantity" name="{{ y.item_name }}_quantity" value="0"></td>
+            </tr>
+
+        {% endfor %}
+    {% endfor %}
+</table>
+<input id="submit" type="button"  value="Submit" onclick="send_fun()">
 </body>
+
 </html>
 
