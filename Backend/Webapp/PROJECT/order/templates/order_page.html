@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+{% block head %}
+<head>
+    {% load static %}
+<meta charset="UTF-8">
+<title>Menu</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+</script>
+    <script type="text/javascript">
+    function GetURLParameter(parameter)
+    {
+        var url_s = window.location.search.substring(1);
+        var url_p = url_s.split('=');
+        if (url_p[0] == parameter)
+        {
+            return url_p[1];
+        }
+    }
+
+    var tableid = GetURLParameter('table');
+</script>
+</head>
+
+{% endblock %}
+
+<body>
+
+<h1>Menu</h1>
+<table border="1" width="600">
+<tr>
+    <td>Category</td>
+    <td>Name</td>
+    <td>Price</td>
+    <td>Select</td>
+    <td>Quantity</td>
+</tr>
+
+{% for x in menu %}
+<tr>
+    <td>{{ x.category }}</td>
+    <td>{{ x.item_name }}</td>
+    <td>{{ x.price }}</td>
+    <td><input type="checkbox" id="{{ x.item_name }}_select" name="{{ x.item_name }}_select"></td>
+    <td><input type="number" id="{{ x.item_name }}_quantity" name="{{x.item_name }}_quantity" value="0"></td>
+</tr>
+{% endfor %}
+</table>
+
+
+<p id="demo"></p>
+<!--{{ menu.0.item_name }}-->
+<script type="text/javascript">
+    var s = "\{ \"tableid\" : ";
+    s=s.concat(tableid);
+    s=s.concat(", \"items\" : \[ ");
+    {% for x in menu %}
+        if(document.getElementById("{{ x.item_name }}_select").checked)
+        {
+            s=s.concat("\{ \"item_name\" : ");
+            s=s.concat("\"{{ x.item_name }}\", ");
+            s=s.concat("\"item_qty\" : ");
+            var q=document.getElementById("{{ x.item_name }}_quantity").value;
+            s=s.concat(q);
+            s=s.concat(" \}, ");
+        }
+    {% endfor %}
+    s=s.slice(0,-2);
+    s=s.concat(" \] \}");
+    var y = document.getElementById("{{ menu.0.item_name }}_select").checked;
+    document.getElementById("demo").innerHTML = s;
+</script>
+<!--<script type="text/javascript">'
+var st = "\{ \"tableid\": 6 \}";
+$(document).ready(function() {
+        $('#submit').click( function () {
+            console.log("click");
+            var sendData = $('#data').val();
+
+            $.ajax({
+                url: 'localhost:5000/AddTable',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    data : sendData
+                },
+                success: function () {
+                }
+            })
+            ;
+        });
+    });
+</script>-->
+
+<input id="submit" type="button"  value="Submit" onclick="send_fun()">
+<!--<script type="text/javascript">
+function send_fun()
+{
+var xhr = new XMLHttpRequest();
+xhr.open("POST", "localhost:5000/AddTable", true);
+xhr.setRequestHeader('Content-Type', 'application/json');
+xhr.send(JSON.stringify({
+    tableid: 6
+}));
+xhr.onload = function() {
+    var data = JSON.parse(this.responseText);
+    console.log(data);
+}
+</script>-->
+
+<!--{{ no_of_items }}
+<script type="text/javascript">
+document.write(tableid)
+</script>-->
+
+<!--<form action="" method="post">
+    {% csrf_token %}-->
+    <!--{{ form.as_table }}-->
+    <!--<label for="your_name">Your name: </label>
+    <input id="your_name" type="number" name="your_name">
+    <input type="submit" value="Place Order">
+</form>
+-->
+</body>
+</html>
+
