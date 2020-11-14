@@ -25,49 +25,51 @@
 {% endblock %}
 
 <body>
-
 <h1>Menu</h1>
 <table border="1" width="600">
 <tr>
-    <td>Category</td>
-    <td>Name</td>
-    <td>Price</td>
-    <td>Select</td>
-    <td>Quantity</td>
+    <th>Name</th>
+    <th>Price</th>
+    <th>Select</th>
+    <th>Quantity</th>
 </tr>
+    {% for x in menu.categories %}
+        <tr>
+            <th colspan="4">{{ x.category }}</th>
+        </tr>
+            {% for y in x.menu_items %}
+                <tr>
+                    <td>{{ y.item_name }}</td>
+                    <td>{{ y.price }}</td>
+                    <td><input type="checkbox" id="{{ y.item_name }}_select" name="{{ y.item_name }}_select"></td>
+                    <td><input type="number" id="{{ y.item_name }}_quantity" name="{{ y.item_name }}_quantity" value="0"></td>
+                </tr>
 
-{% for x in menu %}
-<tr>
-    <td>{{ x.category }}</td>
-    <td>{{ x.item_name }}</td>
-    <td>{{ x.price }}</td>
-    <td><input type="checkbox" id="{{ x.item_name }}_select" name="{{ x.item_name }}_select"></td>
-    <td><input type="number" id="{{ x.item_name }}_quantity" name="{{x.item_name }}_quantity" value="0"></td>
-</tr>
-{% endfor %}
-</table>
+            {% endfor %}
+    {% endfor %}
+        </table>
 
 
 <p id="demo"></p>
-<!--{{ menu.0.item_name }}-->
 <script type="text/javascript">
     var s = "\{ \"tableid\" : ";
     s=s.concat(tableid);
-    s=s.concat(", \"items\" : \[ ");
-    {% for x in menu %}
-        if(document.getElementById("{{ x.item_name }}_select").checked)
-        {
-            s=s.concat("\{ \"item_name\" : ");
-            s=s.concat("\"{{ x.item_name }}\", ");
-            s=s.concat("\"item_qty\" : ");
-            var q=document.getElementById("{{ x.item_name }}_quantity").value;
-            s=s.concat(q);
-            s=s.concat(" \}, ");
-        }
+    s=s.concat(", \"items\" : \[  ");
+    {% for x in menu.categories %}
+        {% for y in x.menu_items %}
+            if(document.getElementById("{{ y.item_name }}_select").checked)
+            {
+                s=s.concat("\{ \"item_name\" : ");
+                s=s.concat("\"{{ y.item_name }}\", ");
+                s=s.concat("\"item_qty\" : ");
+                var q=document.getElementById("{{ y.item_name }}_quantity").value;
+                s=s.concat(q);
+                s=s.concat(" \}, ");
+            }
+        {% endfor %}
     {% endfor %}
     s=s.slice(0,-2);
     s=s.concat(" \] \}");
-    var y = document.getElementById("{{ menu.0.item_name }}_select").checked;
     document.getElementById("demo").innerHTML = s;
 </script>
 <!--<script type="text/javascript">'

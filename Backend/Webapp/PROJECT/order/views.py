@@ -15,12 +15,11 @@ def sortFunction(value):
 
 def menu_show(request):
     response = requests.get('http://localhost:5000/GetFullMenu')
-    menu_a = response.json()
-    menu = sorted(menu_a, key=sortFunction)
+    menu = response.json()
+    #menu = sorted(menu_a, key=sortFunction)
     no_of_items = len(menu)
-    # print(no_of_items)
+    #print(menu)
     #print(type(menu))
-    # print(menu)
     # menu_pretty = json.dumps(menu, sort_keys=True, indent=4)
     # print(type(menu_pretty))
     context = {
