@@ -15,4 +15,6 @@
 local.properties
 .idea
 __pycache__
+*.db
+
 

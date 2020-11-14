@@ -95,20 +95,48 @@ $(document).ready(function() {
 </script>-->
 
 <input id="submit" type="button"  value="Submit" onclick="send_fun()">
-<!--<script type="text/javascript">
-function send_fun()
-{
-var xhr = new XMLHttpRequest();
-xhr.open("POST", "localhost:5000/AddTable", true);
-xhr.setRequestHeader('Content-Type', 'application/json');
-xhr.send(JSON.stringify({
-    tableid: 6
-}));
-xhr.onload = function() {
-    var data = JSON.parse(this.responseText);
-    console.log(data);
+<script type="text/javascript">
+
+function get_data() {
+    var s = "\{ \"tableid\" : ";
+    s=s.concat(tableid);
+    s=s.concat(", \"items\" : \[  ");
+    {% for x in menu.categories %}
+        {% for y in x.menu_items %}
+            if(document.getElementById("{{ y.item_name }}_select").checked)
+            {
+                s=s.concat("\{ \"item_name\" : ");
+                s=s.concat("\"{{ y.item_name }}\", ");
+                s=s.concat("\"item_qty\" : ");
+                var q=document.getElementById("{{ y.item_name }}_quantity").value;
+                s=s.concat(q);
+                s=s.concat(" \}, ");
+            }
+        {% endfor %}
+    {% endfor %}
+    s=s.slice(0,-2);
+    s=s.concat(" \] \}");
+    return s
+
 }
-</script>-->
+
+
+function send_fun() {
+    var xhr = new XMLHttpRequest()
+    xhr.open("PUT", "http://localhost:5000/NewOrder", true)
+    xhr.setRequestHeader('Content-Type', 'application/json')
+    xhr.setRequestHeader('Access-Control-Allow-Origin', "*")
+    req = get_data()
+    console.log(req)
+    //request_data = JSON.stringify(req)
+    //console.log(req)
+    xhr.send(req)
+    xhr.onload = function() {
+        var data = JSON.parse(this.responseText);
+        console.log(data)
+    }
+}
+</script>
 
 <!--{{ no_of_items }}
 <script type="text/javascript">
