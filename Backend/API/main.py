@@ -60,7 +60,7 @@ class OrdersPending(db.Model):
     quantity = db.Column(db.Integer)
     
 class OrdersComplete(db.Model):
-    orderid = db.Column(db.Integer, db.ForeignKey('orders_master.orderid'))
+    orderid = db.Column(db.Integer, db.ForeignKey('orders_master.orderid'), primary_key=True)
     item_name = db.Column(db.String, primary_key=True)
     quantity = db.Column(db.Integer)
     
@@ -444,7 +444,13 @@ def most_sold():
     for order in todays_orders:
         today_orderid_list.append(order.orderid)
 
+    print(today_orderid_list)
+
     sold_items = OrdersComplete.query.all()
+
+    for item in sold_items:
+        print(item.orderid)
+
     output = []
     items = {}
 
