@@ -19,13 +19,14 @@ public class OrdersRecyclerAdapter extends RecyclerView.Adapter<OrdersRecyclerAd
 
     public static class OrdersRecyclerViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView tvOrderTableId;
+        public TextView tvOrderId, tvTableId;
         public LinearLayout llItems;
 
         public OrdersRecyclerViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            tvOrderTableId = itemView.findViewById(R.id.tv_table_id);
+            tvOrderId = itemView.findViewById(R.id.tv_order_id);
+            tvTableId = itemView.findViewById(R.id.tv_order_table_id);
             llItems = itemView.findViewById(R.id.ll_items);
         }
     }
@@ -46,12 +47,13 @@ public class OrdersRecyclerAdapter extends RecyclerView.Adapter<OrdersRecyclerAd
     @Override
     public void onBindViewHolder(@NonNull OrdersRecyclerViewHolder holder, int position) {
         Order currentOrder = orderList.get(position);
-        holder.tvOrderTableId.setText("OID: " + currentOrder.getOrderId());
+        holder.tvOrderId.setText("OID: " + currentOrder.getOrderId());
+        holder.tvTableId.setText("Table " + currentOrder.getTableId());
 
         holder.llItems.removeAllViews();
 
         for (OrderItem o: currentOrder.getOrderItemList()) {
-            View v = LayoutInflater.from(holder.tvOrderTableId.getContext()).inflate(R.layout.order_item_layout, null);
+            View v = LayoutInflater.from(holder.tvOrderId.getContext()).inflate(R.layout.order_item_layout, null);
             TextView tvItemName = v.findViewById(R.id.tv_order_item_name);
             TextView tvItemQty = v.findViewById(R.id.tv_order_item_qty);
 

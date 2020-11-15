@@ -5,8 +5,6 @@ import android.util.Log;
 import com.example.lmrs.model.ApiInterface;
 import com.example.lmrs.model.ApiUtils;
 
-import java.util.List;
-
 public class StatisticsModel {
 
     ApiInterface apiInterface;
@@ -46,16 +44,16 @@ public class StatisticsModel {
     }
 
     public String getMostSoldItem(String[] err) {
-        List<GetMostSoldItemJSONResponse> response = null;
+        GetMostSoldItemJSONResponse response = null;
         try {
             response = apiInterface.getMostSoldItem().execute().body();
         } catch (Exception e) {
             Log.e(TAG, "Ex: ", e);
         }
-        return response == null ? "" : response.get(0).getItemName();
+        return response == null ? "" : response.getItemName();
     }
 
-    public double getAvgOrderTime() {
+    public String getAvgOrderTime() {
         GetOrderAvgTimeJSONResponse response = null;
         try {
             response = apiInterface.getAvgOrderTime().execute().body();
@@ -63,7 +61,7 @@ public class StatisticsModel {
             Log.e(TAG, "Ex: ", e);
         }
 
-        return response == null ? -1 : response.getAvgTime();
+        return response == null ? "" : response.getAvgTime();
     }
 
 }

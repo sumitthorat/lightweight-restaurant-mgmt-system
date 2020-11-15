@@ -99,7 +99,7 @@ public class StatisticsFragment extends Fragment {
                     SnackbarUtil.showErrorSnackbar(getView(), err[0]);
                 }
 
-                double avgOrderTime = statisticsModel.getAvgOrderTime();
+                String avgOrderTime = statisticsModel.getAvgOrderTime();
 
                 updateUI(todaysSale, mostSoldItem, avgOrderTime);
             }
@@ -108,14 +108,14 @@ public class StatisticsFragment extends Fragment {
         thread.start();
     }
 
-    void updateUI(int todaysSale, String mostSoldItem, double avgOrderTime) {
+    void updateUI(int todaysSale, String mostSoldItem, String avgOrderTime) {
         if (getActivity() != null) {
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     etTodaysSale.getEditText().setText(String.valueOf(todaysSale));
                     etMostSoldItem.getEditText().setText((mostSoldItem == null ? "" : mostSoldItem));
-                    etAvgOrderTime.getEditText().setText(String.valueOf(avgOrderTime));
+                    etAvgOrderTime.getEditText().setText(avgOrderTime);
                 }
             });
         }

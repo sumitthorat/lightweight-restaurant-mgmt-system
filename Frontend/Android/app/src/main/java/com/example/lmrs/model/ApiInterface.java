@@ -73,6 +73,6 @@ public interface ApiInterface {
     Call<GetOrderAvgTimeJSONResponse> getAvgOrderTime();
 
     @GET("MostSoldItem")
-    Call<List<GetMostSoldItemJSONResponse>> getMostSoldItem();
+    Call<GetMostSoldItemJSONResponse> getMostSoldItem();
 
 }

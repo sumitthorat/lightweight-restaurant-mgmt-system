@@ -1,17 +1,14 @@
 package com.example.lmrs.view;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.lmrs.R;
 import com.example.lmrs.model.login.LoginModel;
@@ -64,6 +61,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
                 if (!validateLoginInfo(username, password)) {
+                    // TODO: Uncomment error snackbar
                     startMainactivity();
 //                    SnackbarUtil.showErrorSnackbar(clRoot, "Please enter valid username and password");
                     return;

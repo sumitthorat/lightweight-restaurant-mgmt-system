@@ -58,7 +58,7 @@ public class ViewOrdersModel {
                     OrderItem orderItem = new OrderItem(itemName, itemQty);
                     orderItems.add(orderItem);
                 }
-                Order o = new Order(String.valueOf((int) jsonObject.get("orderid")), orderItems);
+                Order o = new Order(String.valueOf((int) jsonObject.get("orderid")), orderItems, String.valueOf((int) jsonObject.get("tableid")));
 
                 delegate.onReceiveNewOrder(o);
 
@@ -88,7 +88,7 @@ public class ViewOrdersModel {
                         OrderItem orderItem = new OrderItem(itemJSON.getItemName(), itemJSON.getItemQty());
                         orderItems.add(orderItem);
                     }
-                    Order o = new Order(String.valueOf(orderJSON.getOrderid()), orderItems);
+                    Order o = new Order(String.valueOf(orderJSON.getOrderid()), orderItems, String.valueOf(orderJSON.getTableid()));
                     orders.add(o);
                 }
 

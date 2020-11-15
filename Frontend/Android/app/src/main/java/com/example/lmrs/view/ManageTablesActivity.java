@@ -40,8 +40,12 @@
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_tables);
 
+        setTitle("Manage Tables");
+
         manageTablesModel = new ManageTablesModel();
         llRootManageTables = findViewById(R.id.ll_root_manage_tables);
+
+
 
         fetchTablesInfo();
 

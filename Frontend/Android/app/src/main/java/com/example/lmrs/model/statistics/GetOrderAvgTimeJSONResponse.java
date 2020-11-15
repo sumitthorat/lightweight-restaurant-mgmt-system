@@ -7,14 +7,25 @@ public class GetOrderAvgTimeJSONResponse {
 
     @SerializedName("avg_time")
     @Expose
-    private Double avgTime;
+    private String avgTime;
+    @SerializedName("orders_completed")
+    @Expose
+    private Integer ordersCompleted;
 
-    public Double getAvgTime() {
+    public String getAvgTime() {
         return avgTime;
     }
 
-    public void setAvgTime(Double avgTime) {
+    public void setAvgTime(String avgTime) {
         this.avgTime = avgTime;
+    }
+
+    public Integer getOrdersCompleted() {
+        return ordersCompleted;
+    }
+
+    public void setOrdersCompleted(Integer ordersCompleted) {
+        this.ordersCompleted = ordersCompleted;
     }
 
 }

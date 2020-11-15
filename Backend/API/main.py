@@ -10,9 +10,6 @@ import base64
 import png
 import os
 import pyqrcode
-# from datetime import timedelta
-# from flask import make_response, request, current_app
-# from functools import update_wrapper
 from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
@@ -29,7 +26,6 @@ db = SQLAlchemy(app)
 
 class MenuTab(db.Model):
     __tablename__ = 'menutab'
-    #id = db.Column(db.Integer, primary_key=True)
     item_name = db.Column(db.String(100), primary_key=True)
     price = db.Column(db.Integer, nullable=False)
     category = db.Column(db.String, db.ForeignKey('categories.category'))
@@ -50,8 +46,7 @@ class OrdersMaster(db.Model):
     tableid = db.Column(db.Integer, nullable=False)
     time_start = db.Column(db.DateTime,nullable=False)
     time_end = db.Column(db.DateTime)
-    # orders_pen = db.relationship('OrdersPending', backref = 'orderid')
-    #orders_comp = db.relationship('OrdersComplete', backref = 'orderid')
+
 
 class OrdersPending(db.Model):
     __tablename__ = 'orders_pending'
@@ -77,10 +72,6 @@ class Categories(db.Model):
 
 
 #db.create_all()
-
-#trialadd = OrdersMaster(orderid = 222, status = "pending", time_start = datetime.now())
-#db.session.add(trialadd)
-#db.session.commit()
 
 
 # Define parser objects and field types for all tables in database
@@ -369,7 +360,7 @@ def new_order():
         db.session.add(add_pend)
         db.session.commit()
 
-    sio.emit('new order', {'orderid' : order_id, 'items' : items})
+    sio.emit('new order', {'orderid' : order_id, 'items' : items, 'tableid' : tableid})
 
     return jsonify({"status":1, "message":"Order added successfully"})
 
@@ -409,20 +400,18 @@ def complete_order():
 
 
 # Return Sale of a particular item
-@app.route('/ItemSale', methods=['GET'])
+@app.route('/ItemSale', methods=['PUT'])
 def item_sale():
     args = request.get_json()
     name = args['item_name']
     prev_days = args['days']
 
     total_qty = 0
-    #todays_datetime = datetime(datetime.today().year, datetime.today().month, datetime.today().day)
     if(prev_days != 0):
         filter_after = datetime.today() - timedelta(days= prev_days)
     else :
         filter_after = datetime(datetime.today().year, datetime.today().month, datetime.today().day)
 
-    #todays_orders = OrdersMaster.query.filter(OrdersMaster.time_end >= todays_datetime).all()
     todays_orders = OrdersMaster.query.filter(OrdersMaster.time_end >= filter_after).all()
     
     if not todays_orders :
@@ -430,7 +419,6 @@ def item_sale():
 
     for order in todays_orders:
         id = order.orderid
-        #print(id , " iddddd")
         completed = OrdersComplete.query.filter_by(orderid = id).all()
         for x in completed:
             if(x.item_name == name):
@@ -449,7 +437,6 @@ def most_sold():
         today_orderid_list.append(order.orderid)
 
     sold_items = OrdersComplete.query.all()
-    #output = []
     items = {}
 
     for sold in sold_items:
@@ -468,15 +455,8 @@ def most_sold():
     mx = max(items.values())
     max_sold = [k for k, v in items.items() if v == mx]
     max_sold.sort()
-    '''
-    for x in max_sold :
-        temp = {}
-        temp['item_name'] = x
-        temp['quantity'] = items[x]
-        output.append(temp)
-    '''
+    
     return jsonify({"item_name" : max_sold[0], "quantity_sold" : items[max_sold[0]] })
-    #return jsonify(output)       
 
 
 # Total Sale For the Day
@@ -493,14 +473,14 @@ def total_sale():
     return jsonify({"current_day_sale" : day_sale})
 
 # Average Order Completion Time
-@app.route('/AverageOrderCompletionTime', methods=['GET'])
+@app.route('/AvgOrderTime', methods=['GET'])
 def average_time():
     total_time = 0.0
     count = 0
     filter_after = datetime(datetime.today().year, datetime.today().month, datetime.today().day)
     todays_orders = OrdersMaster.query.filter(OrdersMaster.time_end >= filter_after).all()
     if not todays_orders :
-	    return jsonify({"Orders_Completed" : 0, "Average_Time (Minutes)" : 0.00})
+	    return jsonify({"orders_completed" : 0, "avg_time" : 0.00})
     for order in todays_orders:
         if(order.status == "complete"):
             count += 1
@@ -509,10 +489,10 @@ def average_time():
             delta = (end - start).total_seconds()
             total_time += delta
     if(count == 0) :
-	    return jsonify({"Orders_Completed" : 0, "Average_Time (Minutes)" : 0.00})
+	    return jsonify({"orders_completed" : 0, "avg_time" : 0.00})
     avg = total_time / ( 60 * count)
     avg = "{:.2f}".format(avg)
-    return jsonify({"Orders_Completed" : count, "Average_Time (Minutes)" : avg})
+    return jsonify({"orders_completed" : count, "avg_time" : avg})
 
 
 
@@ -536,7 +516,7 @@ def all_completed():
 
 if __name__ == "__main__":
     app.run(debug=True)
-'''
+''' 
 CREATE TABLE "orders_master" (
 	"orderid"	INTEGER NOT NULL AUTOINCREMENT,
 	"status"	VARCHAR NOT NULL,
