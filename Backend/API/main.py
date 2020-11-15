@@ -5,7 +5,7 @@ from sqlalchemy import func, desc
 from flask import jsonify
 from datetime import datetime, timedelta
 import json
-#import socketio
+import socketio
 import base64
 import png
 import os
@@ -20,8 +20,8 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 CORS(app, resources={r"/NewOrder": {"origins": "http://localhost:8000"}})
 
 
-#sio = socketio.Server(logger=True, async_mode=None)
-#app.wsgi_app = socketio.WSGIApp(sio, app.wsgi_app)
+sio = socketio.Server(logger=True, async_mode=None)
+app.wsgi_app = socketio.WSGIApp(sio, app.wsgi_app)
 
 api = Api(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///database.db"
@@ -366,7 +366,7 @@ def new_order():
         db.session.add(add_pend)
         db.session.commit()
 
-    #sio.emit('new order', {'orderid' : order_id, 'items' : items})
+    sio.emit('new order', {'orderid' : order_id, 'items' : items})
 
     return jsonify({"status":1, "message":"Order added successfully"})
 
@@ -485,7 +485,7 @@ def total_sale():
     return jsonify({"current_day_sale" : day_sale})
 
 # Average Order Completion Time
-@app.route('/AverageOrderCompletionTime', methods=['GET'])
+@app.route('/AvgOrderTime', methods=['GET'])
 def average_time():
     total_time = 0.0
     count = 0
@@ -498,7 +498,7 @@ def average_time():
         delta = (end - start).total_seconds()
         total_time += delta
     avg = total_time / ( 60 * count)
-    return jsonify({"Average_Time (Minutes)" : avg})
+    return jsonify({"avg_time" : avg})
 
 
 '''

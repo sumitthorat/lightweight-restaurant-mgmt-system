@@ -13,6 +13,8 @@ import com.example.lmrs.model.managetables.GetTablesJSONResponse;
 import com.example.lmrs.model.statistics.GetCurrentDaySaleJSONResponse;
 import com.example.lmrs.model.statistics.GetItemSaleJSONRequest;
 import com.example.lmrs.model.statistics.GetItemSaleJSONResponse;
+import com.example.lmrs.model.statistics.GetMostSoldItemJSONResponse;
+import com.example.lmrs.model.statistics.GetOrderAvgTimeJSONResponse;
 import com.example.lmrs.model.vieworders.GetPendingOrdersResponseJSON;
 import com.example.lmrs.model.vieworders.OrderCompleteJSONRequest;
 import com.example.lmrs.model.vieworders.OrderCompleteJSONResponse;
@@ -66,5 +68,11 @@ public interface ApiInterface {
 
     @GET("CurrentDaySale")
     Call<GetCurrentDaySaleJSONResponse> getCurrentDaySale();
+
+    @GET("AvgOrderTime")
+    Call<GetOrderAvgTimeJSONResponse> getAvgOrderTime();
+
+    @GET("MostSoldItem")
+    Call<List<GetMostSoldItemJSONResponse>> getMostSoldItem();
 
 }
