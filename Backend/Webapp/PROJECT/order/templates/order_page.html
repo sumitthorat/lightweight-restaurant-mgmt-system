@@ -4,8 +4,12 @@
 <head>
 {% load static %}
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--<LINK href="style.css" rel="stylesheet" type="text/css">-->
 <title>Menu</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script type="text/javascript">
     var tableid = GetURLParameter('table');
 
@@ -20,92 +24,127 @@
     }
 
     function get_data() {
-    var s = "\{ \"tableid\" : ";
-    s=s.concat(tableid);
-    s=s.concat(", \"items\" : \[  ");
-    {% for x in menu.categories %}
-        {% for y in x.menu_items %}
-            if(document.getElementById("{{ y.item_name }}_select").checked)
-            {
-                s=s.concat("\{ \"item_name\" : ");
-                s=s.concat("\"{{ y.item_name }}\", ");
-                s=s.concat("\"item_qty\" : ");
-                var q=document.getElementById("{{ y.item_name }}_quantity").value;
-                s=s.concat(q);
-                s=s.concat(" \}, ");
-            }
+        var s = "\{ \"tableid\" : ";
+        s=s.concat(tableid);
+        s=s.concat(", \"items\" : \[  ");
+        {% for x in menu.categories %}
+            {% for y in x.menu_items %}
+                if(document.getElementById("{{ y.item_name }}_select").checked && document.getElementById("{{ y.item_name }}_quantity").value>0)
+                {
+                    s=s.concat("\{ \"item_name\" : ");
+                    s=s.concat("\"{{ y.item_name }}\", ");
+                    s=s.concat("\"item_qty\" : ");
+                    var q=document.getElementById("{{ y.item_name }}_quantity").value;
+                    s=s.concat(q);
+                    s=s.concat(" \}, ");
+                }
+            {% endfor %}
         {% endfor %}
-    {% endfor %}
-    s=s.slice(0,-2);
-    s=s.concat(" \] \}");
-    return s
-}
-
-function send_fun() {
-    var xhr = new XMLHttpRequest()
-    xhr.open("PUT", "http://localhost:5000/NewOrder", true)
-    xhr.setRequestHeader('Content-Type', 'application/json')
-    xhr.setRequestHeader('Access-Control-Allow-Origin', "*")
-    req = get_data()
-    console.log(req)
-    //request_data = JSON.stringify(req)
-    //console.log(req)
-    xhr.send(req)
-    xhr.onload = function() {
-        var data = JSON.parse(this.responseText);
-        console.log(data)
+        s=s.slice(0,-2);
+        s=s.concat(" \] \}");
+        return s
     }
-}
 
-var s = "\{ \"tableid\" : ";
-    s=s.concat(tableid);
-    s=s.concat(", \"items\" : \[  ");
-    {% for x in menu.categories %}
-        {% for y in x.menu_items %}
-            if(document.getElementById("{{ y.item_name }}_select").checked)
-            {
-                s=s.concat("\{ \"item_name\" : ");
-                s=s.concat("\"{{ y.item_name }}\", ");
-                s=s.concat("\"item_qty\" : ");
-                var q=document.getElementById("{{ y.item_name }}_quantity").value;
-                s=s.concat(q);
-                s=s.concat(" \}, ");
-            }
-    {% endfor %}
-    {% endfor %}
-    s=s.slice(0,-2);
-    s=s.concat(" \] \}");
+    function get_alert_message() {
+        var s = "Order Placed!\n";
+        {% for x in menu.categories %}
+            {% for y in x.menu_items %}
+                if(document.getElementById("{{ y.item_name }}_select").checked && document.getElementById("{{ y.item_name }}_quantity").value>0)
+                {
+                    s=s.concat("{{ y.item_name }} X ");
+                    var q=document.getElementById("{{ y.item_name }}_quantity").value;
+                    s=s.concat(q);
+                    s=s.concat("\n");
+                }
+            {% endfor %}
+        {% endfor %}
+        return s
+    }
 
+    function check() {
+        var s="";
+        {% for x in menu.categories %}
+            {% for y in x.menu_items %}
+                if(document.getElementById("{{ y.item_name }}_select").checked && document.getElementById("{{ y.item_name }}_quantity").value<=0)
+                {
+                    s=s.concat("Please check the quantity of {{ y.item_name }}!");
+                    alert(s);
+                    return 0;
+                }
+                if(!(document.getElementById("{{ y.item_name }}_select").checked) && document.getElementById("{{ y.item_name }}_quantity").value!=0)
+                {
+                    s=s.concat("Please select the item : {{ y.item_name }}!");
+                    alert(s);
+                    return 0;
+                }
+            {% endfor %}
+        {% endfor %}
+        return 1;
+    }
+
+    function send_fun() {
+        a = check();
+        if(a!=1)
+        {
+            return;
+        }
+        var xhr = new XMLHttpRequest()
+        xhr.open("PUT", "http://localhost:5000/NewOrder", true)
+        xhr.setRequestHeader('Content-Type', 'application/json')
+        xhr.setRequestHeader('Access-Control-Allow-Origin', "*")
+        req = get_data()
+        show_alert = get_alert_message()
+        console.log(req)
+        //request_data = JSON.stringify(req)
+        //console.log(req)
+        xhr.send(req)
+        xhr.onload = function() {
+            var data = JSON.parse(this.responseText);
+            console.log(data)
+        }
+        alert(show_alert);
+        window.location.reload();
+    }
 </script>
 
 </head>
 {% endblock %}
 
 <body>
-<h1>Menu</h1>
-<table border="1" width="600">
-    <tr>
-        <th>Name</th>
-        <th>Price</th>
-        <th>Select</th>
-        <th>Quantity</th>
-    </tr>
-    {% for x in menu.categories %}
-        <tr>
-            <th colspan="4">{{ x.category }}</th>
-        </tr>
-        {% for y in x.menu_items %}
+<h1 style="text-align:center">Menu</h1>
+<div class="container">
+    <div class="table-responsive">
+    <table class="table">
+        <thead>
             <tr>
-                <td>{{ y.item_name }}</td>
-                <td>{{ y.price }}</td>
-                <td><input type="checkbox" id="{{ y.item_name }}_select" name="{{ y.item_name }}_select"></td>
-                <td><input type="number" id="{{ y.item_name }}_quantity" name="{{ y.item_name }}_quantity" value="0"></td>
+                <th style="font-size: 15px;">Name</th>
+                <th style="text-align:center; font-size: 15px;">Price</th>
+                <th style="text-align:center; font-size: 15px;">Select</th>
+                <th style="text-align:center; font-size: 15px;">Quantity</th>
             </tr>
+        </thead>
+        <tbody>
+            {% for x in menu.categories %}
+                <tr>
+                    <th colspan="4" style="text-align:center; font-size: 17px;">{{ x.category }}</th>
+                </tr>
+                {% for y in x.menu_items %}
+                    <tr>
+                        <td><b>{{ y.item_name }}</b></td>
+                        <td style="text-align:center">{{ y.price }}</td>
+                        <td style="text-align:center"><input type="checkbox" id="{{ y.item_name }}_select" name="{{ y.item_name }}_select" autocomplete="off"></td>
+                        <td style="text-align:center"><input type="number" id="{{ y.item_name }}_quantity" name="{{ y.item_name }}_quantity" value="0" size="3" autocomplete="off"></td>
+                    </tr>
 
-        {% endfor %}
-    {% endfor %}
-</table>
-<input id="submit" type="button"  value="Submit" onclick="send_fun()">
+                {% endfor %}
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+</div>
+<div style="text-align:center; margin-bottom: 1cm" >
+<input id="submit" type="button" class="btn btn-primary" value="Place Order" onclick="send_fun()">
+</div>
 </body>
 
 </html>
