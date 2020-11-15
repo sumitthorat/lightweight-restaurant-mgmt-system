@@ -327,10 +327,13 @@ def all_tables():
 @app.route('/GetPendingOrders', methods=['GET'])
 def get_pending_orders():
     pending_list = OrdersPending.query.all()
+
     output = []
     for pending_order in pending_list:
+        get_tableid = OrdersMaster.query.filter_by(orderid = pending_order.orderid).first()
+        table = get_tableid.tableid
         item_data = {"item_name" : pending_order.item_name, "item_qty" : pending_order.quantity}
-
+        
         found = False
         for order in output:
             if order['orderid'] == pending_order.orderid:
@@ -338,8 +341,8 @@ def get_pending_orders():
                 found = True
 
         if not found:
-            output.append({"orderid" : pending_order.orderid, "items" : [item_data]})
-
+            output.append({"orderid" : pending_order.orderid, "items" : [item_data], "tableid" : table})
+    
     return jsonify(output)
 
 # Create New Order
@@ -404,8 +407,9 @@ def complete_order():
     return jsonify({"status":1, "message":"Order completed successfully"})
 
 
+
 # Return Sale of a particular item
-@app.route('/ItemSale', methods=['PUT'])
+@app.route('/ItemSale', methods=['GET'])
 def item_sale():
     args = request.get_json()
     name = args['item_name']
@@ -420,6 +424,9 @@ def item_sale():
 
     #todays_orders = OrdersMaster.query.filter(OrdersMaster.time_end >= todays_datetime).all()
     todays_orders = OrdersMaster.query.filter(OrdersMaster.time_end >= filter_after).all()
+    
+    if not todays_orders :
+	    return jsonify({"item_name" : name, "quantity_sold" : total_qty})
 
     for order in todays_orders:
         id = order.orderid
@@ -427,12 +434,9 @@ def item_sale():
         completed = OrdersComplete.query.filter_by(orderid = id).all()
         for x in completed:
             if(x.item_name == name):
-                #print(x.orderid, " ID")
-                #print(x.quantity)
                 total_qty += x.quantity
         
     return jsonify({"item_name": name, "quantity_sold" : total_qty})
-
 
 # Return Most Sold Items For the Day
 @app.route('/MostSoldItem', methods=['GET'])
@@ -444,14 +448,8 @@ def most_sold():
     for order in todays_orders:
         today_orderid_list.append(order.orderid)
 
-    print(today_orderid_list)
-
     sold_items = OrdersComplete.query.all()
-
-    for item in sold_items:
-        print(item.orderid)
-
-    output = []
+    #output = []
     items = {}
 
     for sold in sold_items:
@@ -464,17 +462,21 @@ def most_sold():
             else :
                 items[item_name] = item_qty
         
-    #max_sold = max(items, key=items.get) 
+    if not items :
+	    return jsonify({"item_name" : "No Item sold today", "quantity_sold" : 0})
+
     mx = max(items.values())
     max_sold = [k for k, v in items.items() if v == mx]
-
+    max_sold.sort()
+    '''
     for x in max_sold :
         temp = {}
         temp['item_name'] = x
         temp['quantity'] = items[x]
         output.append(temp)
-    #return jsonify({"item_name" : max_sold, "quantity_sold" : items[max_sold] })
-    return jsonify(output)        
+    '''
+    return jsonify({"item_name" : max_sold[0], "quantity_sold" : items[max_sold[0]] })
+    #return jsonify(output)       
 
 
 # Total Sale For the Day
@@ -491,52 +493,28 @@ def total_sale():
     return jsonify({"current_day_sale" : day_sale})
 
 # Average Order Completion Time
-@app.route('/AvgOrderTime', methods=['GET'])
+@app.route('/AverageOrderCompletionTime', methods=['GET'])
 def average_time():
     total_time = 0.0
     count = 0
     filter_after = datetime(datetime.today().year, datetime.today().month, datetime.today().day)
     todays_orders = OrdersMaster.query.filter(OrdersMaster.time_end >= filter_after).all()
+    if not todays_orders :
+	    return jsonify({"Orders_Completed" : 0, "Average_Time (Minutes)" : 0.00})
     for order in todays_orders:
-        count += 1
-        start = order.time_start
-        end = order.time_end
-        delta = (end - start).total_seconds()
-        total_time += delta
+        if(order.status == "complete"):
+            count += 1
+            start = order.time_start
+            end = order.time_end
+            delta = (end - start).total_seconds()
+            total_time += delta
+    if(count == 0) :
+	    return jsonify({"Orders_Completed" : 0, "Average_Time (Minutes)" : 0.00})
     avg = total_time / ( 60 * count)
-    return jsonify({"avg_time" : avg})
+    avg = "{:.2f}".format(avg)
+    return jsonify({"Orders_Completed" : count, "Average_Time (Minutes)" : avg})
 
 
-'''
-#Return Sale of a particular item
-@app.route('/ItemSale', methods=['GET'])
-def item_sale():
-    args = request.get_json()
-    name = args['item_name']
-    prev_days = args['days']
-
-    total_qty = 0
-    #todays_datetime = datetime(datetime.today().year, datetime.today().month, datetime.today().day)
-    if(prev_days != 0):
-        filter_after = datetime.today() - timedelta(days= prev_days)
-    else :
-        filter_after = datetime(datetime.today().year, datetime.today().month, datetime.today().day)
-
-    #todays_orders = OrdersMaster.query.filter(OrdersMaster.time_end >= todays_datetime).all()
-    todays_orders = OrdersMaster.query.filter(OrdersMaster.time_end >= filter_after).all()
-
-    for order in todays_orders:
-        id = order.orderid
-        #print(id , " iddddd")
-        completed = OrdersComplete.query.filter_by(orderid = id).all()
-        for x in completed:
-            if(x.item_name == name):
-                print(x.orderid, " ID")
-                print(x.quantity)
-                total_qty += x.quantity
-        
-    return jsonify({"item_name": name, "quantity_sold" : total_qty})
-'''
 
 
 # Returns all completed orders
