@@ -44,8 +44,24 @@ public class StatisticsModel {
     }
 
     public String getMostSoldItem(String[] err) {
+        GetMostSoldItemJSONResponse response = null;
+        try {
+            response = apiInterface.getMostSoldItem().execute().body();
+        } catch (Exception e) {
+            Log.e(TAG, "Ex: ", e);
+        }
+        return response == null ? "" : response.getItemName();
+    }
 
-        return "";
+    public String getAvgOrderTime() {
+        GetOrderAvgTimeJSONResponse response = null;
+        try {
+            response = apiInterface.getAvgOrderTime().execute().body();
+        } catch (Exception e) {
+            Log.e(TAG, "Ex: ", e);
+        }
+
+        return response == null ? "" : response.getAvgTime();
     }
 
 }

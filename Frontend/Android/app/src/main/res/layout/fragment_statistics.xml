@@ -3,20 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     tools:context=".view.StatisticsFragment">
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_margin="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_weight="0.20"
         android:layout_height="wrap_content"
         app:cardCornerRadius="4dp"
         app:cardElevation="8dp"
         app:strokeWidth="2dp">
 
         <LinearLayout
-            android:padding="16dp"
+            android:padding="8dp"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -30,33 +33,53 @@
                 android:layout_height="wrap_content" />
 
             <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_weight="0.3"
-                    android:id="@+id/et_item_sale_name"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Item name">
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
-                    <com.google.android.material.textfield.TextInputEditText
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_weight="0.25"
+                        android:layout_marginEnd="8dp"
+                        android:id="@+id/et_item_sale_name"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:hint="Item name">
 
-                </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
 
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_weight="0.75"
+                        android:id="@+id/et_item_sale_days"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Days">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_weight="0.7"
-                    android:layout_marginLeft="8dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:id="@+id/et_item_sale_amt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Sale">
+                    android:hint="Quantity">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
@@ -64,10 +87,7 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-
             </LinearLayout>
-
-        <!--                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"  -->
 
 
             <com.google.android.material.button.MaterialButton
@@ -87,105 +107,141 @@
 
     </com.google.android.material.card.MaterialCardView>
 
-    <LinearLayout
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        app:cardCornerRadius="4dp"
+        android:layout_weight="0.25"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:cardElevation="8dp"
+        app:strokeWidth="2dp"
+        android:layout_height="wrap_content">
 
 
-        <com.google.android.material.card.MaterialCardView
+        <LinearLayout
+            android:padding="8dp"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            app:cardCornerRadius="4dp"
-            android:layout_weight="1"
-            android:layout_marginBottom="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="8dp"
-            app:cardElevation="8dp"
-            app:strokeWidth="2dp"
             android:layout_height="wrap_content">
 
-
-            <LinearLayout
-                android:padding="16dp"
-                android:orientation="vertical"
+            <TextView
+                android:gravity="center"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:layout_marginBottom="8dp"
+                android:text="Today's sale" />
 
-                <TextView
-                    android:gravity="center"
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:id="@+id/et_todays_sale"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Amount">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:inputType="none"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    android:layout_marginBottom="8dp"
-                    android:text="Today's sale" />
+                    android:layout_height="wrap_content" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_marginLeft="8dp"
-                    android:id="@+id/et_todays_sale"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Sale">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:inputType="none"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-
-                </com.google.android.material.textfield.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
 
-            </LinearLayout>
+        </LinearLayout>
 
 
-        </com.google.android.material.card.MaterialCardView>
+    </com.google.android.material.card.MaterialCardView>
 
-        <com.google.android.material.card.MaterialCardView
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        app:cardCornerRadius="4dp"
+        android:layout_weight="0.25"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:cardElevation="8dp"
+        app:strokeWidth="2dp"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:padding="8dp"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            app:cardCornerRadius="4dp"
-            android:layout_marginBottom="16dp"
-            android:layout_weight="1"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="16dp"
-            app:cardElevation="8dp"
-            app:strokeWidth="2dp"
             android:layout_height="wrap_content">
 
-
-            <LinearLayout
-                android:padding="16dp"
-                android:orientation="vertical"
+            <TextView
+                android:gravity="center"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:layout_marginBottom="8dp"
+                android:text="Today's Most Sold Item" />
 
-                <TextView
-                    android:gravity="center"
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_height="wrap_content"
+                android:id="@+id/et_most_sold"
+                android:hint="Item name">
+
+                <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    android:layout_marginBottom="8dp"
-                    android:text="Most sold item" />
+                    android:layout_height="wrap_content" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_marginLeft="8dp"
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+        </LinearLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        app:cardCornerRadius="4dp"
+        android:layout_weight="0.25"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        app:cardElevation="8dp"
+        app:strokeWidth="2dp"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:padding="8dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:layout_marginBottom="8dp"
+                android:text="Today's Average Order Completion Time" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_height="wrap_content"
+                android:id="@+id/et_avg_order_time"
+                android:hint="Time(Minutes)">
+
+                <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/et_most_sold"
-                    android:hint="Item name">
+                    android:layout_height="wrap_content" />
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-
-                </com.google.android.material.textfield.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
 
-            </LinearLayout>
+        </LinearLayout>
 
 
-        </com.google.android.material.card.MaterialCardView>
-
-    </LinearLayout>
-
-
+    </com.google.android.material.card.MaterialCardView>
 
 </LinearLayout>

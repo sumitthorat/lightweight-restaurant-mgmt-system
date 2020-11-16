@@ -4,12 +4,14 @@ import java.util.List;
 
 public class Order implements Comparable<Order> {
     private String orderId;
+    private String tableId;
     private List<OrderItem> orderItemList;
 
 
-    public Order(String orderId, List<OrderItem> orderItemList) {
+    public Order(String orderId, List<OrderItem> orderItemList, String tableId) {
         this.orderId = orderId;
         this.orderItemList = orderItemList;
+        this.tableId = tableId;
     }
 
     public String getOrderId() {
@@ -26,6 +28,10 @@ public class Order implements Comparable<Order> {
 
     public void setOrderItemList(List<OrderItem> orderItemList) {
         this.orderItemList = orderItemList;
+    }
+
+    public String getTableId() {
+        return this.tableId;
     }
 
     @Override

@@ -19,7 +19,7 @@ import java.util.Objects;
 public class StatisticsFragment extends Fragment {
 
     StatisticsModel statisticsModel;
-    TextInputLayout etTodaysSale, etMostSoldItem, etItemSaleAmt, etItemSaleName;
+    TextInputLayout etTodaysSale, etMostSoldItem, etItemSaleAmt, etItemSaleName, etAvgOrderTime;
     MaterialButton btnGetItemSale;
 
     @Override
@@ -40,6 +40,7 @@ public class StatisticsFragment extends Fragment {
         etItemSaleAmt = view.findViewById(R.id.et_item_sale_amt);
         btnGetItemSale = view.findViewById(R.id.btn_get_item_sale);
         etItemSaleName = view.findViewById(R.id.et_item_sale_name);
+        etAvgOrderTime = view.findViewById(R.id.et_avg_order_time);
 
 
         btnGetItemSale.setOnClickListener(getItemSaleBtnListener);
@@ -98,20 +99,23 @@ public class StatisticsFragment extends Fragment {
                     SnackbarUtil.showErrorSnackbar(getView(), err[0]);
                 }
 
-                updateUI(todaysSale, mostSoldItem);
+                String avgOrderTime = statisticsModel.getAvgOrderTime();
+
+                updateUI(todaysSale, mostSoldItem, avgOrderTime);
             }
         };
 
         thread.start();
     }
 
-    void updateUI(int todaysSale, String mostSoldItem) {
+    void updateUI(int todaysSale, String mostSoldItem, String avgOrderTime) {
         if (getActivity() != null) {
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     etTodaysSale.getEditText().setText(String.valueOf(todaysSale));
                     etMostSoldItem.getEditText().setText((mostSoldItem == null ? "" : mostSoldItem));
+                    etAvgOrderTime.getEditText().setText(avgOrderTime);
                 }
             });
         }

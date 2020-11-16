@@ -9,17 +9,20 @@ public class GetPendingOrdersResponseJSON {
 
     @SerializedName("items")
     @Expose
-    private List<ItemJSON> itemJSONS = null;
+    private List<ItemJSON> items = null;
     @SerializedName("orderid")
     @Expose
     private Integer orderid;
+    @SerializedName("tableid")
+    @Expose
+    private Integer tableid;
 
     public List<ItemJSON> getItemJSONS() {
-        return itemJSONS;
+        return items;
     }
 
-    public void setItemJSONS(List<ItemJSON> itemJSONS) {
-        this.itemJSONS = itemJSONS;
+    public void setItems(List<ItemJSON> items) {
+        this.items = items;
     }
 
     public Integer getOrderid() {
@@ -28,6 +31,14 @@ public class GetPendingOrdersResponseJSON {
 
     public void setOrderid(Integer orderid) {
         this.orderid = orderid;
+    }
+
+    public Integer getTableid() {
+        return tableid;
+    }
+
+    public void setTableid(Integer tableid) {
+        this.tableid = tableid;
     }
 
 }

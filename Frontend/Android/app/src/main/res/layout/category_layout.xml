@@ -21,13 +21,6 @@
         android:paddingStart="8dp"
         android:layout_height="wrap_content">
 
-<!--        <include layout="@layout/menu_item_layout"/>-->
-
-<!--        <include layout="@layout/menu_item_layout"/>-->
-
-<!--        <include layout="@layout/menu_item_layout"/>-->
-
-<!--        <include layout="@layout/menu_item_layout"/>-->
 
     </LinearLayout>
 
