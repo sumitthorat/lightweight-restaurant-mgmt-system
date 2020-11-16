@@ -68,6 +68,20 @@
     function check() {
         var s="";
         var nothing_selected=1;
+        var table_match=0;
+        var temp;
+        {% for x in tables %}
+            temp={{ x.tableid }};
+            if(tableid == temp)
+            {
+                table_match=1;
+            }
+        {% endfor %}
+        if(table_match==0)
+        {
+            alert("No such table!");
+            return 0;
+        }
         {% for x in menu.categories %}
             {% for y in x.menu_items %}
                 if(document.getElementById("{{ y.item_name }}_select").checked && document.getElementById("{{ y.item_name }}_quantity").value<=0)

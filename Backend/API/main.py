@@ -308,7 +308,7 @@ def all_tables():
     for table in tablelist:
         table_data = {}
         table_data['tableid'] = table.tableid
-        table_data['encodstr'] = table.encodstr
+        table_data['qrcode_str'] = table.qrcode_str
         output.append(table_data)
     
     return jsonify(output)
