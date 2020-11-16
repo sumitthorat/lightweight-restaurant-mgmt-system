@@ -14,7 +14,9 @@ from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
 app.config['CORS_HEADERS'] = 'Content-Type'
-CORS(app, resources={r"/NewOrder": {"origins": "http://localhost:8000"}})
+# CORS(app, resources={r"/NewOrder": {"origins": "http://localhost:8000"}})
+CORS(app, resources={r"/NewOrder": {"origins": "*"}})
+
 
 
 sio = socketio.Server(logger=True, async_mode=None)
@@ -179,7 +181,7 @@ def add_new_table():
         response = jsonify({"status": -1, "message": "Table id already exists"})
         return response
 
-    s = "localhost:5000/order/?table=" + str(args['tableid'])
+    s = "http://localhost:8000/order/?table=" + str(args['tableid'])
     qr = pyqrcode.create(s)
     qr.png("qr_table.png", scale = 6)
 
@@ -515,7 +517,7 @@ def all_completed():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host='0.0.0.0', debug=False)
 ''' 
 CREATE TABLE "orders_master" (
 	"orderid"	INTEGER NOT NULL AUTOINCREMENT,
