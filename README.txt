@@ -5,7 +5,7 @@ Members:
 Sushil Kukreja (203050020)
 Ankit Raj (203050047)
 Sumit Thorat (203050087)
-Ramswaroop None (203050117)
+Ramswaroop  (203050117)
 
 How to get the project running:
 1. Clone the repository from https://github.com/sumitthorat/cs699-project
