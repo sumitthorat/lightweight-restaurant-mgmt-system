@@ -61,9 +61,8 @@ public class LoginActivity extends AppCompatActivity {
 
 
                 if (!validateLoginInfo(username, password)) {
-                    // TODO: Uncomment error snackbar
-                    startMainactivity();
-//                    SnackbarUtil.showErrorSnackbar(clRoot, "Please enter valid username and password");
+//                    startMainactivity();
+                    SnackbarUtil.showErrorSnackbar(clRoot, "Please enter valid username and password");
                     return;
                 }
 
