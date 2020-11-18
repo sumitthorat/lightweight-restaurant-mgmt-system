@@ -410,7 +410,7 @@ def item_sale():
 
     total_qty = 0
     if(prev_days != 0):
-        filter_after = datetime.today() - timedelta(days= prev_days)
+        filter_after = datetime(datetime.today().year, datetime.today().month, datetime.today().day) - timedelta(days= prev_days)
     else :
         filter_after = datetime(datetime.today().year, datetime.today().month, datetime.today().day)
 
