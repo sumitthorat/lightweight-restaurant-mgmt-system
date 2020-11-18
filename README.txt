@@ -1,10 +1,10 @@
 Lightweight Restaurant Management System
 
 Team name: Bug Busters
-Members:
-Sushil Kukreja (203050020)
-Ankit Raj (203050047)
-Sumit Thorat (203050087)
+Members and Contribution:
+Sushil Kukreja (203050020) - Backend
+Ankit Raj (203050047) - Backend, Frontend
+Sumit Thorat (203050087) - Backend, Frontend
 Ramswaroop None (203050117)
 
 How to get the project running:
