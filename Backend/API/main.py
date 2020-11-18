@@ -408,6 +408,12 @@ def item_sale():
     name = args['item_name']
     prev_days = args['days']
 
+    item = MenuTab.query.filter_by(item_name=name).first()
+    
+    if not item:
+        return jsonify({"item_name" : name, "quantity_sold" : -1})
+
+
     total_qty = 0
     if(prev_days != 0):
         filter_after = datetime(datetime.today().year, datetime.today().month, datetime.today().day) - timedelta(days= prev_days)

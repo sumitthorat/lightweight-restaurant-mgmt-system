@@ -27,7 +27,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.PUT;
 
-public interface ApiInterface {
+public interface  ApiInterface {
 
     // API calls interface for LoginModel
 

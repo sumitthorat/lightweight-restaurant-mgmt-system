@@ -19,7 +19,7 @@ import java.util.Objects;
 public class StatisticsFragment extends Fragment {
 
     StatisticsModel statisticsModel;
-    TextInputLayout etTodaysSale, etMostSoldItem, etItemSaleAmt, etItemSaleName, etAvgOrderTime;
+    TextInputLayout etTodaysSale, etMostSoldItem, etItemSaleAmt, etItemSaleName, etAvgOrderTime, etItemSaleDays;
     MaterialButton btnGetItemSale;
 
     @Override
@@ -41,6 +41,7 @@ public class StatisticsFragment extends Fragment {
         btnGetItemSale = view.findViewById(R.id.btn_get_item_sale);
         etItemSaleName = view.findViewById(R.id.et_item_sale_name);
         etAvgOrderTime = view.findViewById(R.id.et_avg_order_time);
+        etItemSaleDays = view.findViewById(R.id.et_item_sale_days);
 
 
         btnGetItemSale.setOnClickListener(getItemSaleBtnListener);
@@ -62,15 +63,20 @@ public class StatisticsFragment extends Fragment {
             @Override
             public void run() {
                 String itemName = etItemSaleName.getEditText().getText().toString();
-                int days = 5;
-                String[] err = {""};
-                int amount = statisticsModel.getItemSale(itemName, days, err);
+                try {
+                    int days = Integer.parseInt(etItemSaleDays.getEditText().getText().toString());
+                    String[] err = {""};
+                    int amount = statisticsModel.getItemSale(itemName, days, err);
 
-                if (amount < 0) {
-                    SnackbarUtil.showErrorSnackbar(getView(), err[0]);
-                } else {
-                    updateItemSaleUI(amount);
+                    if (amount < 0) {
+                        SnackbarUtil.showErrorSnackbar(getView(), "Please enter correct item name");
+                    } else {
+                        updateItemSaleUI(amount);
+                    }
+                } catch (Exception e) {
+                    SnackbarUtil.showErrorSnackbar(getView(), "Please enter correct values");
                 }
+
             }
         };
 
