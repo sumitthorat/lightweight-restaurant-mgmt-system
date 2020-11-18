@@ -13,6 +13,7 @@
 <script type="text/javascript">
     var tableid = GetURLParameter('table');
 
+    //Getting table number from the url
     function GetURLParameter(parameter)
     {
         var url_s = window.location.search.substring(1);
@@ -23,6 +24,7 @@
         }
     }
 
+    //generate string to send to server for placing the order
     function get_data() {
         var s = "\{ \"tableid\" : ";
         s=s.concat(tableid);
@@ -45,6 +47,7 @@
         return s
     }
 
+    //generating the string for displaying on the alert
     function get_alert_message() {
         var s = "Order Placed!\n\n";
         var total=0;
@@ -65,6 +68,7 @@
         return s
     }
 
+    //function to check different conditions
     function check() {
         var s="";
         var nothing_selected=1;
@@ -77,6 +81,7 @@
                 table_match=1;
             }
         {% endfor %}
+        //whether order is placed for table which is not available
         if(table_match==0)
         {
             alert("No such table!");
@@ -84,18 +89,21 @@
         }
         {% for x in menu.categories %}
             {% for y in x.menu_items %}
+                //whether item is selected but quantity is 0
                 if(document.getElementById("{{ y.item_name }}_select").checked && document.getElementById("{{ y.item_name }}_quantity").value<=0)
                 {
                     s=s.concat("Please check the quantity of {{ y.item_name }}!");
                     alert(s);
                     return 0;
                 }
+                //whether quantity is not equal to zero but item is not selected
                 if(!(document.getElementById("{{ y.item_name }}_select").checked) && document.getElementById("{{ y.item_name }}_quantity").value!=0)
                 {
                     s=s.concat("Please select the item : {{ y.item_name }}!");
                     alert(s);
                     return 0;
                 }
+                //whether order is placed without selecting anything
                 if((document.getElementById("{{ y.item_name }}_select").checked) || document.getElementById("{{ y.item_name }}_quantity").value!=0)
                 {
                     nothing_selected=0;
@@ -110,6 +118,7 @@
         return 1;
     }
 
+    //this function gets called when place order button is clicked
     function send_fun() {
         a = check();
         if(a!=1)
@@ -117,6 +126,7 @@
             return;
         }
         var xhr = new XMLHttpRequest()
+        //sending data of order placed to server
         xhr.open("PUT", "http://localhost:5000/NewOrder", true)
         xhr.setRequestHeader('Content-Type', 'application/json')
         xhr.setRequestHeader('Access-Control-Allow-Origin', "*")
@@ -130,6 +140,7 @@
             var data = JSON.parse(this.responseText);
             console.log(data)
         }
+        //showing alert and then reloading
         alert(show_alert);
         window.location.reload();
     }
@@ -140,6 +151,7 @@
 
 <body>
 <h1 style="text-align:center">Menu</h1>
+<!-Making table for menu-->
 <div class="container">
     <div class="table-responsive">
     <table class="table">
