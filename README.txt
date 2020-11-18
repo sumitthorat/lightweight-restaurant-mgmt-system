@@ -5,7 +5,7 @@ Members and Contribution:
 Sushil Kukreja (203050020) - Backend
 Ankit Raj (203050047) - Backend, Frontend
 Sumit Thorat (203050087) - Backend, Frontend
-Ramswaroop (203050117)
+Ramswaroop (203050117)  -   Frontend
 
 How to get the project running:
 1. Clone the repository from https://github.com/sumitthorat/cs699-project
