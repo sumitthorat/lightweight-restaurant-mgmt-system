@@ -2,7 +2,9 @@ package com.example.lmrs.model.editmenu;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
+/**
+ * POJO for Add Item API Request
+ */
 public class AddItemJSONRequest {
 
     @SerializedName("item_name")

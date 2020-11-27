@@ -1,0 +1,122 @@
+\hypertarget{main_8py}{}\doxysection{Backend/\+A\+P\+I/main.py File Reference}
+\label{main_8py}\index{Backend/API/main.py@{Backend/API/main.py}}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classmain_1_1Categories}{Categories}}
+\item 
+class \mbox{\hyperlink{classmain_1_1MenuTab}{Menu\+Tab}}
+\item 
+class \mbox{\hyperlink{classmain_1_1OrdersComplete}{Orders\+Complete}}
+\item 
+class \mbox{\hyperlink{classmain_1_1OrdersMaster}{Orders\+Master}}
+\item 
+class \mbox{\hyperlink{classmain_1_1OrdersPending}{Orders\+Pending}}
+\item 
+class \mbox{\hyperlink{classmain_1_1TableTab}{Table\+Tab}}
+\item 
+class \mbox{\hyperlink{classmain_1_1Users}{Users}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \mbox{\hyperlink{namespacemain}{main}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{namespacemain_a4d6041386cb69a4227aea0192682e614}{add\+\_\+item\+\_\+to\+\_\+menu}} ()
+\item 
+def \mbox{\hyperlink{namespacemain_a6efd3a90f94c231ca5ccaea6b89d5a1a}{add\+\_\+new\+\_\+table}} ()
+\item 
+def \mbox{\hyperlink{namespacemain_ae5717bf75a7a8eaabb78466482cdc1b9}{add\+\_\+new\+\_\+user}} ()
+\item 
+def \mbox{\hyperlink{namespacemain_afe340445e8b4b4f7eb89b9fe10fdef6c}{all\+\_\+categories}} ()
+\item 
+def \mbox{\hyperlink{namespacemain_af810ac03790f6284e8b20d59bcefae28}{all\+\_\+completed}} ()
+\item 
+def \mbox{\hyperlink{namespacemain_a9b9d4753ba75960e1f12d9de5bc6a7ae}{all\+\_\+tables}} ()
+\item 
+def \mbox{\hyperlink{namespacemain_abd8ccc58657193a346b3a746269bacd6}{attempt\+\_\+login}} ()
+\item 
+def \mbox{\hyperlink{namespacemain_a156cd359d08129ac534102b4750b3b52}{average\+\_\+time}} ()
+\item 
+def \mbox{\hyperlink{namespacemain_aec4ab0d5388a01a60ca6d17f7fb864cc}{complete\+\_\+order}} ()
+\item 
+def \mbox{\hyperlink{namespacemain_a878d65bf7adbe630ba7d642b345bdc0d}{delete\+\_\+table}} ()
+\item 
+def \mbox{\hyperlink{namespacemain_ab6b9327a17a876bd8934f273b539732d}{get\+\_\+full\+\_\+menu}} ()
+\item 
+def \mbox{\hyperlink{namespacemain_a7e8d62cfbaa606fef8db58f83b86045b}{get\+\_\+pending\+\_\+orders}} ()
+\item 
+def \mbox{\hyperlink{namespacemain_ad23729acbefbcf56b66148ab1c7d6962}{get\+\_\+tables}} ()
+\item 
+def \mbox{\hyperlink{namespacemain_a028bd1014c56d1d1aeb5de264da6e98a}{item\+\_\+sale}} ()
+\item 
+def \mbox{\hyperlink{namespacemain_a04296b6b6db68afe1464717b4869c13d}{most\+\_\+sold}} ()
+\item 
+def \mbox{\hyperlink{namespacemain_a1215032e36af030aba690ca49053cae8}{new\+\_\+order}} ()
+\item 
+def \mbox{\hyperlink{namespacemain_a24908b92e1685645c910c01082903a25}{total\+\_\+sale}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespacemain_a6da13b696f737097e0146e47cc0d0985}{api}} = Api(app)
+\item 
+\mbox{\hyperlink{namespacemain_afe63fea7be31b0200b496d08bc6b517d}{app}} = Flask(\+\_\+\+\_\+name\+\_\+\+\_\+)
+\item 
+\mbox{\hyperlink{namespacemain_a89a7f6028a19c3dc081cc5f16eb53891}{db}} = S\+Q\+L\+Alchemy(app)
+\item 
+\mbox{\hyperlink{namespacemain_a0514aabed091ee5e2f35766eb01eced6}{debug}}
+\item 
+\mbox{\hyperlink{namespacemain_a6a1bb6ed41f44b60e7bd83b0e9945aa7}{float}}
+\item 
+\mbox{\hyperlink{namespacemain_a81ae9faedaa69e3e28e2960a0548df8d}{help}}
+\item 
+\mbox{\hyperlink{namespacemain_a832ddc04754e8a43d4f3c6165b1294a7}{host}}
+\item 
+\mbox{\hyperlink{namespacemain_a61569f2965b7a369eb10b6d75d410d11}{int}}
+\item 
+\mbox{\hyperlink{namespacemain_af6097cf2218e3cb5ead26fa24227cd11}{menu\+\_\+put\+\_\+item}} = reqparse.\+Request\+Parser()
+\item 
+\mbox{\hyperlink{namespacemain_aa91d7fe076d3d5d7e7131dab20451032}{menu\+\_\+update\+\_\+item}} = reqparse.\+Request\+Parser()
+\item 
+\mbox{\hyperlink{namespacemain_a33d390b3d71a902ec9fbcd5d2d237619}{methods}}
+\item 
+\mbox{\hyperlink{namespacemain_a070f00ca4993865b3647159863ba6702}{ordcomp\+\_\+put\+\_\+item}} = reqparse.\+Request\+Parser()
+\item 
+\mbox{\hyperlink{namespacemain_a05b0acdeecc6f3e5ade45f73774a10a8}{order\+\_\+complete}} = reqparse.\+Request\+Parser()
+\item 
+\mbox{\hyperlink{namespacemain_ad7cb4de4d6af1e1f17b9b4984eb54e0f}{ordpen\+\_\+put\+\_\+item}} = reqparse.\+Request\+Parser()
+\item 
+\mbox{\hyperlink{namespacemain_a1e3ebe89cea08436ab0c2fe645ddebb7}{ordpen\+\_\+update\+\_\+item}} = reqparse.\+Request\+Parser()
+\item 
+\mbox{\hyperlink{namespacemain_ae81948490ddf54e80a22593640178350}{required}}
+\item 
+dictionary \mbox{\hyperlink{namespacemain_af70aeb1af633652946268dc73fe9d7c2}{resource\+\_\+menu\+\_\+fields}}
+\item 
+dictionary \mbox{\hyperlink{namespacemain_a54760b6b803e22eaf2177601e04a6644}{resource\+\_\+order\+\_\+fields}}
+\item 
+dictionary \mbox{\hyperlink{namespacemain_a4c6a6bd8beca5d09b9b82acc94a0428d}{resource\+\_\+table\+\_\+fields}}
+\item 
+\mbox{\hyperlink{namespacemain_a715e7b31400aa585643e94e0ba160aab}{resources}}
+\item 
+\mbox{\hyperlink{namespacemain_aaeea185204ac4dbbe96dc60b2e12ae74}{sio}} = socketio.\+Server(logger=True, async\+\_\+mode=None)
+\item 
+\mbox{\hyperlink{namespacemain_a4b99ff73a8a869319570237b5c57ab03}{str}}
+\item 
+\mbox{\hyperlink{namespacemain_ac51a6695dc3603f4943db43a974f5994}{table\+\_\+put\+\_\+item}} = reqparse.\+Request\+Parser()
+\item 
+\mbox{\hyperlink{namespacemain_a643a20c0c59588a0f741a6095e2025fd}{True}}
+\item 
+\mbox{\hyperlink{namespacemain_a7aead736a07eaf25623ad7bfa1f0ee2d}{type}}
+\item 
+\mbox{\hyperlink{namespacemain_a046d50c2d31dc3f06461ef67fe8d6ead}{user\+\_\+login\+\_\+item}} = reqparse.\+Request\+Parser()
+\item 
+\mbox{\hyperlink{namespacemain_a3e0433be7377b4c9923d3f9565c8c47f}{user\+\_\+put\+\_\+item}} = reqparse.\+Request\+Parser()
+\item 
+\mbox{\hyperlink{namespacemain_a16b947279e7babff74d70eb0318e0b3f}{user\+\_\+update\+\_\+item}} = reqparse.\+Request\+Parser()
+\item 
+\mbox{\hyperlink{namespacemain_a2d5a7e92b4fa368f689456aa85ed14c9}{wsgi\+\_\+app}}
+\end{DoxyCompactItemize}

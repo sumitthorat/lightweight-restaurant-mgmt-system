@@ -3,6 +3,9 @@ package com.example.lmrs.model.editmenu;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * POJO for Menu Item
+ */
 public class MenuItem {
 
     @SerializedName("item_name")

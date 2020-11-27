@@ -17,11 +17,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-
+/**
+* "Brain" for view orders
+*/
 public class ViewOrdersModel {
-    /**
-    * "Brain" for view orders
-    */
+    
     ApiInterface apiInterface;
     Socket mSocket;
 

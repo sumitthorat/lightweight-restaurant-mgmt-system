@@ -1,0 +1,28 @@
+var searchData=
+[
+  ['main_152',['main',['../namespacemain.html',1,'main'],['../namespacemanage.html#afd5b00260cc364aa5bde07e227c6ea78',1,'manage.main()']]],
+  ['main_2epy_153',['main.py',['../main_8py.html',1,'']]],
+  ['mainactivity_154',['MainActivity',['../classcom_1_1example_1_1lmrs_1_1view_1_1MainActivity.html',1,'com::example::lmrs::view']]],
+  ['mainactivity_2ejava_155',['MainActivity.java',['../MainActivity_8java.html',1,'']]],
+  ['manage_156',['manage',['../namespacemanage.html',1,'']]],
+  ['manage_2epy_157',['manage.py',['../manage_8py.html',1,'']]],
+  ['managetablesactivity_158',['ManageTablesActivity',['../classcom_1_1example_1_1lmrs_1_1view_1_1ManageTablesActivity.html',1,'com::example::lmrs::view']]],
+  ['managetablesactivity_2ejava_159',['ManageTablesActivity.java',['../ManageTablesActivity_8java.html',1,'']]],
+  ['managetablesmodel_160',['ManageTablesModel',['../classcom_1_1example_1_1lmrs_1_1model_1_1managetables_1_1ManageTablesModel.html',1,'ManageTablesModel'],['../classcom_1_1example_1_1lmrs_1_1model_1_1managetables_1_1ManageTablesModel.html#a6bbaedead992c4922e1f6dea91a502fd',1,'com.example.lmrs.model.managetables.ManageTablesModel.ManageTablesModel()']]],
+  ['managetablesmodel_2ejava_161',['ManageTablesModel.java',['../ManageTablesModel_8java.html',1,'']]],
+  ['manifest_2dmerger_2dblame_2ddebug_2dreport_2etxt_162',['manifest-merger-blame-debug-report.txt',['../manifest-merger-blame-debug-report_8txt.html',1,'']]],
+  ['manifest_2dmerger_2ddebug_2dreport_2etxt_163',['manifest-merger-debug-report.txt',['../manifest-merger-debug-report_8txt.html',1,'']]],
+  ['menu_5fadd_164',['menu_add',['../classmain_1_1Categories.html#ab935c4f00a0deac4fe6817524b8fa687',1,'main::Categories']]],
+  ['menu_5fput_5fitem_165',['menu_put_item',['../namespacemain.html#af6097cf2218e3cb5ead26fa24227cd11',1,'main']]],
+  ['menu_5fshow_166',['menu_show',['../namespaceorder_1_1views.html#ab4f3fedc08e7fe066861513681df261c',1,'order::views']]],
+  ['menu_5fupdate_5fitem_167',['menu_update_item',['../namespacemain.html#aa91d7fe076d3d5d7e7131dab20451032',1,'main']]],
+  ['menuitem_168',['MenuItem',['../classcom_1_1example_1_1lmrs_1_1model_1_1editmenu_1_1MenuItem.html',1,'com::example::lmrs::model::editmenu']]],
+  ['menuitem_2ejava_169',['MenuItem.java',['../MenuItem_8java.html',1,'']]],
+  ['menutab_170',['MenuTab',['../classmain_1_1MenuTab.html',1,'main']]],
+  ['methods_171',['methods',['../namespacemain.html#a33d390b3d71a902ec9fbcd5d2d237619',1,'main']]],
+  ['middleware_172',['MIDDLEWARE',['../namespacePROJECT_1_1settings.html#a1c6780d063beebde4d00e2c1c45c3192',1,'PROJECT::settings']]],
+  ['models_2epy_173',['models.py',['../models_8py.html',1,'']]],
+  ['most_5fsold_174',['most_sold',['../namespacemain.html#a04296b6b6db68afe1464717b4869c13d',1,'main']]],
+  ['movablefloatingactionbutton_175',['MovableFloatingActionButton',['../classcom_1_1example_1_1lmrs_1_1view_1_1MovableFloatingActionButton.html',1,'MovableFloatingActionButton'],['../classcom_1_1example_1_1lmrs_1_1view_1_1MovableFloatingActionButton.html#a95d5e6ca3b7fa0cd3ca617e5d20d8f61',1,'com.example.lmrs.view.MovableFloatingActionButton.MovableFloatingActionButton(Context context)'],['../classcom_1_1example_1_1lmrs_1_1view_1_1MovableFloatingActionButton.html#abf1f8576908a3819ec50844ac4ac59dd',1,'com.example.lmrs.view.MovableFloatingActionButton.MovableFloatingActionButton(Context context, AttributeSet attrs)'],['../classcom_1_1example_1_1lmrs_1_1view_1_1MovableFloatingActionButton.html#a449d6be1da515d348cfcd330193aef8a',1,'com.example.lmrs.view.MovableFloatingActionButton.MovableFloatingActionButton(Context context, AttributeSet attrs, int defStyleAttr)']]],
+  ['movablefloatingactionbutton_2ejava_176',['MovableFloatingActionButton.java',['../MovableFloatingActionButton_8java.html',1,'']]]
+];

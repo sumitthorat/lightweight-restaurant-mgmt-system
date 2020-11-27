@@ -3,6 +3,9 @@ package com.example.lmrs.model.login;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * POJO for Attempt Login API Response
+ */
 public class LoginJSONResponse {
 
     @SerializedName("message")

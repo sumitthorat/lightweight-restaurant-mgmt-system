@@ -1,0 +1,19 @@
+digraph "StatisticsFragment"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="StatisticsFragment",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Statistics Fragment Class."];
+  Node2 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid"];
+  Node2 [label="Fragment",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node3 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" btnGetItemSale" ];
+  Node3 [label="MaterialButton",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node4 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" statisticsModel" ];
+  Node4 [label="StatisticsModel",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classcom_1_1example_1_1lmrs_1_1model_1_1statistics_1_1StatisticsModel.html",tooltip="\"Brain\" for the statistics page"];
+  Node5 -> Node4 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" apiInterface" ];
+  Node5 [label="ApiInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$interfacecom_1_1example_1_1lmrs_1_1model_1_1ApiInterface.html",tooltip="Interface for communication between client(Android app) and server(API)"];
+  Node6 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" etAvgOrderTime\netMostSoldItem\netTodaysSale\netItemSaleDays\netItemSaleAmt\netItemSaleName" ];
+  Node6 [label="TextInputLayout",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node7 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" getItemSaleBtnListener" ];
+  Node7 [label="View",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+}

@@ -2,6 +2,10 @@ package com.example.lmrs.model.managetables;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+
+/**
+ * POJO for Get Tables API Response
+ */
 public class GetTablesJSONResponse {
 
     @SerializedName("qrcode_str")

@@ -1,0 +1,42 @@
+\hypertarget{namespacePROJECT_1_1urls}{}\doxysection{P\+R\+O\+J\+E\+C\+T.\+urls Namespace Reference}
+\label{namespacePROJECT_1_1urls}\index{PROJECT.urls@{PROJECT.urls}}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+list \mbox{\hyperlink{namespacePROJECT_1_1urls_a885d935e702b2639d5893d720e71fde8}{urlpatterns}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}PROJECT URL Configuration
+
+The `urlpatterns` list routes URLs to views. For more information please see:
+https://docs.djangoproject.com/en/3.1/topics/http/urls/
+Examples:
+Function views
+1. Add an import:  from my_app import views
+2. Add a URL to urlpatterns:  path('', views.home, name='home')
+Class-based views
+1. Add an import:  from other_app.views import Home
+2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
+Including another URLconf
+1. Import the include() function: from django.urls import include, path
+2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+\end{DoxyVerb}
+ 
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{namespacePROJECT_1_1urls_a885d935e702b2639d5893d720e71fde8}\label{namespacePROJECT_1_1urls_a885d935e702b2639d5893d720e71fde8}} 
+\index{PROJECT.urls@{PROJECT.urls}!urlpatterns@{urlpatterns}}
+\index{urlpatterns@{urlpatterns}!PROJECT.urls@{PROJECT.urls}}
+\doxysubsubsection{\texorpdfstring{urlpatterns}{urlpatterns}}
+{\footnotesize\ttfamily list urlpatterns}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 =  [}
+\DoxyCodeLine{2     path(\textcolor{stringliteral}{'admin/'}, admin.site.urls),}
+\DoxyCodeLine{3     path(\textcolor{stringliteral}{'order/'}, include(\textcolor{stringliteral}{"order.urls"})),}
+\DoxyCodeLine{4 ]}
+
+\end{DoxyCode}

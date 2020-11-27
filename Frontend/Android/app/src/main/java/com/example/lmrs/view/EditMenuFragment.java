@@ -32,6 +32,10 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
+
+/**
+ * Edit Menu Fragment Class
+ */
 public class EditMenuFragment extends Fragment {
     final private static String TAG = "EditMenuModel";
     LinearLayout llMenuRoot;

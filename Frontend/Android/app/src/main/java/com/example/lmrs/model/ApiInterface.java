@@ -26,12 +26,12 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.PUT;
-
+/**
+ * Interface for communication between client(Android app) and server(API)
+ */
 public interface  ApiInterface {
 
-    /**
-     * Interface for communication between client(Android app) and server(API)
-     */
+    
 
     @Headers("Content-Type: application/json")
     @PUT("AttemptLogin")

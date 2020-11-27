@@ -2,6 +2,9 @@ package com.example.lmrs.model.vieworders;
 
 import java.util.List;
 
+/**
+ * POJO for Order
+ */
 public class Order implements Comparable<Order> {
     private String orderId;
     private String tableId;

@@ -9,10 +9,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * "Brain" for Edit Menu page.
+ */
 public class EditMenuModel {
-    /**
-     * "Brain" for Edit Menu page.
-     */
+    
 
     final static String TAG = "EditMenuModel";
 

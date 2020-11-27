@@ -5,10 +5,11 @@ import android.util.Log;
 import com.example.lmrs.model.ApiInterface;
 import com.example.lmrs.model.ApiUtils;
 
+/**
+ * "Brain" for the Login page
+ */
 public class LoginModel {
-    /**
-     * "Brain" for the Login page
-     */
+    
     ApiInterface apiInterface;
 
     final String TAG = "LoginModel";

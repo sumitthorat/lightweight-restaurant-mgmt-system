@@ -3,6 +3,9 @@ package com.example.lmrs.model.statistics;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * POJO for Get Most Sold Item API Response
+ */
 public class GetMostSoldItemJSONResponse {
 
     @SerializedName("item_name")

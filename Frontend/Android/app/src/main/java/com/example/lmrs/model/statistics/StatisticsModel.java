@@ -5,11 +5,10 @@ import android.util.Log;
 import com.example.lmrs.model.ApiInterface;
 import com.example.lmrs.model.ApiUtils;
 
+/**
+ * "Brain" for the statistics page
+ */
 public class StatisticsModel {
-    /**
-     * "Brain" for the statistics page
-     */
-
     ApiInterface apiInterface;
 
 

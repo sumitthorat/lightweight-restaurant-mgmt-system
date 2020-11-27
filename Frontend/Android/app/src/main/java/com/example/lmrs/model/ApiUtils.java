@@ -1,5 +1,8 @@
 package com.example.lmrs.model;
 
+/**
+ * Class to instantiate Api Interface user
+ */
 public class ApiUtils {
     private ApiUtils() {}
 

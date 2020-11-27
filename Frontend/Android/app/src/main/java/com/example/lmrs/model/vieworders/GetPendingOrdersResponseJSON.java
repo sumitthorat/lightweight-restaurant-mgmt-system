@@ -5,6 +5,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+/**
+ * POJO for Get Pending Orders JSON Response
+ */
 public class GetPendingOrdersResponseJSON {
 
     @SerializedName("items")

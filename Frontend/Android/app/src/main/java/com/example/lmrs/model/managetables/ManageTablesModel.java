@@ -8,10 +8,11 @@ import com.example.lmrs.model.ApiUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * "Brain" for the manage tables page
+ */
 public class ManageTablesModel {
-    /**
-     * "Brain" for the manage tables page
-     */
+
     ApiInterface apiInterface;
 
     static private final String TAG = "ManageTablesModel";

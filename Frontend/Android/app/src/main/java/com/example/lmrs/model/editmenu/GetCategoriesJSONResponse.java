@@ -4,6 +4,9 @@ import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * POJO for Get Categories API Response
+ */
 public class GetCategoriesJSONResponse {
 
     @SerializedName("categories")

@@ -16,6 +16,9 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Objects;
 
+/**
+ * Statistics Fragment Class
+ */
 public class StatisticsFragment extends Fragment {
 
     StatisticsModel statisticsModel;

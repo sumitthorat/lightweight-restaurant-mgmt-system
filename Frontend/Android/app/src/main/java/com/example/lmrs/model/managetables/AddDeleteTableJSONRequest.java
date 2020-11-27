@@ -3,6 +3,10 @@ package com.example.lmrs.model.managetables;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * POJO for Add/Delete table API Request
+ */
+
 public class AddDeleteTableJSONRequest {
 
     @SerializedName("tableid")

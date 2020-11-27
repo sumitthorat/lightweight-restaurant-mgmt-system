@@ -1,5 +1,8 @@
 package com.example.lmrs.model.vieworders;
 
+/**
+ * POJO for Order Item
+ */
 public class OrderItem {
     private String itemName;
     private int qty;

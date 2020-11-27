@@ -4,6 +4,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
 
+/**
+ * POJO for Table
+ */
 public class Table {
     Integer tableId;
     Bitmap qrCode;

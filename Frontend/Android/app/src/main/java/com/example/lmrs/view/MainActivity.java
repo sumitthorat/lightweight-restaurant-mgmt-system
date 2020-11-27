@@ -17,6 +17,9 @@ import com.example.lmrs.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
+/**
+ * Main Activity Class
+ */
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";

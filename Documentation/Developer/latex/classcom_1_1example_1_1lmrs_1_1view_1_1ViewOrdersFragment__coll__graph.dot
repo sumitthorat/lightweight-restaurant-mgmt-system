@@ -1,0 +1,27 @@
+digraph "ViewOrdersFragment"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="ViewOrdersFragment",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="View Orders Fragment Class."];
+  Node2 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid"];
+  Node2 [label="Fragment",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node3 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid"];
+  Node3 [label="ViewOrdersProtocol",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$interfacecom_1_1example_1_1lmrs_1_1model_1_1vieworders_1_1ViewOrdersProtocol.html",tooltip="Protocol for Deleage Pattern."];
+  Node4 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" clViewOrdersRoot" ];
+  Node4 [label="ConstraintLayout",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node5 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" orders" ];
+  Node5 [label="List\< com.example.lmrs.model.vieworders.\lOrder \>",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node6 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" itemTouchCallback" ];
+  Node6 [label="ItemTouchHelper",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node7 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" viewOrdersModel" ];
+  Node7 [label="ViewOrdersModel",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classcom_1_1example_1_1lmrs_1_1model_1_1vieworders_1_1ViewOrdersModel.html",tooltip="\"Brain\" for view orders"];
+  Node8 -> Node7 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" onNewOrder" ];
+  Node8 [label="Emitter",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node9 -> Node7 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" apiInterface" ];
+  Node9 [label="ApiInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$interfacecom_1_1example_1_1lmrs_1_1model_1_1ApiInterface.html",tooltip="Interface for communication between client(Android app) and server(API)"];
+  Node3 -> Node7 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" delegate" ];
+  Node10 -> Node7 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" mSocket" ];
+  Node10 [label="Socket",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+}

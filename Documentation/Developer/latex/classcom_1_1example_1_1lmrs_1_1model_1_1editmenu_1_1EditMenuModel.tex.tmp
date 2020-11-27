@@ -1,0 +1,60 @@
+\hypertarget{classcom_1_1example_1_1lmrs_1_1model_1_1editmenu_1_1EditMenuModel}{}\doxysection{Edit\+Menu\+Model Class Reference}
+\label{classcom_1_1example_1_1lmrs_1_1model_1_1editmenu_1_1EditMenuModel}\index{EditMenuModel@{EditMenuModel}}
+
+
+\char`\"{}\+Brain\char`\"{} for Edit Menu page.  
+
+
+
+
+Collaboration diagram for Edit\+Menu\+Model\+:
+% FIG 0
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+boolean \mbox{\hyperlink{classcom_1_1example_1_1lmrs_1_1model_1_1editmenu_1_1EditMenuModel_a4fef5e8076be0b8781935b31406d7505}{add\+New\+Item}} (String item\+Name, String category, Integer price, String\mbox{[}$\,$\mbox{]} err)
+\item 
+\mbox{\hyperlink{classcom_1_1example_1_1lmrs_1_1model_1_1editmenu_1_1EditMenuModel_abd80ed1bd402e2b02cbcebe33bc5e96e}{Edit\+Menu\+Model}} ()
+\item 
+List$<$ String $>$ \mbox{\hyperlink{classcom_1_1example_1_1lmrs_1_1model_1_1editmenu_1_1EditMenuModel_ae74cd7bff25c75d4aec53cb23a4e1ecc}{get\+All\+Categories}} (String\mbox{[}$\,$\mbox{]} err)
+\item 
+Map$<$ String, List$<$ \mbox{\hyperlink{classcom_1_1example_1_1lmrs_1_1model_1_1editmenu_1_1MenuItem}{Menu\+Item}} $>$ $>$ \mbox{\hyperlink{classcom_1_1example_1_1lmrs_1_1model_1_1editmenu_1_1EditMenuModel_a2e9b7939c1e29928e838e54f85254f4f}{get\+Full\+Menu}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\char`\"{}\+Brain\char`\"{} for Edit Menu page. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classcom_1_1example_1_1lmrs_1_1model_1_1editmenu_1_1EditMenuModel_abd80ed1bd402e2b02cbcebe33bc5e96e}\label{classcom_1_1example_1_1lmrs_1_1model_1_1editmenu_1_1EditMenuModel_abd80ed1bd402e2b02cbcebe33bc5e96e}} 
+\index{EditMenuModel@{EditMenuModel}!EditMenuModel@{EditMenuModel}}
+\index{EditMenuModel@{EditMenuModel}!EditMenuModel@{EditMenuModel}}
+\doxysubsubsection{\texorpdfstring{EditMenuModel()}{EditMenuModel()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classcom_1_1example_1_1lmrs_1_1model_1_1editmenu_1_1EditMenuModel}{Edit\+Menu\+Model}} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classcom_1_1example_1_1lmrs_1_1model_1_1editmenu_1_1EditMenuModel_a4fef5e8076be0b8781935b31406d7505}\label{classcom_1_1example_1_1lmrs_1_1model_1_1editmenu_1_1EditMenuModel_a4fef5e8076be0b8781935b31406d7505}} 
+\index{EditMenuModel@{EditMenuModel}!addNewItem@{addNewItem}}
+\index{addNewItem@{addNewItem}!EditMenuModel@{EditMenuModel}}
+\doxysubsubsection{\texorpdfstring{addNewItem()}{addNewItem()}}
+{\footnotesize\ttfamily boolean add\+New\+Item (\begin{DoxyParamCaption}\item[{String}]{item\+Name,  }\item[{String}]{category,  }\item[{Integer}]{price,  }\item[{String\mbox{[}$\,$\mbox{]}}]{err }\end{DoxyParamCaption})}
+
+Add new menu item and send request to server\mbox{\Hypertarget{classcom_1_1example_1_1lmrs_1_1model_1_1editmenu_1_1EditMenuModel_ae74cd7bff25c75d4aec53cb23a4e1ecc}\label{classcom_1_1example_1_1lmrs_1_1model_1_1editmenu_1_1EditMenuModel_ae74cd7bff25c75d4aec53cb23a4e1ecc}} 
+\index{EditMenuModel@{EditMenuModel}!getAllCategories@{getAllCategories}}
+\index{getAllCategories@{getAllCategories}!EditMenuModel@{EditMenuModel}}
+\doxysubsubsection{\texorpdfstring{getAllCategories()}{getAllCategories()}}
+{\footnotesize\ttfamily List$<$String$>$ get\+All\+Categories (\begin{DoxyParamCaption}\item[{String\mbox{[}$\,$\mbox{]}}]{err }\end{DoxyParamCaption})}
+
+Retrieve all menu categories from the server\mbox{\Hypertarget{classcom_1_1example_1_1lmrs_1_1model_1_1editmenu_1_1EditMenuModel_a2e9b7939c1e29928e838e54f85254f4f}\label{classcom_1_1example_1_1lmrs_1_1model_1_1editmenu_1_1EditMenuModel_a2e9b7939c1e29928e838e54f85254f4f}} 
+\index{EditMenuModel@{EditMenuModel}!getFullMenu@{getFullMenu}}
+\index{getFullMenu@{getFullMenu}!EditMenuModel@{EditMenuModel}}
+\doxysubsubsection{\texorpdfstring{getFullMenu()}{getFullMenu()}}
+{\footnotesize\ttfamily Map$<$String, List$<$\mbox{\hyperlink{classcom_1_1example_1_1lmrs_1_1model_1_1editmenu_1_1MenuItem}{Menu\+Item}}$>$ $>$ get\+Full\+Menu (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Retrieve full menu
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Frontend/\+Android/app/src/main/java/com/example/lmrs/model/editmenu/\mbox{\hyperlink{EditMenuModel_8java}{Edit\+Menu\+Model.\+java}}\end{DoxyCompactItemize}

@@ -27,6 +27,9 @@
  import java.io.IOException;
  import java.util.List;
 
+ /**
+ * Manage Tables Activity Class
+ */
  public class ManageTablesActivity extends AppCompatActivity {
 
     ManageTablesModel manageTablesModel;

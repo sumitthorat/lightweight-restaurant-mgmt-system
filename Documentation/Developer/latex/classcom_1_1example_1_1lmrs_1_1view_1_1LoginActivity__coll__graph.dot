@@ -1,0 +1,21 @@
+digraph "LoginActivity"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="LoginActivity",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Login Activity Class."];
+  Node2 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid"];
+  Node2 [label="AppCompatActivity",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node3 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" btnLogin" ];
+  Node3 [label="MaterialButton",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node4 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" clRoot" ];
+  Node4 [label="ConstraintLayout",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node5 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" loginModel" ];
+  Node5 [label="LoginModel",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classcom_1_1example_1_1lmrs_1_1model_1_1login_1_1LoginModel.html",tooltip="\"Brain\" for the Login page"];
+  Node6 -> Node5 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" apiInterface" ];
+  Node6 [label="ApiInterface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$interfacecom_1_1example_1_1lmrs_1_1model_1_1ApiInterface.html",tooltip="Interface for communication between client(Android app) and server(API)"];
+  Node7 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" textInputPassword\ntextInputUsername" ];
+  Node7 [label="TextInputLayout",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node8 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" tvCreateAccount" ];
+  Node8 [label="TextView",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+}

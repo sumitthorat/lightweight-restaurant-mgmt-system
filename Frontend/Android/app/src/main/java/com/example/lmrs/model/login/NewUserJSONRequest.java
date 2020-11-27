@@ -3,6 +3,10 @@ package com.example.lmrs.model.login;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+
+/**
+ * POJO for Add New User JSON Request
+ */
 public class NewUserJSONRequest {
 
     @SerializedName("username")

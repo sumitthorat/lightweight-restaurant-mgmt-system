@@ -13,7 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.lmrs.R;
 
 import java.util.List;
-
+/**
+ * Adapter for View Orders RecyclerView
+ */
 public class OrdersRecyclerAdapter extends RecyclerView.Adapter<OrdersRecyclerAdapter.OrdersRecyclerViewHolder> {
     private List<Order> orderList;
 

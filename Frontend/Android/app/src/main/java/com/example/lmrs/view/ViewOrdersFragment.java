@@ -26,6 +26,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * View Orders Fragment Class
+ */
 public class ViewOrdersFragment extends Fragment implements ViewOrdersProtocol {
 
     private RecyclerView ordersRecyclerView;

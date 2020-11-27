@@ -18,6 +18,9 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Objects;
 
+/**
+ * Login Activity Class
+ */
 public class LoginActivity extends AppCompatActivity {
 
     static final String TAG = "LoginActivity";

@@ -3,6 +3,9 @@ package com.example.lmrs.model.statistics;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * POJO for Get Item Sale API Request
+ */
 public class GetItemSaleJSONRequest {
 
     @SerializedName("item_name")

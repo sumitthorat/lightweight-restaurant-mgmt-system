@@ -3,6 +3,9 @@ package com.example.lmrs.model.statistics;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * POJO for Get Average Order Time API Response
+ */
 public class GetOrderAvgTimeJSONResponse {
 
     @SerializedName("avg_time")
