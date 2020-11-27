@@ -31,13 +31,12 @@ var searchData=
   ['apiutils_2ejava_30',['ApiUtils.java',['../ApiUtils_8java.html',1,'']]],
   ['app_31',['app',['../namespacemain.html#afe63fea7be31b0200b496d08bc6b517d',1,'main']]],
   ['application_32',['application',['../namespacePROJECT_1_1asgi.html#a9556574144704032c9e6bafa10276622',1,'PROJECT.asgi.application()'],['../namespacePROJECT_1_1wsgi.html#a9556574144704032c9e6bafa10276622',1,'PROJECT.wsgi.application()']]],
-  ['application_5fid_33',['APPLICATION_ID',['../classcom_1_1example_1_1lmrs_1_1BuildConfig.html#a162257a18c2b746d35291f38d5e2e025',1,'com::example::lmrs::BuildConfig']]],
-  ['apps_2epy_34',['apps.py',['../apps_8py.html',1,'']]],
-  ['asgi_2epy_35',['asgi.py',['../asgi_8py.html',1,'']]],
-  ['attempt_5flogin_36',['attempt_login',['../namespacemain.html#abd8ccc58657193a346b3a746269bacd6',1,'main']]],
-  ['attemptlogin_37',['attemptLogin',['../interfacecom_1_1example_1_1lmrs_1_1model_1_1ApiInterface.html#a5e1b97df4e2e992f4ba6923588b7439f',1,'com.example.lmrs.model.ApiInterface.attemptLogin()'],['../classcom_1_1example_1_1lmrs_1_1model_1_1login_1_1LoginModel.html#acfee8806499e9afe2ec4d4ff7ed699e7',1,'com.example.lmrs.model.login.LoginModel.attemptLogin()']]],
-  ['attemptloginjsonrequest_38',['AttemptLoginJSONRequest',['../classcom_1_1example_1_1lmrs_1_1model_1_1login_1_1AttemptLoginJSONRequest.html',1,'com::example::lmrs::model::login']]],
-  ['attemptloginjsonrequest_2ejava_39',['AttemptLoginJSONRequest.java',['../AttemptLoginJSONRequest_8java.html',1,'']]],
-  ['auth_5fpassword_5fvalidators_40',['AUTH_PASSWORD_VALIDATORS',['../namespacePROJECT_1_1settings.html#adfde5213ef848d455082a227c9925e22',1,'PROJECT::settings']]],
-  ['average_5ftime_41',['average_time',['../namespacemain.html#a156cd359d08129ac534102b4750b3b52',1,'main']]]
+  ['apps_2epy_33',['apps.py',['../apps_8py.html',1,'']]],
+  ['asgi_2epy_34',['asgi.py',['../asgi_8py.html',1,'']]],
+  ['attempt_5flogin_35',['attempt_login',['../namespacemain.html#abd8ccc58657193a346b3a746269bacd6',1,'main']]],
+  ['attemptlogin_36',['attemptLogin',['../interfacecom_1_1example_1_1lmrs_1_1model_1_1ApiInterface.html#a5e1b97df4e2e992f4ba6923588b7439f',1,'com.example.lmrs.model.ApiInterface.attemptLogin()'],['../classcom_1_1example_1_1lmrs_1_1model_1_1login_1_1LoginModel.html#acfee8806499e9afe2ec4d4ff7ed699e7',1,'com.example.lmrs.model.login.LoginModel.attemptLogin()']]],
+  ['attemptloginjsonrequest_37',['AttemptLoginJSONRequest',['../classcom_1_1example_1_1lmrs_1_1model_1_1login_1_1AttemptLoginJSONRequest.html',1,'com::example::lmrs::model::login']]],
+  ['attemptloginjsonrequest_2ejava_38',['AttemptLoginJSONRequest.java',['../AttemptLoginJSONRequest_8java.html',1,'']]],
+  ['auth_5fpassword_5fvalidators_39',['AUTH_PASSWORD_VALIDATORS',['../namespacePROJECT_1_1settings.html#adfde5213ef848d455082a227c9925e22',1,'PROJECT::settings']]],
+  ['average_5ftime_40',['average_time',['../namespacemain.html#a156cd359d08129ac534102b4750b3b52',1,'main']]]
 ];

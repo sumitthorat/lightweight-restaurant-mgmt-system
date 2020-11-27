@@ -1,5 +1,10 @@
 \hypertarget{main_8py}{}\doxysection{Backend/\+A\+P\+I/main.py File Reference}
 \label{main_8py}\index{Backend/API/main.py@{Backend/API/main.py}}
+
+
+File Related to A\+PI endpoints and database.  
+
+
 \doxysubsection*{Classes}
 \begin{DoxyCompactItemize}
 \item 
@@ -74,14 +79,12 @@ def \mbox{\hyperlink{namespacemain_a24908b92e1685645c910c01082903a25}{total\+\_\
 \item 
 \mbox{\hyperlink{namespacemain_a81ae9faedaa69e3e28e2960a0548df8d}{help}}
 \item 
-\mbox{\hyperlink{namespacemain_a832ddc04754e8a43d4f3c6165b1294a7}{host}}
-\item 
 \mbox{\hyperlink{namespacemain_a61569f2965b7a369eb10b6d75d410d11}{int}}
 \item 
 \mbox{\hyperlink{namespacemain_af6097cf2218e3cb5ead26fa24227cd11}{menu\+\_\+put\+\_\+item}} = reqparse.\+Request\+Parser()
-\item 
+\begin{DoxyCompactList}\small\item\em Parser object to parse menu items. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{namespacemain_aa91d7fe076d3d5d7e7131dab20451032}{menu\+\_\+update\+\_\+item}} = reqparse.\+Request\+Parser()
-\item 
+\begin{DoxyCompactList}\small\item\em Parser object to parse menu items for updation. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{namespacemain_a33d390b3d71a902ec9fbcd5d2d237619}{methods}}
 \item 
 \mbox{\hyperlink{namespacemain_a070f00ca4993865b3647159863ba6702}{ordcomp\+\_\+put\+\_\+item}} = reqparse.\+Request\+Parser()
@@ -89,9 +92,9 @@ def \mbox{\hyperlink{namespacemain_a24908b92e1685645c910c01082903a25}{total\+\_\
 \mbox{\hyperlink{namespacemain_a05b0acdeecc6f3e5ade45f73774a10a8}{order\+\_\+complete}} = reqparse.\+Request\+Parser()
 \item 
 \mbox{\hyperlink{namespacemain_ad7cb4de4d6af1e1f17b9b4984eb54e0f}{ordpen\+\_\+put\+\_\+item}} = reqparse.\+Request\+Parser()
-\item 
+\begin{DoxyCompactList}\small\item\em Parser object to parse pending order data. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{namespacemain_a1e3ebe89cea08436ab0c2fe645ddebb7}{ordpen\+\_\+update\+\_\+item}} = reqparse.\+Request\+Parser()
-\item 
+\begin{DoxyCompactList}\small\item\em Parser object to parse pending order data for update. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{namespacemain_ae81948490ddf54e80a22593640178350}{required}}
 \item 
 dictionary \mbox{\hyperlink{namespacemain_af70aeb1af633652946268dc73fe9d7c2}{resource\+\_\+menu\+\_\+fields}}
@@ -107,16 +110,49 @@ dictionary \mbox{\hyperlink{namespacemain_a4c6a6bd8beca5d09b9b82acc94a0428d}{res
 \mbox{\hyperlink{namespacemain_a4b99ff73a8a869319570237b5c57ab03}{str}}
 \item 
 \mbox{\hyperlink{namespacemain_ac51a6695dc3603f4943db43a974f5994}{table\+\_\+put\+\_\+item}} = reqparse.\+Request\+Parser()
-\item 
+\begin{DoxyCompactList}\small\item\em Parser object to parse table data. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{namespacemain_a643a20c0c59588a0f741a6095e2025fd}{True}}
 \item 
 \mbox{\hyperlink{namespacemain_a7aead736a07eaf25623ad7bfa1f0ee2d}{type}}
 \item 
 \mbox{\hyperlink{namespacemain_a046d50c2d31dc3f06461ef67fe8d6ead}{user\+\_\+login\+\_\+item}} = reqparse.\+Request\+Parser()
-\item 
+\begin{DoxyCompactList}\small\item\em Parser object to parse login data. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{namespacemain_a3e0433be7377b4c9923d3f9565c8c47f}{user\+\_\+put\+\_\+item}} = reqparse.\+Request\+Parser()
-\item 
+\begin{DoxyCompactList}\small\item\em Parser object to parse user details data. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{namespacemain_a16b947279e7babff74d70eb0318e0b3f}{user\+\_\+update\+\_\+item}} = reqparse.\+Request\+Parser()
-\item 
+\begin{DoxyCompactList}\small\item\em Parser object to parse user update details. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{namespacemain_a2d5a7e92b4fa368f689456aa85ed14c9}{wsgi\+\_\+app}}
 \end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+File Related to A\+PI endpoints and database. 
+
+\hypertarget{main_8py_description_function}{}\doxysubsection{Description}\label{main_8py_description_function}
+Classes used for database creation
+\begin{DoxyItemize}
+\item Menu\+Tab (for storing menu)
+\item Table\+Tab (for storing restraunt table data)
+\item Orders\+Master (master table for order tracking)
+\item Orders\+Pending (table for storing pending orders)
+\item Orders\+Complete (table for storing completed orders)
+\item Categories (Storing item names with category of that item)
+\item Users (Table for storing user details)
+\end{DoxyItemize}\hypertarget{main_8py_libraries_sensors}{}\doxysubsection{Libraries/\+Modules}\label{main_8py_libraries_sensors}
+
+\begin{DoxyItemize}
+\item flask library
+\item flask\+\_\+restful library
+\item flask\+\_\+sqlalchemy library
+\item json standard library
+\item datetime standard library
+\item pyqrcode library
+\item base64 library
+\item socketio library
+\item png library
+\item os standard library
+\end{DoxyItemize}\hypertarget{main_8py_notes_sensors}{}\doxysubsection{Notes}\label{main_8py_notes_sensors}
+
+\begin{DoxyItemize}
+\item Comments are Doxygen compatible. 
+\end{DoxyItemize}

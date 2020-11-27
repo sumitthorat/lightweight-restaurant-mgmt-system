@@ -4,5 +4,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="ExampleUnitTest",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classcom_1_1example_1_1lmrs_1_1ExampleUnitTest.html",tooltip="Example local unit test, which will execute on the development machine (host)."];
+  Node0 [label="GetCategoriesJSONResponse",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classcom_1_1example_1_1lmrs_1_1model_1_1editmenu_1_1GetCategoriesJSONResponse.html",tooltip="POJO for Get Categories API Response."];
 }

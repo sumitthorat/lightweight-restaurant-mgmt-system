@@ -69,14 +69,12 @@ def \mbox{\hyperlink{namespacemain_a24908b92e1685645c910c01082903a25}{total\+\_\
 \item 
 \mbox{\hyperlink{namespacemain_a81ae9faedaa69e3e28e2960a0548df8d}{help}}
 \item 
-\mbox{\hyperlink{namespacemain_a832ddc04754e8a43d4f3c6165b1294a7}{host}}
-\item 
 \mbox{\hyperlink{namespacemain_a61569f2965b7a369eb10b6d75d410d11}{int}}
 \item 
 \mbox{\hyperlink{namespacemain_af6097cf2218e3cb5ead26fa24227cd11}{menu\+\_\+put\+\_\+item}} = reqparse.\+Request\+Parser()
-\item 
+\begin{DoxyCompactList}\small\item\em Parser object to parse menu items. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{namespacemain_aa91d7fe076d3d5d7e7131dab20451032}{menu\+\_\+update\+\_\+item}} = reqparse.\+Request\+Parser()
-\item 
+\begin{DoxyCompactList}\small\item\em Parser object to parse menu items for updation. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{namespacemain_a33d390b3d71a902ec9fbcd5d2d237619}{methods}}
 \item 
 \mbox{\hyperlink{namespacemain_a070f00ca4993865b3647159863ba6702}{ordcomp\+\_\+put\+\_\+item}} = reqparse.\+Request\+Parser()
@@ -84,9 +82,9 @@ def \mbox{\hyperlink{namespacemain_a24908b92e1685645c910c01082903a25}{total\+\_\
 \mbox{\hyperlink{namespacemain_a05b0acdeecc6f3e5ade45f73774a10a8}{order\+\_\+complete}} = reqparse.\+Request\+Parser()
 \item 
 \mbox{\hyperlink{namespacemain_ad7cb4de4d6af1e1f17b9b4984eb54e0f}{ordpen\+\_\+put\+\_\+item}} = reqparse.\+Request\+Parser()
-\item 
+\begin{DoxyCompactList}\small\item\em Parser object to parse pending order data. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{namespacemain_a1e3ebe89cea08436ab0c2fe645ddebb7}{ordpen\+\_\+update\+\_\+item}} = reqparse.\+Request\+Parser()
-\item 
+\begin{DoxyCompactList}\small\item\em Parser object to parse pending order data for update. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{namespacemain_ae81948490ddf54e80a22593640178350}{required}}
 \item 
 dictionary \mbox{\hyperlink{namespacemain_af70aeb1af633652946268dc73fe9d7c2}{resource\+\_\+menu\+\_\+fields}}
@@ -102,20 +100,24 @@ dictionary \mbox{\hyperlink{namespacemain_a4c6a6bd8beca5d09b9b82acc94a0428d}{res
 \mbox{\hyperlink{namespacemain_a4b99ff73a8a869319570237b5c57ab03}{str}}
 \item 
 \mbox{\hyperlink{namespacemain_ac51a6695dc3603f4943db43a974f5994}{table\+\_\+put\+\_\+item}} = reqparse.\+Request\+Parser()
-\item 
+\begin{DoxyCompactList}\small\item\em Parser object to parse table data. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{namespacemain_a643a20c0c59588a0f741a6095e2025fd}{True}}
 \item 
 \mbox{\hyperlink{namespacemain_a7aead736a07eaf25623ad7bfa1f0ee2d}{type}}
 \item 
 \mbox{\hyperlink{namespacemain_a046d50c2d31dc3f06461ef67fe8d6ead}{user\+\_\+login\+\_\+item}} = reqparse.\+Request\+Parser()
-\item 
+\begin{DoxyCompactList}\small\item\em Parser object to parse login data. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{namespacemain_a3e0433be7377b4c9923d3f9565c8c47f}{user\+\_\+put\+\_\+item}} = reqparse.\+Request\+Parser()
-\item 
+\begin{DoxyCompactList}\small\item\em Parser object to parse user details data. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{namespacemain_a16b947279e7babff74d70eb0318e0b3f}{user\+\_\+update\+\_\+item}} = reqparse.\+Request\+Parser()
-\item 
+\begin{DoxyCompactList}\small\item\em Parser object to parse user update details. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{namespacemain_a2d5a7e92b4fa368f689456aa85ed14c9}{wsgi\+\_\+app}}
 \end{DoxyCompactItemize}
 
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}@brief API Endpoint Functions And Database Classes \end{DoxyVerb}
+ 
 
 \doxysubsection{Function Documentation}
 \mbox{\Hypertarget{namespacemain_a4d6041386cb69a4227aea0192682e614}\label{namespacemain_a4d6041386cb69a4227aea0192682e614}} 
@@ -124,103 +126,171 @@ dictionary \mbox{\hyperlink{namespacemain_a4c6a6bd8beca5d09b9b82acc94a0428d}{res
 \doxysubsubsection{\texorpdfstring{add\_item\_to\_menu()}{add\_item\_to\_menu()}}
 {\footnotesize\ttfamily def main.\+add\+\_\+item\+\_\+to\+\_\+menu (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{namespacemain_a6efd3a90f94c231ca5ccaea6b89d5a1a}\label{namespacemain_a6efd3a90f94c231ca5ccaea6b89d5a1a}} 
+\begin{DoxyVerb}This function is used to a new menu item to database
+
+@return A json structure having status and message of operation.
+\end{DoxyVerb}
+ \mbox{\Hypertarget{namespacemain_a6efd3a90f94c231ca5ccaea6b89d5a1a}\label{namespacemain_a6efd3a90f94c231ca5ccaea6b89d5a1a}} 
 \index{main@{main}!add\_new\_table@{add\_new\_table}}
 \index{add\_new\_table@{add\_new\_table}!main@{main}}
 \doxysubsubsection{\texorpdfstring{add\_new\_table()}{add\_new\_table()}}
 {\footnotesize\ttfamily def main.\+add\+\_\+new\+\_\+table (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{namespacemain_ae5717bf75a7a8eaabb78466482cdc1b9}\label{namespacemain_ae5717bf75a7a8eaabb78466482cdc1b9}} 
+\begin{DoxyVerb}This function is used to add new table info to database
+
+@return A json structure having status and message of operation.
+\end{DoxyVerb}
+ \mbox{\Hypertarget{namespacemain_ae5717bf75a7a8eaabb78466482cdc1b9}\label{namespacemain_ae5717bf75a7a8eaabb78466482cdc1b9}} 
 \index{main@{main}!add\_new\_user@{add\_new\_user}}
 \index{add\_new\_user@{add\_new\_user}!main@{main}}
 \doxysubsubsection{\texorpdfstring{add\_new\_user()}{add\_new\_user()}}
 {\footnotesize\ttfamily def main.\+add\+\_\+new\+\_\+user (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{namespacemain_afe340445e8b4b4f7eb89b9fe10fdef6c}\label{namespacemain_afe340445e8b4b4f7eb89b9fe10fdef6c}} 
+\begin{DoxyVerb}This function is used to add user details database
+
+@return A json structure having status and message of operation.
+\end{DoxyVerb}
+ \mbox{\Hypertarget{namespacemain_afe340445e8b4b4f7eb89b9fe10fdef6c}\label{namespacemain_afe340445e8b4b4f7eb89b9fe10fdef6c}} 
 \index{main@{main}!all\_categories@{all\_categories}}
 \index{all\_categories@{all\_categories}!main@{main}}
 \doxysubsubsection{\texorpdfstring{all\_categories()}{all\_categories()}}
 {\footnotesize\ttfamily def main.\+all\+\_\+categories (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{namespacemain_af810ac03790f6284e8b20d59bcefae28}\label{namespacemain_af810ac03790f6284e8b20d59bcefae28}} 
+\begin{DoxyVerb}This function is used to get item categories from database.
+
+@return A json structure having status and message of operation with categories list.
+\end{DoxyVerb}
+ \mbox{\Hypertarget{namespacemain_af810ac03790f6284e8b20d59bcefae28}\label{namespacemain_af810ac03790f6284e8b20d59bcefae28}} 
 \index{main@{main}!all\_completed@{all\_completed}}
 \index{all\_completed@{all\_completed}!main@{main}}
 \doxysubsubsection{\texorpdfstring{all\_completed()}{all\_completed()}}
 {\footnotesize\ttfamily def main.\+all\+\_\+completed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{namespacemain_a9b9d4753ba75960e1f12d9de5bc6a7ae}\label{namespacemain_a9b9d4753ba75960e1f12d9de5bc6a7ae}} 
+\begin{DoxyVerb}This function is used to retrieve list of complete orders.
+
+@return A json structure having completed orders data.
+\end{DoxyVerb}
+ \mbox{\Hypertarget{namespacemain_a9b9d4753ba75960e1f12d9de5bc6a7ae}\label{namespacemain_a9b9d4753ba75960e1f12d9de5bc6a7ae}} 
 \index{main@{main}!all\_tables@{all\_tables}}
 \index{all\_tables@{all\_tables}!main@{main}}
 \doxysubsubsection{\texorpdfstring{all\_tables()}{all\_tables()}}
 {\footnotesize\ttfamily def main.\+all\+\_\+tables (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{namespacemain_abd8ccc58657193a346b3a746269bacd6}\label{namespacemain_abd8ccc58657193a346b3a746269bacd6}} 
+\begin{DoxyVerb}This function is used to get restraunt tables list from database.
+
+@return A json structure having tables info data.
+\end{DoxyVerb}
+ \mbox{\Hypertarget{namespacemain_abd8ccc58657193a346b3a746269bacd6}\label{namespacemain_abd8ccc58657193a346b3a746269bacd6}} 
 \index{main@{main}!attempt\_login@{attempt\_login}}
 \index{attempt\_login@{attempt\_login}!main@{main}}
 \doxysubsubsection{\texorpdfstring{attempt\_login()}{attempt\_login()}}
 {\footnotesize\ttfamily def main.\+attempt\+\_\+login (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{namespacemain_a156cd359d08129ac534102b4750b3b52}\label{namespacemain_a156cd359d08129ac534102b4750b3b52}} 
+\begin{DoxyVerb}This function is used to verify user login.
+
+@return A json structure having status and message of operation.
+\end{DoxyVerb}
+ \mbox{\Hypertarget{namespacemain_a156cd359d08129ac534102b4750b3b52}\label{namespacemain_a156cd359d08129ac534102b4750b3b52}} 
 \index{main@{main}!average\_time@{average\_time}}
 \index{average\_time@{average\_time}!main@{main}}
 \doxysubsubsection{\texorpdfstring{average\_time()}{average\_time()}}
 {\footnotesize\ttfamily def main.\+average\+\_\+time (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{namespacemain_aec4ab0d5388a01a60ca6d17f7fb864cc}\label{namespacemain_aec4ab0d5388a01a60ca6d17f7fb864cc}} 
+\begin{DoxyVerb}This function is used to retrieve average time for order completion.
+
+@return A json structure having numeber of orders completed and average time taken.
+\end{DoxyVerb}
+ \mbox{\Hypertarget{namespacemain_aec4ab0d5388a01a60ca6d17f7fb864cc}\label{namespacemain_aec4ab0d5388a01a60ca6d17f7fb864cc}} 
 \index{main@{main}!complete\_order@{complete\_order}}
 \index{complete\_order@{complete\_order}!main@{main}}
 \doxysubsubsection{\texorpdfstring{complete\_order()}{complete\_order()}}
 {\footnotesize\ttfamily def main.\+complete\+\_\+order (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{namespacemain_a878d65bf7adbe630ba7d642b345bdc0d}\label{namespacemain_a878d65bf7adbe630ba7d642b345bdc0d}} 
+\begin{DoxyVerb}This function is used to complete a pending order from database.
+
+@return A json structure having status and message of operation.
+\end{DoxyVerb}
+ \mbox{\Hypertarget{namespacemain_a878d65bf7adbe630ba7d642b345bdc0d}\label{namespacemain_a878d65bf7adbe630ba7d642b345bdc0d}} 
 \index{main@{main}!delete\_table@{delete\_table}}
 \index{delete\_table@{delete\_table}!main@{main}}
 \doxysubsubsection{\texorpdfstring{delete\_table()}{delete\_table()}}
 {\footnotesize\ttfamily def main.\+delete\+\_\+table (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{namespacemain_ab6b9327a17a876bd8934f273b539732d}\label{namespacemain_ab6b9327a17a876bd8934f273b539732d}} 
+\begin{DoxyVerb}This function is used to delete table from database
+
+@return A json structure having status and message of operation.
+\end{DoxyVerb}
+ \mbox{\Hypertarget{namespacemain_ab6b9327a17a876bd8934f273b539732d}\label{namespacemain_ab6b9327a17a876bd8934f273b539732d}} 
 \index{main@{main}!get\_full\_menu@{get\_full\_menu}}
 \index{get\_full\_menu@{get\_full\_menu}!main@{main}}
 \doxysubsubsection{\texorpdfstring{get\_full\_menu()}{get\_full\_menu()}}
 {\footnotesize\ttfamily def main.\+get\+\_\+full\+\_\+menu (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{namespacemain_a7e8d62cfbaa606fef8db58f83b86045b}\label{namespacemain_a7e8d62cfbaa606fef8db58f83b86045b}} 
+\begin{DoxyVerb}This function is used to retrieve entire menu from database
+
+@return A json structure having menu items and their categories.
+\end{DoxyVerb}
+ \mbox{\Hypertarget{namespacemain_a7e8d62cfbaa606fef8db58f83b86045b}\label{namespacemain_a7e8d62cfbaa606fef8db58f83b86045b}} 
 \index{main@{main}!get\_pending\_orders@{get\_pending\_orders}}
 \index{get\_pending\_orders@{get\_pending\_orders}!main@{main}}
 \doxysubsubsection{\texorpdfstring{get\_pending\_orders()}{get\_pending\_orders()}}
 {\footnotesize\ttfamily def main.\+get\+\_\+pending\+\_\+orders (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{namespacemain_ad23729acbefbcf56b66148ab1c7d6962}\label{namespacemain_ad23729acbefbcf56b66148ab1c7d6962}} 
+\begin{DoxyVerb}This function is used to retrieve pending orders from database.
+
+@return A json structure having order id with a list of items data.
+\end{DoxyVerb}
+ \mbox{\Hypertarget{namespacemain_ad23729acbefbcf56b66148ab1c7d6962}\label{namespacemain_ad23729acbefbcf56b66148ab1c7d6962}} 
 \index{main@{main}!get\_tables@{get\_tables}}
 \index{get\_tables@{get\_tables}!main@{main}}
 \doxysubsubsection{\texorpdfstring{get\_tables()}{get\_tables()}}
 {\footnotesize\ttfamily def main.\+get\+\_\+tables (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{namespacemain_a028bd1014c56d1d1aeb5de264da6e98a}\label{namespacemain_a028bd1014c56d1d1aeb5de264da6e98a}} 
+\begin{DoxyVerb}This function is used to get tables list from database
+
+@return A json structure having tableid and encoded string.
+\end{DoxyVerb}
+ \mbox{\Hypertarget{namespacemain_a028bd1014c56d1d1aeb5de264da6e98a}\label{namespacemain_a028bd1014c56d1d1aeb5de264da6e98a}} 
 \index{main@{main}!item\_sale@{item\_sale}}
 \index{item\_sale@{item\_sale}!main@{main}}
 \doxysubsubsection{\texorpdfstring{item\_sale()}{item\_sale()}}
 {\footnotesize\ttfamily def main.\+item\+\_\+sale (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{namespacemain_a04296b6b6db68afe1464717b4869c13d}\label{namespacemain_a04296b6b6db68afe1464717b4869c13d}} 
+\begin{DoxyVerb}This function is used to retrieve sale of particular item from database.
+
+@return A json structure having item name and quantity sold of that item.
+\end{DoxyVerb}
+ \mbox{\Hypertarget{namespacemain_a04296b6b6db68afe1464717b4869c13d}\label{namespacemain_a04296b6b6db68afe1464717b4869c13d}} 
 \index{main@{main}!most\_sold@{most\_sold}}
 \index{most\_sold@{most\_sold}!main@{main}}
 \doxysubsubsection{\texorpdfstring{most\_sold()}{most\_sold()}}
 {\footnotesize\ttfamily def main.\+most\+\_\+sold (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{namespacemain_a1215032e36af030aba690ca49053cae8}\label{namespacemain_a1215032e36af030aba690ca49053cae8}} 
+\begin{DoxyVerb}This function is used to retrieve most sold item for the day.
+
+@return A json structure having item name and quantity sale.
+\end{DoxyVerb}
+ \mbox{\Hypertarget{namespacemain_a1215032e36af030aba690ca49053cae8}\label{namespacemain_a1215032e36af030aba690ca49053cae8}} 
 \index{main@{main}!new\_order@{new\_order}}
 \index{new\_order@{new\_order}!main@{main}}
 \doxysubsubsection{\texorpdfstring{new\_order()}{new\_order()}}
 {\footnotesize\ttfamily def main.\+new\+\_\+order (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{namespacemain_a24908b92e1685645c910c01082903a25}\label{namespacemain_a24908b92e1685645c910c01082903a25}} 
+\begin{DoxyVerb}This function is used to create new order in database.
+
+@return A json structure having status and message of operation.
+\end{DoxyVerb}
+ \mbox{\Hypertarget{namespacemain_a24908b92e1685645c910c01082903a25}\label{namespacemain_a24908b92e1685645c910c01082903a25}} 
 \index{main@{main}!total\_sale@{total\_sale}}
 \index{total\_sale@{total\_sale}!main@{main}}
 \doxysubsubsection{\texorpdfstring{total\_sale()}{total\_sale()}}
 {\footnotesize\ttfamily def main.\+total\+\_\+sale (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
+\begin{DoxyVerb}This function is used to retrieve total sale of current day.
 
+@return A json structure having amount field.
+\end{DoxyVerb}
+ 
 
 \doxysubsection{Variable Documentation}
 \mbox{\Hypertarget{namespacemain_a6da13b696f737097e0146e47cc0d0985}\label{namespacemain_a6da13b696f737097e0146e47cc0d0985}} 
@@ -259,12 +329,6 @@ dictionary \mbox{\hyperlink{namespacemain_a4c6a6bd8beca5d09b9b82acc94a0428d}{res
 \doxysubsubsection{\texorpdfstring{help}{help}}
 {\footnotesize\ttfamily help}
 
-\mbox{\Hypertarget{namespacemain_a832ddc04754e8a43d4f3c6165b1294a7}\label{namespacemain_a832ddc04754e8a43d4f3c6165b1294a7}} 
-\index{main@{main}!host@{host}}
-\index{host@{host}!main@{main}}
-\doxysubsubsection{\texorpdfstring{host}{host}}
-{\footnotesize\ttfamily host}
-
 \mbox{\Hypertarget{namespacemain_a61569f2965b7a369eb10b6d75d410d11}\label{namespacemain_a61569f2965b7a369eb10b6d75d410d11}} 
 \index{main@{main}!int@{int}}
 \index{int@{int}!main@{main}}
@@ -277,11 +341,19 @@ dictionary \mbox{\hyperlink{namespacemain_a4c6a6bd8beca5d09b9b82acc94a0428d}{res
 \doxysubsubsection{\texorpdfstring{menu\_put\_item}{menu\_put\_item}}
 {\footnotesize\ttfamily menu\+\_\+put\+\_\+item = reqparse.\+Request\+Parser()}
 
+
+
+Parser object to parse menu items. 
+
 \mbox{\Hypertarget{namespacemain_aa91d7fe076d3d5d7e7131dab20451032}\label{namespacemain_aa91d7fe076d3d5d7e7131dab20451032}} 
 \index{main@{main}!menu\_update\_item@{menu\_update\_item}}
 \index{menu\_update\_item@{menu\_update\_item}!main@{main}}
 \doxysubsubsection{\texorpdfstring{menu\_update\_item}{menu\_update\_item}}
 {\footnotesize\ttfamily menu\+\_\+update\+\_\+item = reqparse.\+Request\+Parser()}
+
+
+
+Parser object to parse menu items for updation. 
 
 \mbox{\Hypertarget{namespacemain_a33d390b3d71a902ec9fbcd5d2d237619}\label{namespacemain_a33d390b3d71a902ec9fbcd5d2d237619}} 
 \index{main@{main}!methods@{methods}}
@@ -307,11 +379,19 @@ dictionary \mbox{\hyperlink{namespacemain_a4c6a6bd8beca5d09b9b82acc94a0428d}{res
 \doxysubsubsection{\texorpdfstring{ordpen\_put\_item}{ordpen\_put\_item}}
 {\footnotesize\ttfamily ordpen\+\_\+put\+\_\+item = reqparse.\+Request\+Parser()}
 
+
+
+Parser object to parse pending order data. 
+
 \mbox{\Hypertarget{namespacemain_a1e3ebe89cea08436ab0c2fe645ddebb7}\label{namespacemain_a1e3ebe89cea08436ab0c2fe645ddebb7}} 
 \index{main@{main}!ordpen\_update\_item@{ordpen\_update\_item}}
 \index{ordpen\_update\_item@{ordpen\_update\_item}!main@{main}}
 \doxysubsubsection{\texorpdfstring{ordpen\_update\_item}{ordpen\_update\_item}}
 {\footnotesize\ttfamily ordpen\+\_\+update\+\_\+item = reqparse.\+Request\+Parser()}
+
+
+
+Parser object to parse pending order data for update. 
 
 \mbox{\Hypertarget{namespacemain_ae81948490ddf54e80a22593640178350}\label{namespacemain_ae81948490ddf54e80a22593640178350}} 
 \index{main@{main}!required@{required}}
@@ -388,6 +468,10 @@ dictionary \mbox{\hyperlink{namespacemain_a4c6a6bd8beca5d09b9b82acc94a0428d}{res
 \doxysubsubsection{\texorpdfstring{table\_put\_item}{table\_put\_item}}
 {\footnotesize\ttfamily table\+\_\+put\+\_\+item = reqparse.\+Request\+Parser()}
 
+
+
+Parser object to parse table data. 
+
 \mbox{\Hypertarget{namespacemain_a643a20c0c59588a0f741a6095e2025fd}\label{namespacemain_a643a20c0c59588a0f741a6095e2025fd}} 
 \index{main@{main}!True@{True}}
 \index{True@{True}!main@{main}}
@@ -406,17 +490,29 @@ dictionary \mbox{\hyperlink{namespacemain_a4c6a6bd8beca5d09b9b82acc94a0428d}{res
 \doxysubsubsection{\texorpdfstring{user\_login\_item}{user\_login\_item}}
 {\footnotesize\ttfamily user\+\_\+login\+\_\+item = reqparse.\+Request\+Parser()}
 
+
+
+Parser object to parse login data. 
+
 \mbox{\Hypertarget{namespacemain_a3e0433be7377b4c9923d3f9565c8c47f}\label{namespacemain_a3e0433be7377b4c9923d3f9565c8c47f}} 
 \index{main@{main}!user\_put\_item@{user\_put\_item}}
 \index{user\_put\_item@{user\_put\_item}!main@{main}}
 \doxysubsubsection{\texorpdfstring{user\_put\_item}{user\_put\_item}}
 {\footnotesize\ttfamily user\+\_\+put\+\_\+item = reqparse.\+Request\+Parser()}
 
+
+
+Parser object to parse user details data. 
+
 \mbox{\Hypertarget{namespacemain_a16b947279e7babff74d70eb0318e0b3f}\label{namespacemain_a16b947279e7babff74d70eb0318e0b3f}} 
 \index{main@{main}!user\_update\_item@{user\_update\_item}}
 \index{user\_update\_item@{user\_update\_item}!main@{main}}
 \doxysubsubsection{\texorpdfstring{user\_update\_item}{user\_update\_item}}
 {\footnotesize\ttfamily user\+\_\+update\+\_\+item = reqparse.\+Request\+Parser()}
+
+
+
+Parser object to parse user update details. 
 
 \mbox{\Hypertarget{namespacemain_a2d5a7e92b4fa368f689456aa85ed14c9}\label{namespacemain_a2d5a7e92b4fa368f689456aa85ed14c9}} 
 \index{main@{main}!wsgi\_app@{wsgi\_app}}

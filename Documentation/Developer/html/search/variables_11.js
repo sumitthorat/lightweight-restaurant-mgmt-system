@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['version_5fcode_641',['VERSION_CODE',['../classcom_1_1example_1_1lmrs_1_1BuildConfig.html#a6b775b7888180974e82968ffa57855d2',1,'com::example::lmrs::BuildConfig']]],
-  ['version_5fname_642',['VERSION_NAME',['../classcom_1_1example_1_1lmrs_1_1BuildConfig.html#a19c78eb29b1be38a54e13f738218a81d',1,'com::example::lmrs::BuildConfig']]]
+  ['wsgi_5fapp_618',['wsgi_app',['../namespacemain.html#a2d5a7e92b4fa368f689456aa85ed14c9',1,'main']]],
+  ['wsgi_5fapplication_619',['WSGI_APPLICATION',['../namespacePROJECT_1_1settings.html#a9c343ae6b8eb80ef2de562528f3f00b9',1,'PROJECT::settings']]]
 ];

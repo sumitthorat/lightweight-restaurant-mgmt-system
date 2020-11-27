@@ -1,3 +1,46 @@
+""" @brief API Endpoint Functions And Database Classes """
+
+##
+# @mainpage Lightweight Restraunt Management System
+#
+# @section description_main Description
+# Lightweight Restaurant Management System is a software system which aims
+#to digitise the order management process at restaurants whilst being very light,
+#inexpensive and user friendly. It does so by enabling the restaurant staff to
+#make use of an Android app to view orders, edit menu, manage tables and view
+#statistics. IT allows placing orders using a webapp which can be accessed via a
+#table specific QR code.
+##
+# @file main.py
+#
+# @brief File Related to API endpoints and database
+#
+# @section description_function Description
+# Classes used for database creation
+# - MenuTab (for storing menu)
+# - TableTab (for storing restraunt table data)
+# - OrdersMaster (master table for order tracking)
+# - OrdersPending (table for storing pending orders)
+# - OrdersComplete (table for storing completed orders)
+# - Categories (Storing item names with category of that item)
+# - Users (Table for storing user details)
+#
+# @section libraries_sensors Libraries/Modules
+# - flask library
+# - flask_restful library
+# - flask_sqlalchemy library
+# - json standard library
+# - datetime standard library 
+# - pyqrcode library
+# - base64 library
+# - socketio library
+# - png library
+# - os standard library
+#
+# @section notes_sensors Notes
+# - Comments are Doxygen compatible.
+
+#Imports
 from flask import Flask, request
 from flask_restful import Api, Resource, reqparse, abort, fields, marshal_with
 from flask_sqlalchemy import SQLAlchemy
@@ -14,9 +57,7 @@ from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
 app.config['CORS_HEADERS'] = 'Content-Type'
-# CORS(app, resources={r"/NewOrder": {"origins": "http://localhost:8000"}})
-CORS(app, resources={r"/NewOrder": {"origins": "*"}})
-
+CORS(app, resources={r"/NewOrder": {"origins": "http://localhost:8000"}})
 
 
 sio = socketio.Server(logger=True, async_mode=None)
@@ -27,6 +68,11 @@ app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///database.db"
 db = SQLAlchemy(app)
 
 class MenuTab(db.Model):
+	"""
+	The database model class for menu storage.
+	
+	Defines MenuTab table attributes and the appropriate keys.
+	"""
     __tablename__ = 'menutab'
     item_name = db.Column(db.String(100), primary_key=True)
     price = db.Column(db.Integer, nullable=False)
@@ -36,12 +82,22 @@ class MenuTab(db.Model):
         return f"Menu(items = {item_name}, price = {price})"
 
 class TableTab(db.Model):
+	"""
+	The database model class for restraunt table storage.
+	
+	Defines TableTab table attributes and the appropriate keys.
+	"""
     __tablename__ = 'tabletab'
     tableid = db.Column(db.Integer, primary_key=True)
     qrcode_str = db.Column(db.String, unique=True, nullable=False)
     
 
 class OrdersMaster(db.Model):
+	"""
+	The database model class for defining Order table.
+	
+	Defines OrdersMaster table attributes and the appropriate keys.
+	"""
     orderid = db.Column(db.Integer, primary_key=True)
     status = db.Column(db.String, nullable=False)
     amount = db.Column(db.Float, nullable=False)
@@ -51,24 +107,44 @@ class OrdersMaster(db.Model):
 
 
 class OrdersPending(db.Model):
+	"""
+	The database model class for defining table for pending orders.
+	
+	Defines OrdersPending table attributes and the appropriate keys.
+	"""
     __tablename__ = 'orders_pending'
     orderid = db.Column(db.Integer, db.ForeignKey('orders_master.orderid'), primary_key=True)
     item_name = db.Column(db.String, primary_key=True)
     quantity = db.Column(db.Integer)
     
 class OrdersComplete(db.Model):
+	"""
+	The database model class for defining table for completed orders.
+	
+	Defines OrdersComplete table attributes and the appropriate keys.
+	"""
     orderid = db.Column(db.Integer, db.ForeignKey('orders_master.orderid'), primary_key=True)
     item_name = db.Column(db.String, primary_key=True)
     quantity = db.Column(db.Integer)
     
 
 class Users(db.Model):
+	"""
+	The database model class for storing user details.
+	
+	Defines Users table attributes and the appropriate keys.
+	"""
     username = db.Column(db.String(40), primary_key=True)
     password_hash = db.Column(db.String, nullable=False)
     role = db.Column(db.String(20), nullable=False)
 
 class Categories(db.Model):
-    category = db.Column(db.String(20), primary_key=True)
+    """
+	The database model class for storing item categories.
+	
+	Defines Users table attributes and the appropriate keys.
+	"""
+	category = db.Column(db.String(20), primary_key=True)
     menu_add = db.relationship('MenuTab', backref='item')
 
 
@@ -77,24 +153,30 @@ class Categories(db.Model):
 
 
 # Define parser objects and field types for all tables in database
+#Global Parser Objects
+## Parser object to parse menu items
 menu_put_item = reqparse.RequestParser()
 menu_put_item.add_argument("item_name", type=str,required=True, help="Item name not sent")
 menu_put_item.add_argument("price", type=int,required=True, help="Price of item is required")
 menu_put_item.add_argument("category", type=str, required=True, help="Category not given")
 
+## Parser object to parse menu items for updation
 menu_update_item = reqparse.RequestParser()
 menu_update_item.add_argument("item_name", type=str)
 menu_update_item.add_argument("price", type=int)
 menu_update_item.add_argument("category", type=str)
 
+## Parser object to parse table data
 table_put_item = reqparse.RequestParser()
 table_put_item.add_argument("tableid", type=int, required=True, help="Table id required")
 
+## Parser object to parse pending order data
 ordpen_put_item = reqparse.RequestParser()
 ordpen_put_item.add_argument("content", type=str, required=True, help="No food items entered")
 ordpen_put_item.add_argument("amount", type=float, required=True, help="Amount not entered")
 ordpen_put_item.add_argument("tableid", type=int, required=True, help="table id not entered")
 
+## Parser object to parse pending order data for update
 ordpen_update_item = reqparse.RequestParser()
 ordpen_update_item.add_argument("content", type=str)
 ordpen_update_item.add_argument("amount", type=float)
@@ -105,15 +187,18 @@ ordcomp_put_item.add_argument("content", type=str, required=True, help="No food 
 ordcomp_put_item.add_argument("amount", type=float, required=True, help="Amount not entered")
 ordcomp_put_item.add_argument("tableid", type=int, required=True, help="table id not entered")
 
+## Parser object to parse user details data
 user_put_item = reqparse.RequestParser()
 user_put_item.add_argument("username", type=str, required=True, help="username required")
 user_put_item.add_argument("password_hash", type=str, required=True, help="password required")
 user_put_item.add_argument("role", type=str, required=True, help="role of user required")
 
+## Parser object to parse login data
 user_login_item = reqparse.RequestParser()
 user_login_item.add_argument("username", type=str, required=True, help="username required")
 user_login_item.add_argument("password_hash", type=str, required=True, help="password required")
 
+## Parser object to parse user update details
 user_update_item = reqparse.RequestParser()
 user_update_item.add_argument("username", type=str, required=True)
 user_update_item.add_argument("password_hash", type=str)
@@ -144,6 +229,11 @@ resource_order_fields = {
 # Delete A Table
 @app.route('/DeleteTable', methods=['PUT'])
 def delete_table():
+	"""
+	This function is used to delete table from database
+	
+	@return A json structure having status and message of operation.
+	"""
 	args = request.get_json()
 	table_id = args['tableid']
 	
@@ -161,6 +251,11 @@ def delete_table():
 # Get all tables info
 @app.route('/GetTables', methods=['GET'])
 def get_tables():
+	"""
+	This function is used to get tables list from database
+	
+	@return A json structure having tableid and encoded string.
+	"""
     all_tables = TableTab.query.all()
 
     output = []
@@ -175,13 +270,18 @@ def get_tables():
 # Add new table
 @app.route('/AddTable', methods=['PUT'])
 def add_new_table():
+	"""
+	This function is used to add new table info to database
+	
+	@return A json structure having status and message of operation.
+	"""
     args = table_put_item.parse_args()
     result = TableTab.query.filter_by(tableid=args['tableid']).first()
     if result:
         response = jsonify({"status": -1, "message": "Table id already exists"})
         return response
 
-    s = "http://localhost:8000/order/?table=" + str(args['tableid'])
+    s = "localhost:5000/order/?table=" + str(args['tableid'])
     qr = pyqrcode.create(s)
     qr.png("qr_table.png", scale = 6)
 
@@ -207,41 +307,56 @@ def add_new_table():
 # Add new user
 @app.route('/AddNewUser', methods=['PUT'])
 def add_new_user():
-        args = user_put_item.parse_args()
-        result = Users.query.filter_by(username=args['username']).first()
-        if result:
-            return jsonify({"status":-1, "message":"Username already taken"})
+	"""
+	This function is used to add user details database
+	
+	@return A json structure having status and message of operation.
+	"""
+	args = user_put_item.parse_args()
+	result = Users.query.filter_by(username=args['username']).first()
+	if result:
+		return jsonify({"status":-1, "message":"Username already taken"})
 
-        user_item = Users(username=args['username'], password_hash=args['password_hash'], role=args['role'])
-        db.session.add(user_item)
-        db.session.commit()
-        return jsonify({"status":1, "message":"User added successfully"})
+	user_item = Users(username=args['username'], password_hash=args['password_hash'], role=args['role'])
+	db.session.add(user_item)
+	db.session.commit()
+	return jsonify({"status":1, "message":"User added successfully"})
 
 # Add new menu item
 @app.route('/AddItemToMenu', methods=['PUT'])
 def add_item_to_menu():
-        args = menu_put_item.parse_args()
-        result = MenuTab.query.filter_by(item_name = args['item_name']).first()
-        if result:
-            response = jsonify({"status":-1, "message":"Item name already exists"})
-            return response
+	"""
+	This function is used to a new menu item to database
+	
+	@return A json structure having status and message of operation.
+	"""
+	args = menu_put_item.parse_args()
+	result = MenuTab.query.filter_by(item_name = args['item_name']).first()
+	if result:
+		response = jsonify({"status":-1, "message":"Item name already exists"})
+		return response
 
-        fetch_category = Categories.query.filter_by(category=args['category']).first()
-        if not fetch_category:
-            add_category = Categories(category=args['category'])
-            db.session.add(add_category)
-            db.session.commit()
+	fetch_category = Categories.query.filter_by(category=args['category']).first()
+	if not fetch_category:
+		add_category = Categories(category=args['category'])
+		db.session.add(add_category)
+		db.session.commit()
 
-        fetch_category = Categories.query.filter_by(category=args['category']).first()
-        menu_item = MenuTab(item_name=args['item_name'], price=args['price'], item = fetch_category)
-        db.session.add(menu_item)
-        db.session.commit()
-        return jsonify({"status":1, "message":"Item added successfully"})
+	fetch_category = Categories.query.filter_by(category=args['category']).first()
+	menu_item = MenuTab(item_name=args['item_name'], price=args['price'], item = fetch_category)
+	db.session.add(menu_item)
+	db.session.commit()
+	return jsonify({"status":1, "message":"Item added successfully"})
 
 
 # Attempt user login
 @app.route('/AttemptLogin',methods=['PUT'])
 def attempt_login():
+	"""
+	This function is used to verify user login.
+	
+	@return A json structure having status and message of operation.
+	"""
     args = user_login_item.parse_args()
     result = Users.query.filter_by(username=args['username']).first()
     if not result:
@@ -255,6 +370,11 @@ def attempt_login():
 # Returns all menu categories
 @app.route('/GetCategories', methods=['GET'])
 def all_categories():
+	"""
+	This function is used to get item categories from database.
+	
+	@return A json structure having status and message of operation with categories list.
+	"""
     full_categories = Categories.query.all()
     res = []
     output = {}
@@ -277,6 +397,11 @@ def all_categories():
 # Returns the entire menu
 @app.route('/GetFullMenu',methods=['GET'])
 def get_full_menu():
+	"""
+	This function is used to retrieve entire menu from database
+	
+	@return A json structure having menu items and their categories.
+	"""
     fullmenu = MenuTab.query.all()
     categories_list = []
     # output will a list of categories, each category will have a list of items
@@ -305,12 +430,17 @@ def get_full_menu():
 # Returns a list of all 'tables' in the restaurant
 @app.route('/GetAllTablesInfo', methods=['GET'])
 def all_tables():
+	"""
+	This function is used to get restraunt tables list from database.
+	
+	@return A json structure having tables info data.
+	"""
     tablelist = TableTab.query.all()
     output = []
     for table in tablelist:
         table_data = {}
         table_data['tableid'] = table.tableid
-        table_data['qrcode_str'] = table.qrcode_str
+        table_data['encodstr'] = table.encodstr
         output.append(table_data)
     
     return jsonify(output)
@@ -319,6 +449,11 @@ def all_tables():
 # Return pending orders
 @app.route('/GetPendingOrders', methods=['GET'])
 def get_pending_orders():
+	"""
+	This function is used to retrieve pending orders from database.
+	
+	@return A json structure having order id with a list of items data.
+	"""
     pending_list = OrdersPending.query.all()
 
     output = []
@@ -342,6 +477,11 @@ def get_pending_orders():
 @app.route('/NewOrder', methods=['PUT'])
 @cross_origin(origin='localhost',headers=['Content- Type','Authorization'])
 def new_order():
+	"""
+	This function is used to create new order in database.
+	
+	@return A json structure having status and message of operation.
+	"""
     check_empty = OrdersMaster.query.first()
     if not check_empty:
         order_id = 0
@@ -369,6 +509,11 @@ def new_order():
 #Complete an Order
 @app.route('/OrderComplete', methods=['PUT'])
 def complete_order():
+	"""
+	This function is used to complete a pending order from database.
+	
+	@return A json structure having status and message of operation.
+	"""
     args = order_complete.parse_args()
 
     multi_rows = OrdersPending.query.filter_by(orderid = args['orderid']).all()
@@ -404,19 +549,18 @@ def complete_order():
 # Return Sale of a particular item
 @app.route('/ItemSale', methods=['PUT'])
 def item_sale():
+	"""
+	This function is used to retrieve sale of particular item from database.
+	
+	@return A json structure having item name and quantity sold of that item.
+	"""
     args = request.get_json()
     name = args['item_name']
     prev_days = args['days']
 
-    item = MenuTab.query.filter_by(item_name=name).first()
-    
-    if not item:
-        return jsonify({"item_name" : name, "quantity_sold" : -1})
-
-
     total_qty = 0
     if(prev_days != 0):
-        filter_after = datetime(datetime.today().year, datetime.today().month, datetime.today().day) - timedelta(days= prev_days)
+        filter_after = datetime.today() - timedelta(days= prev_days)
     else :
         filter_after = datetime(datetime.today().year, datetime.today().month, datetime.today().day)
 
@@ -437,6 +581,11 @@ def item_sale():
 # Return Most Sold Items For the Day
 @app.route('/MostSoldItem', methods=['GET'])
 def most_sold():
+	"""
+	This function is used to retrieve most sold item for the day.
+	
+	@return A json structure having item name and quantity sale.
+	"""
 
     today_orderid_list = []
     filter_after = datetime(datetime.today().year, datetime.today().month, datetime.today().day)
@@ -470,6 +619,11 @@ def most_sold():
 # Total Sale For the Day
 @app.route('/CurrentDaySale', methods=['GET'])
 def total_sale():
+	"""
+	This function is used to retrieve total sale of current day.
+	
+	@return A json structure having amount field.
+	"""
     day_sale = 0
     filter_after = datetime(datetime.today().year, datetime.today().month, datetime.today().day)
     todays_orders = OrdersMaster.query.filter(OrdersMaster.time_end >= filter_after).all()
@@ -483,6 +637,11 @@ def total_sale():
 # Average Order Completion Time
 @app.route('/AvgOrderTime', methods=['GET'])
 def average_time():
+	"""
+	This function is used to retrieve average time for order completion.
+	
+	@return A json structure having numeber of orders completed and average time taken.
+	"""
     total_time = 0.0
     count = 0
     filter_after = datetime(datetime.today().year, datetime.today().month, datetime.today().day)
@@ -508,6 +667,11 @@ def average_time():
 # Returns all completed orders
 @app.route('/GetCompletedOrders', methods=['GET'])
 def all_completed():
+	"""
+	This function is used to retrieve list of complete orders.
+	
+	@return A json structure having completed orders data.
+	"""
     completelist = OrdersComplete.query.all()
     output = []
     for order in completelist:
@@ -523,7 +687,7 @@ def all_completed():
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', debug=False)
+    app.run(debug=True)
 ''' 
 CREATE TABLE "orders_master" (
 	"orderid"	INTEGER NOT NULL AUTOINCREMENT,

@@ -4,19 +4,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node13 [label="Model",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
-  Node13 -> Node0 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node0 [label="Categories",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmain_1_1Categories.html",tooltip=" "];
-  Node13 -> Node15 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node15 [label="MenuTab",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmain_1_1MenuTab.html",tooltip=" "];
-  Node13 -> Node16 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node16 [label="OrdersComplete",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmain_1_1OrdersComplete.html",tooltip=" "];
-  Node13 -> Node17 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node17 [label="OrdersMaster",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmain_1_1OrdersMaster.html",tooltip=" "];
-  Node13 -> Node18 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node18 [label="OrdersPending",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmain_1_1OrdersPending.html",tooltip=" "];
-  Node13 -> Node19 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node19 [label="TableTab",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmain_1_1TableTab.html",tooltip=" "];
-  Node13 -> Node20 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node20 [label="Users",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classmain_1_1Users.html",tooltip=" "];
+  Node0 [label="Category",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classcom_1_1example_1_1lmrs_1_1model_1_1editmenu_1_1Category.html",tooltip="POJO for MenuCategory."];
 }
