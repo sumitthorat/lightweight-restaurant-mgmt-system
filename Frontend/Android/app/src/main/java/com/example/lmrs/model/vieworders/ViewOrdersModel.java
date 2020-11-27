@@ -19,6 +19,9 @@ import java.util.List;
 
 
 public class ViewOrdersModel {
+    /**
+    * "Brain" for view orders
+    */
     ApiInterface apiInterface;
     Socket mSocket;
 
@@ -75,6 +78,9 @@ public class ViewOrdersModel {
 
 
     public List<Order> getPendingOrders(String[] err) {
+        /**
+         * Retrieve all the currently pending orders
+         */
         List<GetPendingOrdersResponseJSON> ordersList = null;
         List<Order> orders = null;
         try {
@@ -102,6 +108,9 @@ public class ViewOrdersModel {
     }
 
     public boolean notifyOrderComplete(Integer orderId, String[] err) {
+        /**
+         * Notify the server about order completion
+         */
         OrderCompleteJSONResponse response = null;
         OrderCompleteJSONRequest request = new OrderCompleteJSONRequest();
         request.setOrderid(orderId);

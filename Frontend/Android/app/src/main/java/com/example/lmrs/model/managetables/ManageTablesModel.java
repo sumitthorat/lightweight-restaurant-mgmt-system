@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ManageTablesModel {
+    /**
+     * "Brain" for the manage tables page
+     */
     ApiInterface apiInterface;
 
     static private final String TAG = "ManageTablesModel";
@@ -18,6 +21,9 @@ public class ManageTablesModel {
     }
 
     public List<Table> getTables() {
+        /**
+         * Retrieve all tables from the server
+         */
         List<GetTablesJSONResponse> responses = null;
         List<Table> ret = null;
         try {
@@ -39,6 +45,9 @@ public class ManageTablesModel {
     }
 
     public boolean addTable(Integer tableId, String[] err) {
+        /**
+         * Add new table to the database
+         */
         AddDeleteTableJSONRequest request = new AddDeleteTableJSONRequest();
         request.setTableid(tableId);
         AddDeleteTableJSONResponse response = null;
@@ -58,6 +67,9 @@ public class ManageTablesModel {
     }
 
     public boolean deleteTable(Integer tableId, String[] err) {
+        /**
+         * Delete a table based on the table id
+         */
         AddDeleteTableJSONRequest request = new AddDeleteTableJSONRequest();
         request.setTableid(tableId);
         AddDeleteTableJSONResponse response = null;

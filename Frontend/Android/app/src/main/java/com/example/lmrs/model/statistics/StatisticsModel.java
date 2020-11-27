@@ -6,6 +6,9 @@ import com.example.lmrs.model.ApiInterface;
 import com.example.lmrs.model.ApiUtils;
 
 public class StatisticsModel {
+    /**
+     * "Brain" for the statistics page
+     */
 
     ApiInterface apiInterface;
 
@@ -18,6 +21,9 @@ public class StatisticsModel {
     }
 
     public int getItemSale(String itemName, int days, String[] err) {
+        /**
+         * Get the quantity of items sold for a given item in the past number of "days"
+         */
         GetItemSaleJSONRequest request = new GetItemSaleJSONRequest();
         request.setItemName(itemName);
         request.setDays(days);
@@ -34,6 +40,9 @@ public class StatisticsModel {
     }
 
     public int getTodaysSale() {
+        /**
+         * Calculate today's total sale
+         */
         GetCurrentDaySaleJSONResponse response = null;
         try {
             response = apiInterface.getCurrentDaySale().execute().body();
@@ -44,6 +53,9 @@ public class StatisticsModel {
     }
 
     public String getMostSoldItem(String[] err) {
+        /**
+         * Get most sold item of the day
+         */
         GetMostSoldItemJSONResponse response = null;
         try {
             response = apiInterface.getMostSoldItem().execute().body();
@@ -54,6 +66,9 @@ public class StatisticsModel {
     }
 
     public String getAvgOrderTime() {
+        /**
+         * Get the average order completion time
+         */
         GetOrderAvgTimeJSONResponse response = null;
         try {
             response = apiInterface.getAvgOrderTime().execute().body();

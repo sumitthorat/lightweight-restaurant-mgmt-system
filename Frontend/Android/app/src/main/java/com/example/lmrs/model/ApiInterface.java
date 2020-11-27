@@ -29,7 +29,9 @@ import retrofit2.http.PUT;
 
 public interface  ApiInterface {
 
-    // API calls interface for LoginModel
+    /**
+     * Interface for communication between client(Android app) and server(API)
+     */
 
     @Headers("Content-Type: application/json")
     @PUT("AttemptLogin")

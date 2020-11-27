@@ -10,6 +10,9 @@ import java.util.List;
 import java.util.Map;
 
 public class EditMenuModel {
+    /**
+     * "Brain" for Edit Menu page.
+     */
 
     final static String TAG = "EditMenuModel";
 
@@ -20,6 +23,9 @@ public class EditMenuModel {
     }
 
     public List<String> getAllCategories(String[] err) {
+        /**
+         * Retrieve all menu categories from the server
+         */
         GetCategoriesJSONResponse getCategoriesJSONResponse = null;
         try {
             getCategoriesJSONResponse = apiInterface.getAllCategories().execute().body();
@@ -34,6 +40,9 @@ public class EditMenuModel {
     }
 
     public boolean addNewItem(String itemName, String category, Integer price, String[] err) {
+        /**
+         * Add new menu item and send request to server
+         */
         AddItemJSONRequest addItemJSONRequest = new AddItemJSONRequest();
 
         addItemJSONRequest.setCategory(category);
@@ -56,6 +65,9 @@ public class EditMenuModel {
     }
 
     public Map<String, List<MenuItem>> getFullMenu() {
+        /**
+         * Retrieve full menu
+         */
         GetFullMenuJSONResponse getFullMenuJSONResponse = null;
         Map<String, List<MenuItem>> res = new HashMap<>();
 
